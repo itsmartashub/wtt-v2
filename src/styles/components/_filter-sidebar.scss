@@ -1,0 +1,107 @@
+.filters {
+	@extend %grid-center;
+	align-content: space-between;
+	// grid-gap: 5rem;
+	@extend %border-r;
+	padding: 5rem 1rem;
+	position: sticky;
+	top: 20%;
+	bottom: 0%;
+	// left: 10vw;
+	background: $primary;
+	height: 60vh;
+	width: 6.5rem;
+	z-index: 1;
+	// transform-origin: center bottom;
+	transform-origin: left center;
+	// animation: scaleY 1s backwards $inOutQuart;
+
+	// animation: scaleX 1s backwards $inOutQuart;
+
+	// &--anim { @include delay-random-child(4, 1.5, 3, .5, "fadeInScale"); }
+
+	&__box {
+		width: 4.5rem;
+		height: 4.5rem;
+		background: $text;
+		@extend %flex-center;
+		@extend %pos-rel;
+		@extend %border-r;
+		@extend %cursor;
+		transition: all .6s $inOutBack;
+		
+
+		// animation: fadeInY-toup 1s $outBack backwards;
+		// &:nth-of-type(1) { animation-delay: 500ms; }
+		// &:nth-of-type(2) { animation-delay: 600ms; }
+		// &:nth-of-type(3) { animation-delay: 700ms; } 
+		&:not(:last-child) { margin-bottom: 3rem; }
+
+		&:hover {
+			background: rgba($card-subtitle, .5);
+			svg { transform: scale(0); }
+			p {
+				opacity: 1;
+				transform: translate(-50%, -50%);
+			}
+		}
+
+		svg {
+			fill: $primary;
+			height: 2.5rem;
+			width: auto;
+			pointer-events: none;
+			// transition: all .7s $inOutBack;
+			transition: all .7s $outSmooth;
+
+			&:nth-last-of-type(3) {
+				stroke: $primary;
+				stroke-width: .5px;
+			}
+		}
+
+		p {
+			font-size: 1.2rem;
+			@extend %fw-700;
+			@extend %text-center;
+			@extend %abs-center;
+			transform: translate(-50%, 50%);
+			opacity: 0;
+			pointer-events: none;
+			transition: all .6s $inOutBack;
+		}
+	}
+
+	&__price{
+		@extend %fw-700;
+		font-size: 1.2rem;
+		font-family: inherit;
+		@extend %text-center;
+		background: $text;
+		color: $primary;
+		padding: 1rem;
+		@extend %border-r;
+		width: 200%;
+		@extend %cursor;
+		@extend %flex-center;
+
+		border: none;
+		// text-indent: 0.01px;
+		// text-overflow: '';
+		// -webkit-appearance: none;
+		-moz-appearance: none;
+		// appearance: none;
+		// @include delay-random-child(4, 3, .5, "fadeInY-toup");
+		// animation: fadeInY-toup 1s $outBack backwards 1000ms;
+
+		&:focus {
+			outline: none;
+		}
+		// -webkit-appearance: button;
+	}
+
+
+	@include device(tab) {
+		display: none;
+	}
+}

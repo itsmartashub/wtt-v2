@@ -1,0 +1,93 @@
+.card {
+	background: $card-gradient-main;
+	@extend %pos-rel;
+	@extend %border-r;
+	@extend %text-center;
+	padding: 0rem 2.3rem;
+	box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
+	transition: all .5s ease-in-out;
+	// animation: fadeInScale 1.5s backwards $outBack;
+	// @include delay(animation, 8, 0.25s);
+	// @include delay2(3); // 3 diva .card, mroam da znam koliko ih ima
+	// @include delay-random(3, 300);
+
+	// animation: fadeInScale 1.5s backwards $outSmooth;
+	// @include delay-random(3, 5, .1);
+
+
+	@include device(tab) { transform: scale(.9); }
+	@include device(phone) { transform: scale(.8); }
+
+	&:hover {
+		background: $card-gr-1;
+		box-shadow: 0rem 1rem 8rem 2px rgba($card-title, .28);
+
+		.card__figure {  transform: translateY(-35%); }
+		// box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
+	}
+
+	&__figure { transform: translateY(-40%); transition: all .5s ease-in-out; }
+
+	&__informations {
+		transform: translateY(-80%);
+		@extend %fw-700;
+		letter-spacing: .5px;
+	}
+
+	&__img {
+		width: 18rem;
+		height: auto;
+	}
+
+	&__title,
+	&__subtitle {
+		@extend %fw-700;
+		font-size: 1.4rem;
+		margin-top: .7rem;
+	}
+	&__price {
+		@extend %fw-700;
+		font-size: 2rem;
+		margin-top: 1.4rem;
+	}
+
+	.btn-addtobag {
+		@extend %pos-abs;
+		bottom: 13%;
+		right: -10%;
+		// animation: fadeInY 1.5s backwards $outSmooth;
+		// @include delay-random(3, 5, .5);
+	}
+
+	&__fav {
+		@extend %cursor;
+		@extend %pos-abs;
+		left: 8%;
+		top: 8%;
+		fill: transparent;
+		stroke: $primary;
+		stroke-width: 2.5px;
+		width: 2.2rem;
+		height: auto;
+		&:hover { fill: $primary; }
+	}
+
+	&--added {
+		.btn-addtobag {
+			&,
+			&:hover {
+				@extend .btn-addtobag:hover;
+				transform: rotateZ(0deg);
+				width: 8rem;
+				height: 5rem;
+				right: -15%;
+				font-size: 1.4rem;
+
+				&::before {
+					content: 'in cart \2713';
+					transform: translateY(0%) rotateZ(0deg)
+				}
+			}
+		}
+	}
+}

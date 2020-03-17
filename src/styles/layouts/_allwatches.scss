@@ -1,0 +1,28 @@
+.allwatches {
+	@extend %grid-jsb;
+	grid-template-columns: min-content 1fr;
+	align-content: flex-start;
+	grid-gap: 8vw;
+	padding: 10rem 10vw;
+	@extend %pos-rel;
+
+	&__cards {
+		@extend %grid-center;
+		grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+		grid-gap: 15rem 10rem;
+
+		@include device(phone) {
+			grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+			grid-gap: 15rem 12rem;
+		}
+	}
+
+	.title { margin-bottom: 20rem; }
+
+
+	@include device(tab) {
+		display: block;
+
+		.title { margin: 10rem auto 15rem auto; }
+	}
+}

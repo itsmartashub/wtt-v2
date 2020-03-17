@@ -1,0 +1,80 @@
+@keyframes fadeInY { // to down
+	from { // backwards da bude
+		opacity: 0;
+		transform: translate3d(0, -15%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0%, 0);
+	}
+}
+@keyframes fadeInY-toup { // to up
+	from { // backwards da bude
+		opacity: 0;
+		transform: translate3d(0, 50%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0%, 0);
+	}
+}
+@keyframes fadeInScale {
+	from { // backwards da bude
+		opacity: 0;
+		transform: scale(.7);
+	}
+	to {
+		opacity: 1;
+		// transform: scale(inherit);
+	}
+}
+
+@keyframes scaleX {
+	from { transform: scaleX(0);}
+	to { transform: scaleX(1);}
+}
+@keyframes scaleX-to-0 {
+	from { transform: scaleX(1);}
+	to { transform: scaleX(0);}
+}
+@keyframes scaleY {
+	from { transform: scaleY(0); }
+	to { transform: scaleY(1);}
+}
+// @keyframes scaleXopacity {
+// 	from { transform: scaleX(.9); opacity: 0;}
+// 	to { transform: scaleX(1); opacity: 1;}
+// }
+@keyframes fadeIn {
+	from { opacity: 0;}
+	to { opacity: 1;}
+}
+
+@keyframes fadeInLetterSpacing {
+	0% {
+		opacity: 0;
+		letter-spacing: .5rem;
+	}
+	30% {
+		opacity: 1;
+	}
+	100% {
+		// opacity: 1;
+		letter-spacing: inherit;
+	}
+}
+@keyframes fadeInLetterSpacingBtn {
+	0% {
+		opacity: 0;
+		letter-spacing: .5rem;
+		transform: translate3d(0, -15%, 0);
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		// opacity: 1;
+		letter-spacing: inherit;
+		transform: translate3d(0, 0%, 0);
+	}
+}

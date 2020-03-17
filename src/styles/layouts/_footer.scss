@@ -1,0 +1,73 @@
+.footer {
+	@extend %grid-center;
+	align-items: flex-start;
+	padding: 15rem 10vw;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	grid-gap: 10rem 5rem;
+	line-height: 1.4;
+	font-size: 1.45rem;
+
+	.navbar__logo {
+		stroke: currentColor;
+		stroke-width: 1px;
+		width: 20rem;
+		height: auto;
+	}
+
+	&__item {
+		ul { line-height: 1.7; }
+		li { opacity: .7; }
+	}
+
+	&__payments {
+		margin: 1.2rem 0;
+		svg {
+			width: 3rem;
+			height: auto;
+		}
+	}
+	&__copyright { @extend %fw-600; }
+	&__build {
+		margin-top: 1rem;
+		color: rgba($text, .8);
+		a {
+			text-decoration: underline;
+			color: $text;
+		}
+	}
+	h5 {
+		@extend %fw-600;
+		font-size: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	&__contacts { opacity: .8; }
+	&__email {
+		@extend %fw-700;
+		margin: 1.2rem 0;
+		display: inline-block;
+	}
+	&__social {
+		a {
+			display: inline-block;
+			&:not(:last-child) { margin-right: 1rem; }
+		}
+
+		svg {
+			height: 2rem;
+			width: auto;
+		}
+	}
+
+
+	@include device(tab-land) {
+		grid-gap: 10rem 8rem;
+	}
+	@include device(tab) {
+		justify-items: flex-start;
+		grid-gap: 8rem;
+	}
+	@include device(phone) {
+		grid-template-columns: max-content;
+	}
+}

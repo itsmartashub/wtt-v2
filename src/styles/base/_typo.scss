@@ -1,0 +1,89 @@
+$default-fml: 'Muli', sans-serif;
+// $default-fml: 'DM Sans', sans-serif;
+$default-fsz: 1.6rem;
+
+// font-family: 'DM Sans', sans-serif ;
+// font-family: 'DM Serif Display', sans-serif;
+// font-family: 'Muli', sans-serif ;
+// $font-size-heading-1: 1.6rem;
+/*
+body {
+    font-size: calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw -
+    [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width])));
+
+	font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+	line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
+}
+*/
+html {
+	font-size: 62.5%; // 1rem = 10px, j 10px/16px = 62.5%
+	// //! uvek VECI ide pre MANJEG msm font-size, ne device koji je, kada je DESKTOP-FIRST, za MOBILE-FIRST od MANJEG ka VECEM
+
+	@include device(tab-land) { // width < 1200 ?
+		font-size: 56.25%; // 1rem = 9px, 9/16 = 50%
+	}
+	@include device(tab) { // width < 900 ?
+		font-size: 50%; // 1rem = 8px, 8/16 = 50%, da li je width manja od 50%, i mogu da pbrisem jedan, tj phone, jer oboje apply 50%
+	}
+	@include device(phone) {
+		font-size: 43.75%; // 1rem = 7px, 7/16 =  43.75%
+	}
+	@include device(phone-ant) {
+		font-size: 37.5%; // 1rem = 6px, 6/16 =  37.5%
+	}
+
+	@include device(big) {
+		font-size: 75%; // 1rem = 12px, 12/16 = 75%
+	}
+}
+
+
+body {
+	font-family: $default-fml;
+	font-size: $default-fsz;
+	letter-spacing: 0.8px;
+	// font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1920 - 300)));
+}
+
+.title {
+	font-size: 4rem;
+	@extend %fw-700;
+	@extend %text-center;
+	@extend %text-upper;
+	color: rgba($card-title, .5);
+	margin-bottom: 8rem;
+}
+
+.subtitle {
+	font-size: 3rem;
+	@extend %fw-500;
+}
+
+// h1 home ce biti Whats the time, inace na drugim str h1 ce biti naslov
+// h2 na home iltii .title je COLLECTIONS< FEATURE WATCHES i sl
+// h3 na home iliti .subtitle je u featured oni naslovi za watch ispod in stock
+
+// h4 // card-title watch
+// h5 // card-subtitle ilit brand watch
+// p // card-price collections
+
+h1, h2, h3, h4, h5, h6 {
+	@extend %fw-400;
+}
+
+.title-fav-bag-filter {
+	font-size: 2.2rem;
+	@extend %text-center;
+	margin: 5rem auto 6rem auto;
+
+	span {
+		@extend %fw-700;
+	}
+}
+
+h3 {
+	color: $card-title;
+}
+h4 {
+	color: darken($card-subtitle, 5%);
+}

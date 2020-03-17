@@ -1,0 +1,171 @@
+// $grey-lighter:#DFE1E6;
+// $grey-darker: #EDEFF5;
+// $grey-gradient: linear-gradient(135deg, rgba($grey-lighter, 1), rgba($grey-darker, 1));
+// $font-color: #484747;
+// $font-light: #AAA19B;
+// $main-color: #CAA580;
+// $sporedna-1: #F8F8F7;
+// $sporedna-2:#E2E2DF;
+// $sporedna-3: #D0C1AF;
+
+
+// $grey-lighter:#D2D2D3;
+// $grey-darker: #BABABD;
+// $grey-gradient: linear-gradient(135deg, rgba($grey-lighter, 1), rgba($grey-darker, 1));
+// $font-color: #4E4E52;
+// $font-light: #CDBFAC;
+// $main-color: #94887F;
+
+
+// $grey-lighter:#D2D2D3;
+// $grey-darker: #BABABD;
+// $grey-gradient: linear-gradient(135deg, rgba($grey-lighter, 1), rgba($grey-darker, 1));
+// $bg: #FDFCFC;
+// $main-color: #622F46 ;
+// $font-color: #1C1A1A;
+// $font-light: #A39D9F;
+
+
+// $grey-lighter:#BABABD;
+// $grey-darker: #C0BDC1;
+// $grey-gradient: linear-gradient(135deg, rgba($grey-lighter, 1), rgba($grey-darker, 1));
+// $bg: #F3F1F7;
+// $main-color: #513222;
+// $font-color: #180C08;
+// $font-light: #A39D9F;
+// $sporedna-1: #6D5C52;
+// $sporedna-2: #E2E2DF;
+// $sporedna-3: #907868;
+
+
+// $grey-lighter:#BABABD;
+// $grey-darker: #C0BDC1;
+// $grey-gradient: linear-gradient(135deg, rgba($grey-lighter, 1), rgba($grey-darker, 1));
+// $pink: #F89699;
+// $bg: #F8F6F7;
+// $main-color: #FE4449;
+// $font-color: #343743;
+// $font-light: #9A989C;
+
+
+// $grey-lighter:#BABABD;
+// $grey-darker: #C0BDC1;
+// $grey-gradient: linear-gradient(135deg, rgba($grey-lighter, 1), rgba($grey-darker, 1));
+// $pink: #AA8972;
+// $bg: #F8F6F7;
+// $main-color: #612B16;
+// $primary-color: #54220B;
+// $primary-light: #A55A3B;
+// $font-color: #140D0B ; // 080B10 wow boja
+// $font-color: #0C0807;
+// $font-light: #9A989C;
+
+
+// $grey: #D1CAB8;
+// $bg: #F9F8F6;
+// $primary-dark: #662813;
+// $primary-light: #9D5E3A; // buttons
+// $font-color: #382F27;
+// $font-light: #C9B18F; // font-light
+// $font-dark: #C59B6C;
+// $bg-article-gradient: linear-gradient(135deg, rgba(#C59B6C, 1), rgba(#C9B18F, 1));
+
+
+// $grey: #A9A9A7;
+// $bg: #FDF0E1;
+// $primary-dark: #5E2A11;
+// $font-color: #291108;
+// $secondary-1: #69574D;
+// $secondary-2: #967055;
+// $secondary-3: #AF845F;
+// $bg-article-gradient: linear-gradient(135deg, rgba(#C59B6C, 1), rgba(#C9B18F, 1));
+
+// $grey: #EBE5E0;
+// $bg-gradient: linear-gradient(135deg, rgba(#EBE5E0, .5), rgba(#B5A091, .5));
+// $primary-dark: #8E684F;
+// $font-color: #3D2721; // #382F27
+// $secondary-1: #C7B1A2;
+// $secondary-2: #B5A091;
+// $secondary-3: #9D8775 ;
+// $bg-article-gradient: linear-gradient(135deg, rgba($secondary-2, 1), rgba($secondary-3, 1));
+
+
+$primary: #A6724A; // za buttons, i header onaj braon deo, 85% mozda bolje za bg
+$text:#291108;
+$text-lighter: #3D2721; // clear cart i add to cart u favourites
+$heading-secondary: #3D2721; // FEATURE, COLLECTIONS< ALL WATCHES....
+$card-title:#6E4D43; // i hover link u mobile menu
+$card-subtitle: #B5A091;
+$card-collections: #EBE5E0 ; // ili mozda samo box-shadow da ostavim, #EBE5E0, 
+$card-gr-1: #E5DBCC;
+$card-gr-2: #D4C19F;
+$card-gradient-main: linear-gradient(200deg, rgba($card-gr-1, .72), rgba($card-gr-2, .85)); // top to bottom #E5DBCC (gore, 72% alpha), #D4C19F (dole 85%)
+// $bg-gr-1: #E5DBCC;
+// $bg-gr-2: #D4C19F;
+$bag-gr-1: #b88e6e;
+$bag-gr-2: $primary;
+$bag-gradient: linear-gradient(to bottom, $bag-gr-2, $bag-gr-1);
+
+$btn-clear: #B9926C;
+$btn-stock: #A89080; // 34%
+$btn-collection: #CBBBA8;
+
+$bg-gradient: radial-gradient(rgba($card-gr-1, .75), rgba($card-gr-2, .85)); // radial, #E5DBCC - u centru 75%, #D4C19F 85%
+
+
+
+//
+// $btn-radius: 2px;
+$btn-shadow: 1px 4px 10px 0px rgba(#000, .08);
+$card-shadow: 1px 8px 20px 0px rgba(#000, .04);
+
+// z-index
+// $z-navbar-menu: 90;
+$z-navmob: 95;
+$z-navbar: 100;
+// $z-navbar: 100;
+$z-burger-open: 110;
+$z-fav-open: 120;
+$z-bag-open: 130;
+
+$z-filtermobile-nav--checked: 220;
+$z-filtermobile-label--checked: 210;
+$z-filtermobile-bg--checked: 200;
+
+$z-filtermobile-nav: 90;
+$z-filtermobile-label: 80;
+$z-filtermobile-bg: 70;
+
+// EASING DEFINITIONS
+$outSmooth: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+$inOutExpo: cubic-bezier(1.000, 0.000, 0.000, 1.000);
+$inBack: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+$outBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$inOutBack: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$inCirc: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+$outCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
+$inOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+$inOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
+
+
+// // TRANSITIONS
+// $inQuad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+// $inCubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+// $inQuart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+// $inQuint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+// $inExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+// $inCirc: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+
+// $outQuad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+// $outCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+// $outQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
+// $outQuint: cubic-bezier(0.23, 1, 0.32, 1);
+// $outExpo: cubic-bezier(0.19, 1, 0.22, 1);
+// $outCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+// $inOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+// $inOutCubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+// $inOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
+// $inOutQuint: cubic-bezier(0.86, 0, 0.07, 1);
+// $inOutExpo: cubic-bezier(1, 0, 0, 1);
+// $inOutCirc: cubic-bezier(0.785, 0.135, 0.15, 0.86);

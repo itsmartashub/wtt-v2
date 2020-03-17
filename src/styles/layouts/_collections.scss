@@ -1,0 +1,126 @@
+.collections {
+	@extend .feature;
+	@extend %text-center;
+
+	&__cards {
+		@extend %grid-center;
+		grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+		grid-gap: 10rem 8rem;
+	}
+
+	&__card {
+		background: rgba($card-collections, .1);
+		box-shadow: $card-shadow;
+		padding: 6rem;
+		@extend %pos-rel;
+		@extend %border-r;
+		transition: all .4s $outSmooth;
+
+		&:hover {
+			transform: translateY(-3%);
+			box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
+			background: rgba($card-collections, .1);
+		}
+
+		&:nth-child(odd) {
+			transform: translateY(5%);
+			&:hover {	transform: translateY(0%); }
+		}
+	}
+
+	&__figure { @extend %flex-center; }
+	&__img {
+		height: 20vh;
+		width: auto;
+	}
+	&__title, &__subtitle, &__price { margin-top: .5rem;}
+	&__title {
+		color: $card-title;
+		@extend %fw-600;
+	}
+	&__subtitle {
+		color: rgba($card-title, .5);
+		@extend %fw-700;
+	}
+	&__price {
+		@extend %fw-700;
+		font-size: 2rem;
+		margin-bottom: 3rem;
+	}
+
+	&__fav {
+		@extend %pos-abs;
+		top: 5%;
+		right: 10%;
+
+		svg {
+			width: 2.8rem;
+			fill: transparent;
+			stroke-width: 2.5px;
+			stroke: $primary;
+			@extend %cursor;
+
+			&:hover {	fill: $primary; }
+		}
+	}
+
+	.btn-icon {
+		font-size: 1.2rem;
+		background: $btn-collection;
+		color: $card-title;
+		box-shadow: 0 3px 8px 0px rgba(#6E4D43, .18);
+		justify-content: center;
+		svg { fill: currentColor; }
+
+		&:hover {
+			background: $card-title;
+			color: $btn-collection;
+		}
+	}
+	.btn-primary { margin: 10rem auto; }
+
+
+
+	//* ----------- MEDIA -------------
+
+	@include device(tab-land) {
+		grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
+		grid-gap: 10rem 5rem;
+		&__card {
+			padding: 3rem;
+			width: 30rem;
+			&:nth-child(odd) {
+				transform: translateY(0%);
+				&:hover { transform: translateY(-3%); }
+			}
+		}
+		&__img { height: 15vw; }
+	}
+
+
+	@include device(tab) {
+		&__card { width: 25rem; }
+		&__title, &__subtitle {
+			font-size: 1.4rem;
+		}
+		&__price {
+			font-size: 1.8rem;
+			margin: 0 0 3rem 0;
+		}
+		&__fav { svg { width: 2rem;}}
+
+		.btn-icon {
+			padding: 1.4rem 1rem !important;
+			svg {
+				width: 1.6rem;
+				height: auto;
+			}
+		}
+	}
+
+	@include device(phone) {
+		&__card { width: 30rem; }
+		&__img { height: 30vw; }
+	}
+	
+}

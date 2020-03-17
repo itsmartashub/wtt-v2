@@ -1,0 +1,197 @@
+.intro {
+	height: 100vh;
+
+	&__right {
+		@extend %pos-abs;
+		top: 20vh;
+		right: 12vw;
+		z-index: -1;
+	}
+
+	&__left {
+		@extend %border-r;
+		@extend %pos-abs;
+		margin: 2rem;
+		top: 30%;
+		left: 8vw;
+		z-index: 0;
+
+		@extend %grid-center;
+		grid-gap: 3rem;
+		// border: 1px solid red;
+	}
+
+	&__logo {
+		height: auto;
+		width: 38vw;
+		// animation: fadeInY 2s ease backwards 1000ms;
+	}
+	&__title {
+		font-size: 3rem;
+		color: $card-title;
+		@extend %text-center;
+		// animation: fadeInLetterSpacing 2s ease backwards 1000ms;
+	}
+
+	figure {
+		@extend %pos-rel;
+	}
+
+	&__img {
+		object-fit: cover;
+		// animation: fadeIn .6s ease backwards 1500ms;
+	}
+	&__img-block {
+		@extend %after;
+		top: 0;
+		left: 0;
+		background: $btn-clear;
+		pointer-events: none;
+		// opacity: 0;
+		z-index: -2;
+		transform-origin: right center;
+		// animation: scaleX 1.5s $inOutQuart backwards 300ms;
+	}
+	&__img,
+	&__img-block {
+		// width: 30vw;
+		// height: 40vw;
+		width: 30vw;
+		height: 72vh;
+	}
+	
+	.btn-primary {
+		padding: 1.8rem 4rem;
+		font-size: 1.8rem;
+		margin: 3rem 0;
+
+		&:hover {
+			background: $card-subtitle;
+			letter-spacing: 2px;
+		}
+	}
+
+	&__shipping {
+		letter-spacing: 2px;
+		 @extend %pos-abs;
+		top: 35%;
+		right: 5vw;
+		writing-mode: vertical-rl;
+		// animation: fadeInY 1.5s ease backwards 2100ms;
+		// background: rgba(#fff, .1);
+		// backdrop-filter: blur(5px);
+	}
+
+	&__brown-block {
+		background: $primary;
+		width: 35vw;
+		height: 100vh;
+		@extend %pos-abs;
+		top: 0;
+		right: 0;
+		z-index: -10;
+		transform-origin: right center;
+		// animation: scaleX 2s $inOutQuart backwards;
+	}
+
+	// .btn-primary { animation: fadeInLetterSpacingBtn 1s ease backwards 1500ms; }
+
+
+	@include device(tab-land) {
+		&__left {
+			padding: 0 3vw;
+			left: 0;
+		}
+		&__img,
+		&__img-block {
+			width: 35vw;
+			height: 75vh;
+		}
+		&__title {
+			background: $card-gradient-main;
+		}
+	}
+
+	@include device(tab) {
+	     &__logo { width: 50vw; }
+
+		&__left {
+			top: 20%;			
+			padding: 7rem 3vw 3vw 3vw;
+		}
+		&__right {
+			top: auto;
+			bottom: 2%;
+		}
+		&__img,
+		&__img-block {
+			width: 38vw;
+			height: 50vw;
+		}
+	}
+
+	@include device(phone-land) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&__brown-block { display: none;}
+		&__left {
+			position: initial;
+			margin: 0;
+			top: 0;
+			left: 0;
+			// background: $bg-gradient;
+			// background: radial-gradient(rgba($card-gr-1, 1), rgba($card-gr-2, 1));
+			background: $card-gradient-main;
+			backdrop-filter: blur(5px);
+			padding: 7rem 4rem 4rem 4rem;
+			// transform: translateY(-20%) scaleX(1);
+			// transform: translateY(-20%) scaleX(1);
+		}
+		&__logo {
+			height: auto;
+			width: 60vw;
+		}
+		&__title {
+			background: none;
+		}
+		&__right {
+			top: 0;
+			left: 0;
+			width: 100%;
+			// height: 100vh;
+			z-index: -1;
+		}
+
+		&__img,
+		&__img-block {
+			width: 100%;
+			height: 100vh;
+		}
+		&__shipping {
+			font-weight: 500;
+			padding: 3px;
+			top: 30%;
+			right: 3%;
+			backdrop-filter: blur(5px);
+			
+			background: rgba($primary, .7);
+			color: $card-gr-2;
+			// color: $text-lighter;
+
+			// color: $card-title;
+			// background: $card-gradient-main;
+		}
+		
+	}
+
+
+	@include device(phone-ant) {
+		&__shipping {
+			top: 15%;
+			right: 5%;
+		}
+	}
+
+}

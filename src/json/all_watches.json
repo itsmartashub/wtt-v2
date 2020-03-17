@@ -1,0 +1,93 @@
+[
+    
+	{
+		"id": 1,
+		"title": "Aoyama",
+		"brand": "pontier",
+		"price": 99.99,
+		"img": "./assets/products/001.png",
+		"gender": "unisex",
+		"color": "black"
+	},
+	{
+		"id": 2,
+		"title": "Arbat Silver",
+		"brand": "pontier",
+		"price": 100.99,
+		"img": "./assets/products/002.png",
+		"gender": "unisex",
+		"color": "silver"
+	},
+	{
+		"id": 3,
+		"title": "Bywater Silack",
+		"brand": "pontier",
+		"price": 120.99,
+		"img": "./assets/products/003.png",
+		"gender": "unisex",
+		"color": "silver"
+	},
+	{
+		"id": 4,
+		"title": "Capucins",
+		"brand": "pontier",
+		"price": 99,
+		"img": "./assets/products/004.png",
+		"gender": "unisex",
+		"color": "brown"
+	},
+	{
+		"id": 5,
+		"title": "Coyoacan Own",
+		"brand": "pontier",
+		"price": 180.99,
+		"img": "./assets/products/005.png",
+		"gender": "male",
+		"color": "brown"
+	},
+	{
+		"id": 6,
+		"title": "Hauzkhas Ack",
+		"brand": "pontier",
+		"price": 160.99,
+		"img": "./assets/products/006.png",
+		"gender": "male",
+		"color": "black"
+	},
+	{
+		"id": 7,
+		"title": "Hivernage Ack",
+		"brand": "pontier",
+		"price": 210.99,
+		"img": "./assets/products/007.png",
+		"gender": "female",
+		"color": "black"
+	},
+	{
+		"id": 8,
+		"title": "Isola Own",
+		"brand": "pontier",
+		"price": 205.99,
+		"img": "./assets/products/008.png",
+		"gender": "female",
+		"color": "brown"
+	},
+	{
+		"id": 9,
+		"title": "Kalamaja Own",
+		"brand": "pontier",
+		"price": 223.99,
+		"img": "./assets/products/009.png",
+		"gender": "unisex",
+		"color": "brown"
+	},
+	{
+		"id": 10,
+		"title": "Kallio Silver",
+		"brand": "pontier",
+		"price": 123.99,
+		"img": "./assets/products/010.png",
+		"gender": "unisex",
+		"color": "silver"
+	}
+]
