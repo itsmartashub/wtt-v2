@@ -1,9 +1,12 @@
 .allwatches {
 	@extend %grid-jsb;
+	@extend .content-wrapper;
 	grid-template-columns: min-content 1fr;
 	align-content: flex-start;
 	grid-gap: 8vw;
 	padding: 10rem 10vw;
+	margin-top: 15rem;
+	min-height: 100vh;
 	@extend %pos-rel;
 
 	&__cards {
@@ -23,6 +26,7 @@
 	@include device(tab) {
 		display: block;
 
-		.title { margin: 10rem auto 15rem auto; }
+		// .title { margin: 10rem auto 15rem auto; }
+		.title { margin-bottom: 15rem; }
 	}
 }

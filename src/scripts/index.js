@@ -1,6 +1,11 @@
 // import jsonData from '../json/hello'
-// import '@babel/polyfill';
-
+import '@babel/polyfill';
+import UI from './classes/ui';
+import Storage from './classes/storage';
+import Products from './classes/products';
+import Bag from './classes/bag';
+import Favourites from './classes/fav';
+import Filter from './classes/filter';
 
 // class Proba {
 // 	name = "Rorors";
@@ -50,41 +55,33 @@
 
 // })
 
-window.onload = function() {
-	document.querySelector('.navbar__bag').addEventListener('click', () => {
-		document.querySelector('.bag').classList.add('bag--open');
-		// if(document.querySelector('.fav').classList.contains('fav--open')) {
-		// 	document.querySelector('.fav').classList.remove('fav--open');
-		// }
-	})
-	document.querySelector('.bag .btn-close').addEventListener('click', () => {
-		document.querySelector('.bag').classList.remove('bag--open');
-	})
+document.addEventListener('DOMContentLoaded', () => {
+	const _ui = new UI();
+	const _products = new Products();
+	// const _filter = new Filter();
+	const _bag = new Bag();
+	const _fav = new Favourites();
 
+	// _ui.SETUP_APP();
+	_ui.SETUP_UI();
+	_bag.SETUP_BAG();
+	_fav.SETUP_FAV();
 
-	document.querySelector('.navbar__favs').addEventListener('click', () => {
-		document.querySelector('.fav').classList.add('fav--open');
-		// if(document.querySelector('.bag').classList.contains('bag--open')) {
-		// 	document.querySelector('.bag').classList.remove('bag--open');
-		// }
-	})
-	document.querySelector('.fav .btn-close').addEventListener('click', () => {
-		document.querySelector('.fav').classList.remove('fav--open');
-	})
-
-	document.querySelector('.navbar__burger').addEventListener('click', () => {
-		const $navbar = document.querySelector('.navbar');
-		const $burger = document.querySelector('.navbar__burger');
-		const $navmob = document.querySelector('.navmob');
-
-		if(!$burger.classList.contains('burger--opened')) {
-			$burger.classList.add('burger--opened');
-			$navmob.classList.add('navmob--opened');
-			$navbar.classList.add('navbar--transparent');
-		} else {
-			$burger.classList.remove('burger--opened');
-			$navmob.classList.remove('navmob--opened');
-			$navbar.classList.remove('navbar--transparent');
-		}
-	})
-}
+	_products.fetchProducts().then(all_products => {
+		// _ui.displayProducts(all_products);
+		// _filter.displayProducts(all_products);
+		Storage.saveProducts(all_products);
+	}).then(() => {
+		// _ui.getAddToBagBtns();
+		// _ui.getFavBtns();
+		// _ui.bagLogic();
+		// _ui.favLogic();
+		_bag.getAddToBagBtns();
+		_fav.getFavBtns();
+		_bag.bagLogic();
+		_fav.favLogic();
+		
+		// _filter.setup_filter();
+		new Filter().setup_filter();
+	});
+})

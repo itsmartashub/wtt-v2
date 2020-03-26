@@ -43,6 +43,8 @@ a {
 	}
 }
 
+svg > * { pointer-events: none; }
+
 
 .bp {
 	font-size: 2rem;

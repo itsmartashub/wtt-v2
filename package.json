@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.html",
   "scripts": {
-    "start": "parcel src/index.html -p 1234 --open",
+    "start": "parcel src/index.html -p 1234",
     "build:parcel": "parcel build src/index.html --out-dir prod",
     "clean": "rm -rf dist/*",
     "build": "npm run clean && npm run build:parcel"

@@ -52,6 +52,8 @@ body {
 	@extend %text-upper;
 	color: rgba($card-title, .5);
 	margin-bottom: 8rem;
+
+	// &--anim { animation: fadeInLetterSpacing 2s backwards ease; }
 }
 
 .subtitle {

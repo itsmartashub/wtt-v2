@@ -18,6 +18,10 @@
 }
 
 .btn {
+	&--added {
+		background: $card-title !important;
+		color: $btn-collection !important;
+	}
 	&-primary {
 		@extend %btn;
 		@extend %text-upper;
@@ -27,6 +31,8 @@
 			color: darken($card-title, 10%);
 			background: $card-subtitle;
 		}
+
+		// &--added { @extend .btn-primary:hover; }
 	}
 
 	&-stock {

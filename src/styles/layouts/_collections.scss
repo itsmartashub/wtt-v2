@@ -70,7 +70,7 @@
 		color: $card-title;
 		box-shadow: 0 3px 8px 0px rgba(#6E4D43, .18);
 		justify-content: center;
-		svg { fill: currentColor; }
+		svg { fill: currentColor; pointer-events: none; }
 
 		&:hover {
 			background: $card-title;
@@ -78,6 +78,8 @@
 		}
 	}
 	.btn-primary { margin: 10rem auto; }
+
+	.card-fav-btn--liked { fill: $primary !important; }
 
 
 
@@ -124,3 +126,4 @@
 	}
 	
 }
+

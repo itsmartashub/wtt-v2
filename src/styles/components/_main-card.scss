@@ -6,14 +6,6 @@
 	padding: 0rem 2.3rem;
 	box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
 	transition: all .5s ease-in-out;
-	// animation: fadeInScale 1.5s backwards $outBack;
-	// @include delay(animation, 8, 0.25s);
-	// @include delay2(3); // 3 diva .card, mroam da znam koliko ih ima
-	// @include delay-random(3, 300);
-
-	// animation: fadeInScale 1.5s backwards $outSmooth;
-	// @include delay-random(3, 5, .1);
-
 
 	@include device(tab) { transform: scale(.9); }
 	@include device(phone) { transform: scale(.8); }
@@ -84,10 +76,15 @@
 				font-size: 1.4rem;
 
 				&::before {
-					content: 'in cart \2713';
+					content: 'in bag \2713';
 					transform: translateY(0%) rotateZ(0deg)
 				}
 			}
 		}
 	}
+}
+
+.card-fav-btn--liked {
+	// @extend .card__fav:hover;
+	fill: $primary !important; 
 }

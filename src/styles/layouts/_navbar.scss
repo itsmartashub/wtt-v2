@@ -1,5 +1,4 @@
 .navbar {
-	// position: sticky;
 	position: fixed;
 	width: 100%;
 	top: 0;
@@ -11,10 +10,6 @@
 	grid-template-columns: max-content 1fr max-content;
 	grid-gap: 5vw;
 	z-index: $z-navbar;
-	
-
-	// background: rgba($primary, 1);
-	// animation: fadeInY 1s ease backwards 1500ms;
 
 	&--scrolled {
 		background: rgba($primary, 1);
@@ -48,87 +43,22 @@
 		&:hover { fill: $primary; }
 	}
 
-	// &__checkbox { display: none; }
-	// &__label {
-	// 	display: none;
-	// 	@extend %cursor;
-	// 	@extend %pos-rel;
-
-	// 	width: 2.7rem;
-	// 	height: 3rem;
-
-	// 	&::after,
-	// 	&::before {
-	// 		@extend %after;
-	// 		border-radius: 50%;
-	// 		box-shadow: 0px 0px 1px 2px rgba(#fff, .1);
-	// 		transform: translate(-48%, -58%) scale(0);
-	// 		opacity: 0;
-	// 		pointer-events: none;
-	// 		transition: all .5s $inOutBack;
-	// 	}
-	// 	&::before {
-	// 		width: 30rem;
-	// 		height: 30rem;
-	// 	}
-	// 	&::after {
-	// 		width: 60rem;
-	// 		height: 60rem;
-	// 	}
-
-	// 	.burger-line {
-	// 		background: $text;
-	// 		width: 100%;
-	// 		height: 2px;
-	// 		@extend %border-r;
-	// 		@extend %pos-rel;
-	// 		@extend %flex-center;
-			
-	// 		&::after,
-	// 		&::before {
-	// 			@extend %after;
-	// 			@extend %border-r;
-	// 			background: currentColor;
-	// 			transition: transform .9s $outSmooth, width .5s $outSmooth;
-	// 		}
-
-	// 		&::after {
-	// 			top: .8rem;
-	// 			width: 80%;
-	// 		}
-	// 		&::before {
-	// 			top: 1.6rem;
-	// 			width: 60%;
-	// 		}
-	// 	}
-
-	// 	&:hover {
-	// 		.burger-line {
-	// 			&::after, &::before { width: 100%; }
-	// 		}
-	// 	}
-	// }
-
 	&__nav {
-		// transition-delay: .4s;
-
 		ul {
 			display: grid;
 			grid-auto-flow: column;
 			justify-content: flex-start;
 			grid-gap: 2.5rem;
-			
 			a, li { transition: all .5s $outSmooth; }
-			// span { display: none; }
 		}
-
-		// &--footer { display: none; }
 	}
 
 	&__iconsContainer { @extend %flex-center; }
 
 	&__favs,
 	&__bag {
+		@extend %pos-rel;
+
 		svg {
 			height: 2.7rem;
 			width: auto;
@@ -143,39 +73,34 @@
 	&__favs {
 		margin-right: 2.2rem;
 		@extend %cursor;
+
+		&-counter {
+			@extend %pos-abs;
+			border-radius: 50%;
+			background: lighten($primary, 10%);
+			font-size: 1rem;
+			@extend %fw-700;
+			@extend %text-center;
+			// padding: 1.5px 2.5px;
+			min-width: 1.8rem;
+			min-height: 1.6rem;
+			line-height: 1.8rem;
+			bottom: 0;
+			right: -20%;
+		}
 	}
 
 	&__bag {
 		@extend %pos-rel;
 		@extend %cursor;
 		svg { height: 3rem; }
+
+		&-counter {
+			@extend .navbar__favs-counter;
+			right: -50%;
+			// top: 50%;\	
+		}
 	}
-	&__bag-counter {
-		display: inline-block;
-		border-radius: 50%;
-		// background: $card-gr-2;
-		background: lighten($primary, 10%);
-		font-size: 1rem;
-		@extend %fw-700;
-		@extend %text-center;
-		padding: 1.5px 2.5px;
-		min-width: 1.5rem;
-		min-height: 1.5rem;
-		line-height: 1.5rem;
-		@extend %pos-abs;
-		right: -50%;
-		bottom: 0%;
-	}
-
-	// &__logo,
-	// &__burger,
-	// &__iconsContainer {
-	// 	z-index: $z-burger-open;
-	// 	// z-index: 200;
-	// }
-
-
-	
 
 // * ----------------------- MEDIA ------------------------
 	@include device(tab) {
