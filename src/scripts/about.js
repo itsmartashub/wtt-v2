@@ -1,11 +1,11 @@
 // import jsonData from '../json/hello'
 import '@babel/polyfill';
-import UI from './classes/ui';
-import Products from './classes/products';
-import Storage from './classes/storage';
-import Bag from './classes/bag';
-import Favourites from './classes/fav';
-import Filter from './classes/filter';
+import UI from './classes/UI';
+import Products from './classes/Products';
+import Storage from './classes/Storage';
+import Bag from './classes/Bag';
+import Favourites from './classes/Fav';
+import Filter from './classes/Filter';
 
 // class Proba {
 // 	name = "Rorors";

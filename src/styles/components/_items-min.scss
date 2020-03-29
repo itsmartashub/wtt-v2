@@ -38,7 +38,7 @@
 
 	&__title, &__subtitle { font-size: 1.4rem; }
 	&__title { color: rgba($text, .8); }
-	&__subtitle, &__amount { color: $card-title; }
+	&__subtitle, &__amount { color: $card-title; text-transform: uppercase;}
 
 	&__price {
 		@extend %fw-700;

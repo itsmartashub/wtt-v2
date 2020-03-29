@@ -1,25 +1,25 @@
 import images from '../../assets/products/*.png';
-import Storage from './storage';
-import Bag from './bag';
+import Storage from './Storage';
+import Bag from './Bag';
+import Favourites from './Fav';
 
 const $arrFilterWomenBtns = document.querySelectorAll('.filter--women');
 const $arrFilterMenBtns = document.querySelectorAll('.filter--men');
 const $arrFilterAllProductsBtns = document.querySelectorAll('.filter--all');
 const $productsContainer = document.querySelector('.allwatches__cards');
 const $title = document.querySelector('.allwatches__cards-section .title');
-
-// let arrAllProducts = JSON.parse(window.localStorage.all_products);
-// let arrAllProducts = Storage.getAllProducts();
-// let arrWomen = arrAllProducts.filter(product => product.gender == 'unisex' || product.gender == 'female');
-// let arrMen = arrAllProducts.filter(product => product.gender == 'unisex' || product.gender == 'male')
-
-
-// let arrObj = Object.values(images);
+const $priceSorting = document.querySelectorAll('.price-sorting');
 
 export default class Filter {
 	arrAllProducts = Storage.getAllProducts();
 	arrWomen = this.arrAllProducts.filter(product => product.gender == 'unisex' || product.gender == 'female');
 	arrMen = this.arrAllProducts.filter(product => product.gender == 'unisex' || product.gender == 'male');
+	arrBag = Storage.getBag();
+	$cards;
+
+	$arrWomen;
+	$arrMen;
+	$arrAllWatch;
 
 	static get arrObjImgs() {
 		return Object.values(images);
@@ -28,9 +28,10 @@ export default class Filter {
 	displayProducts(products) {
 		let productsRender = '';
 		let arrImgs = this.constructor.arrObjImgs;
+		
 		products.forEach(product => {
 			productsRender += `
-				<article class="card">
+				<article class="card" data-gender=${product.gender} data-id=${product.id}>
 					<figure class="card__figure">
 						<img src="${arrImgs[product.id-1]}" alt="hand-watch-with-title-${product.title}" class="card__img" />
 					</figure>
@@ -38,7 +39,7 @@ export default class Filter {
 					<div class="card__informations">
 						<h3 class="card__title">${product.title}</h3>
 						<h4 class="card__subtitle">${product.brand}</h4>
-						<p class="card__price">$ ${product.price}</p>
+						<p class="card__price" data-price=${product.price}>$ ${product.price}</p>
 					</div>
 
 					<button class="btn-addtobag" data-id=${product.id}>
@@ -52,16 +53,58 @@ export default class Filter {
 			`
 		});
 		$productsContainer.innerHTML = productsRender;
+		this.$cards = document.querySelectorAll('.allwatches__cards-section .card');
+		this.makeDOMarrays([...this.$cards]);
+	}
+
+	makeDOMarrays(_cards) {
+		let arrUnisex = document.querySelectorAll(`[data-gender="unisex"]`);
+		this.arrWomen = [...document.querySelectorAll(`[data-gender="female"]`), ...arrUnisex];
+		this.arrMen = [...document.querySelectorAll(`[data-gender="male"]`), ...arrUnisex];
+		this.arrAllWatches = this.$cards;
 	}
 
 	filterProducts(_filterArrBtns, _arrForDisplay, _title) {
+		const _bag = new Bag();
+		const _fav = new Favourites();
+
 		_filterArrBtns.forEach(filterBtn => {
 			filterBtn.addEventListener('click', () => {
 				// this.displayProducts(_arrForDisplay);
 				this.displayProducts(_arrForDisplay);
+				_bag.getAddToBagBtns();
+				_bag.bagLogic();
+				_fav.getFavBtns();
+				_fav.favLogic();
+				
 				this.changeTitle(_title);
 				// new Bag().getAddToBagBtns();
 			})
+		})
+	}
+
+	filtering(_filterArrBtns, _arrForDisplay, _title, _gender) {
+		// document.body.removeAttribute('class');
+
+		_filterArrBtns.forEach(filterBtn => {
+			filterBtn.addEventListener('click', () => {
+				this.appendingChild(_arrForDisplay, _gender);
+				this.changeTitle(_title);
+			})
+		})
+	}
+
+	cardsFilter(_gender, _title) {
+		this.$cards.forEach(card => {
+			if(card.dataset.gender == _gender || card.dataset.gender == 'unisex' ) {
+				card.style.display = 'block';
+
+			} else if(_gender == 'all') {
+				card.style.display = 'block';
+
+			} else {
+				card.style.display = 'none';
+			}
 		})
 	}
 
@@ -77,9 +120,78 @@ export default class Filter {
 		//todo dodati animaciju
 	}
 
+	priceSort() {
+		$priceSorting.forEach(selectEl => {
+			selectEl.addEventListener('change', (e) => {
+				console.log(e.srcElement.selectedIndex);
+				if(e.srcElement.selectedIndex == 1) {
+					//todo fkn priceToHigh
+					this.priceToHigh();
+
+				} else if (e.srcElement.selectedIndex == 2) {
+					//todo fkn priceToLow\
+					this.priceToLow();
+				}
+			})
+		})
+	}
+
+	priceToHigh() {
+		// const $cardsParent = document.querySelector('.allwatches__cards');
+		let $arrCards = [...document.querySelectorAll('.card')]
+		
+		$arrCards.sort((a, b) => {
+			a = parseFloat(a.querySelector('.card__price').dataset.price);
+			b = parseFloat(b.querySelector('.card__price').dataset.price);
+
+			if(a > b) return 1
+			else if(a < b) return -1
+			else return 0;
+		});
+		
+		console.log($arrCards);
+		this.appendingChild($arrCards)
+
+		// $arrCards.forEach(card => {
+		// 	$cardsParent.appendChild(card);
+		// })
+	}
+
+	priceToLow() {
+		const $cardsParent = document.querySelector('.allwatches__cards');
+		let $arrCards = [...document.querySelectorAll('.card')]
+		
+		$arrCards.sort((a, b) => {
+			a = parseFloat(a.querySelector('.card__price').dataset.price);
+			b = parseFloat(b.querySelector('.card__price').dataset.price);
+
+			if(a > b) return -1
+			else if(a < b) return 1
+			else return 0;
+		});
+		
+		console.log($arrCards);
+
+		$arrCards.forEach(card => {
+			$cardsParent.appendChild(card);
+		})
+	}
+
+	appendingChild(_arrForEach, _gender) {
+		const $cardsParent = document.querySelector('.allwatches__cards');
+		$cardsParent.innerHTML = '';
+
+		_arrForEach.forEach(card => {
+			$cardsParent.insertAdjacentElement('afterbegin', card);
+		})
+	}
+
 	setup_filter() {
-		this.filterProducts($arrFilterWomenBtns, this.arrWomen, 'for women');
-		this.filterProducts($arrFilterMenBtns, this.arrMen, 'for men');
-		this.filterProducts($arrFilterAllProductsBtns, this.arrAllProducts, 'all watches');
+		this.filtering($arrFilterWomenBtns, this.arrWomen, 'for her');
+		this.filtering($arrFilterMenBtns, this.arrMen, 'for him');
+		this.filtering($arrFilterAllProductsBtns, this.arrAllWatches, 'all watches');
+
+		this.priceSort();
+
 	};
 }

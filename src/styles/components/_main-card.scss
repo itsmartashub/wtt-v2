@@ -18,6 +18,9 @@
 		// box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
 	}
 
+	// &--hidden { animation: scale-fade-out .4s ease-in-out; }
+	
+
 	&__figure { transform: translateY(-40%); transition: all .5s ease-in-out; }
 
 	&__informations {
@@ -82,9 +85,11 @@
 			}
 		}
 	}
-}
 
-.card-fav-btn--liked {
-	// @extend .card__fav:hover;
-	fill: $primary !important; 
+	// &--hidden { @extend .item--deleted; }
+	&--hidden { display: none!important; }
+	&--anim {
+		animation: fadeInScale 1.5s backwards $outSmooth !important;
+		@include delay-random(3, 5, .1);
+	}
 }

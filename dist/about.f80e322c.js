@@ -6617,7 +6617,7 @@ try {
   Function("r", "regeneratorRuntime = r")(runtime);
 }
 
-},{}],"scripts/classes/storage.js":[function(require,module,exports) {
+},{}],"scripts/classes/UI.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6630,106 +6630,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-//* localstorage
-var Storage = /*#__PURE__*/function () {
-  function Storage() {
-    _classCallCheck(this, Storage);
-  }
-
-  _createClass(Storage, null, [{
-    key: "saveProducts",
-    value: function saveProducts(all_products) {
-      localStorage.setItem('all_products', JSON.stringify(all_products));
-    } // posto je static metod ne moramo da kreiramo instancu new Storage tamo gde zelimo da koristimo ovaj metod. zasto je to on uradio ovako, nisam sigurna
-
-  }, {
-    key: "getProduct",
-    value: function getProduct(id) {
-      // static jer zelimo da koristimo i u drugim klasama?
-      var arrProducts = JSON.parse(localStorage.getItem('all_products'));
-      return arrProducts.find(function (product) {
-        return product.id == id;
-      });
-    }
-  }, {
-    key: "getAllProducts",
-    value: function getAllProducts() {
-      // static jer zelimo da koristimo i u drugim klasama?
-      var arrProducts = JSON.parse(localStorage.getItem('all_products'));
-      return arrProducts || [];
-    }
-  }, {
-    key: "saveBag",
-    value: function saveBag(arrBag) {
-      localStorage.setItem('arrBag', JSON.stringify(arrBag));
-    }
-  }, {
-    key: "saveFav",
-    value: function saveFav(arrFav) {
-      localStorage.setItem('arrFav', JSON.stringify(arrFav));
-    }
-  }, {
-    key: "getBag",
-    value: function getBag() {
-      return localStorage.getItem('arrBag') ? JSON.parse(localStorage.getItem('arrBag')) : [];
-    }
-  }, {
-    key: "getFav",
-    value: function getFav() {
-      return localStorage.getItem('arrFav') ? JSON.parse(localStorage.getItem('arrFav')) : [];
-    }
-  }]);
-
-  return Storage;
-}();
-
-exports.default = Storage;
-},{}],"scripts/classes/ui.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _storage = _interopRequireDefault(require("./storage"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-// import Bag from './bag'
-// import Favourites from './fav'
-"use strict";
 
 var $navbarBag = document.querySelector('.navbar__bag');
-var $navbarBagCounter = document.querySelector('.navbar__bag-counter'); // koliko itemsa imamo u bagu
-
 var $bag = document.querySelector('.bag');
 var $closeBagBtn = document.querySelector('.bag .btn-close');
-var $clearBagBtn = document.querySelector('.bag .btn-clearbag');
-var $bagTotal = document.querySelector('.bag .total-price-items');
-var $bagItems = document.querySelector('.bag .items');
 var $navbarFav = document.querySelector('.navbar__favs');
-var $navbarFavCounter = document.querySelector('.navbar__favs-counter');
 var $fav = document.querySelector('.fav');
 var $closeFavBtn = document.querySelector('.fav .btn-close');
-var $clearFavBtn = document.querySelector('.fav .btn-clearfav');
-var $favItemsCounter = document.querySelector('.fav .total-price-items');
-var $favItems = document.querySelector('.fav .items');
-var $burger = document.querySelector('.navbar__burger'); // const $productsContainer = document.querySelector('.allwatches__cards');
-//! bag array
-// let arrBag = [];
-// let arrAddToBagBtns = [];
-// let arrFav = [];
-// let arrFavBtns = [];
-// let arrObj = Object.values(images);
-//* display products
+var $burger = document.querySelector('.navbar__burger');
 
 var UI = /*#__PURE__*/function () {
   function UI() {
@@ -6765,344 +6673,6 @@ var UI = /*#__PURE__*/function () {
         }
       });
     }
-    /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //* --------------- BAG ---------------
-    	getAddToBagBtns() {
-    		const $addToBagBtns = [...document.querySelectorAll('.btn-addtobag')];// SET_ADD_TO_BAG_BTNS_DOM($addToBagBtns)// kasnije cemo da setujemo metod koji ce da pronadje partikularan btn u tom btns DOM-u
-    		// console.log(document.querySelectorAll('.item__icon--add-to-bag'));
-    		this.arrAddToBagBtns = $addToBagBtns;
-    
-    		$addToBagBtns.forEach(btn => {
-    			let id = btn.dataset.id;
-    			let itemInBag = this.arrBag.find(item => item.id == id);
-    
-    			if(itemInBag) {
-    				btn.closest('.card').classList.add('card--added');
-    				btn.disabled = true;  
-    			}
-    
-    			btn.addEventListener('click', e => {
-    				// console.log(e.target);
-    				e.target.closest('.card').classList.add('card--added');
-    				e.target.disabled = true;
-    
-    				//? 1. get product from products
-    				let bagItem = { ...Storage.getProduct(id), amount: 1 };
-    
-    				//? 2. add products to the bag
-    				this.arrBag = [...this.arrBag, bagItem];
-    
-    				//? 3. save bag in ls
-    				Storage.saveBag(this.arrBag);
-    
-    				//? 4. set bag values
-    				this.setBagValues(this.arrBag);
-    
-    				//? 5. display bag item
-    				this.addToBag(bagItem);
-    
-    				//? 5. show the bag
-    				this.openBagFav($bag, 'bag--open');
-    			})
-    		})
-    	}
-    
-    	setBagValues(_arrBag) {
-    		let total_price = 0;
-    		let items_counter = 0;
-    
-    		_arrBag.map(item => {
-    			total_price += item.price * item.amount;
-    			items_counter += item.amount
-    		});
-    
-    		$bagTotal.innerText = `$ ${parseFloat(total_price.toFixed(2))}`;
-    		$navbarBagCounter.innerText = items_counter;
-    	}
-    
-    	addToBag(bagItem) {
-    		const article = document.createElement('article');
-    		article.classList.add('item');
-    		article.innerHTML = `
-    			<figure class="item__figure">
-    				<img class="item__img" src=${arrObj[bagItem.id-1]} alt="watch-brown-white-${bagItem.title}" />
-    			</figure>
-    
-    			<div class="item__informations">
-    				<h3 class="item__title">${bagItem.title}</h3>
-    				<h4 class="item__subtitle">${bagItem.brand}</h4>
-    				<p class="item__price">$ ${bagItem.price}</p>
-    			</div>
-    
-    			<div class="item__controller">
-    				<div class="item__add" data-id=${bagItem.id}>+</div>
-    				<div class="item__amount">${bagItem.amount}</div>
-    				<div class="item__remove" data-id=${bagItem.id}>-</div>
-    			</div>
-    
-    			<svg xmlns="http://www.w3.org/2000/svg" class="item__icon item__icon--delete" data-id=${bagItem.id} width="17.499" height="20.783" viewBox="0 0 17.499 20.783">
-    				<path d="M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z" transform="translate(6397 2299)"/>
-    			</svg>
-    		`;
-    
-    		$bagItems.appendChild(article);
-    	}
-    
-    	populateBag(_arrBag) {
-    		_arrBag.forEach(item => this.addToBag(item))
-    	}
-    
-    	bagLogic() {
-    		$clearBagBtn.addEventListener('click', () => {
-    			this.clearBag();
-    		});
-    
-    		//? bag functionallity
-    		$bagItems.addEventListener('click', e => {
-    			//* delete item
-    			if(e.target.closest('.item__icon--delete')) { // ! da nisam stavila pointer-events: none; u css-u za sve childove svg elementa, morala bih closest() da koristim, a ne match()
-    				let $deleteItemBtn = e.target;
-    				let itemID = $deleteItemBtn.dataset.id;
-    
-    				$deleteItemBtn.parentElement.classList.add('item--deleted');
-    
-    				setTimeout(() => {
-    						this.deleteFromBag(itemID); // uklonili smo iz arrBag, ali nismo i iz DOM-a
-    					// $bagItems.removeChild(deleteItemBtn.parentElement) || $bagItems.removeChild(deleteItemBtn.parentNode); // za mozilu kao radi parentNode
-    					$bagItems.removeChild($deleteItemBtn.parentElement);
-    					$deleteItemBtn.parentElement.classList.remove('item--deleted');
-    				}, 400);
-    
-    			//* add item amount
-    			} else if(e.target.matches('.item__add')) {
-    				let $increaseAmountBtn = e.target;
-    				let itemID = $increaseAmountBtn.dataset.id;
-    				let currItem = this.arrBag.find(item => item.id == itemID);
-    				currItem.amount = currItem.amount + 1;
-    				Storage.saveBag(this.arrBag);
-    				this.setBagValues(this.arrBag);
-    				$increaseAmountBtn.nextElementSibling.innerText = currItem.amount;
-    			} else if(e.target.matches('.item__remove')) {
-    				let $decreaseAmountBtn = e.target;
-    				let itemID = $decreaseAmountBtn.dataset.id;
-    				let currItem = this.arrBag.find(item => item.id == itemID);
-    				currItem.amount = currItem.amount - 1;
-    
-    				if(currItem.amount > 0) {
-    					Storage.saveBag(this.arrBag);
-    					this.setBagValues(this.arrBag);
-    					$decreaseAmountBtn.previousElementSibling.innerText = currItem.amount;
-    				} else {
-    					$decreaseAmountBtn.parentElement.parentElement.classList.add('item--deleted');
-    
-    					setTimeout(() => {
-    						$bagItems.removeChild($decreaseAmountBtn.parentElement.parentElement);
-    						this.deleteFromBag(itemID);
-    						$decreaseAmountBtn.parentElement.parentElement.classList.remove('item--deleted');
-    					}, 400);
-    				}
-    			}
-    		})
-    	}
-    
-    	clearBag() {
-    		console.log(this); // kad stavim aa addEventListener this.clearBag() on vrati da se this odnosi na UI{} dakle ono sto bi nam trebalo, a kad stavimo this.clearBAg bez zagrada, onda za referencu vraca button na koji smo kliknuli tj clearBagBtn, on kaze da je u ovim slucajevima bolje koristini () => { this.clearBtn()} nego bez () => {}
-    		let bagItemsIDs = this.arrBag.map(item => item.id);
-    		bagItemsIDs.forEach(itemID => this.deleteFromBag(itemID));
-    
-    		console.log($bagItems.children);
-    
-    		while($bagItems.children.length > 0) {
-    			$bagItems.removeChild($bagItems.children[0])
-    		}
-    
-    		this.closeBagFav($bag, 'bag--open')
-    	}
-    	
-    	deleteFromBag(itemID) {
-    		this.arrBag = this.arrBag.filter(item => item.id != itemID);
-    		this.setBagValues(this.arrBag);
-    		Storage.saveBag(this.arrBag);
-    		let ATBbtn = this.getSingleATBbtn(itemID);
-    		ATBbtn.disabled = false;
-    		ATBbtn.closest('.card').classList.remove('card--added');
-    	}
-    
-    	getSingleATBbtn(itemID) {
-    		return this.arrAddToBagBtns.find(btn => btn.dataset.id == itemID)
-    	}
-    
-    
-    //* --------------- FAV ---------------
-    	getFavBtns() {
-    		const $favBtns = [...document.querySelectorAll('.card__fav')];
-    		this.arrFavBtns = $favBtns;
-    		
-    		this.arrFavBtns.forEach(fav => {
-    			let itemID = fav.dataset.id;
-    			let itemInFav = this.arrFav.find(item => item.id == itemID);
-    
-    			if(itemInFav) fav.classList.add('card__fav--liked');
-    
-    			fav.addEventListener('click', () => {
-    				if(!fav.classList.contains('card__fav--liked')) {
-    					fav.classList.add('card__fav--liked');
-    					let favItem = Storage.getProduct(itemID);
-    					this.arrFav = [...this.arrFav, favItem];
-    					Storage.saveFav(this.arrFav);
-    					this.setFavValues(this.arrFav);
-    					this.addToFavourites(favItem);
-    				} else {
-    					fav.classList.remove('card__fav--liked');
-    					this.deleteFromFavourites(itemID);
-    
-    					document.querySelectorAll('.fav .item').forEach(item => {
-    						if(item.dataset.id == itemID) $favItems.removeChild(item);
-    					})
-    					this.setFavValues(this.arrFav);
-    				}
-    			})
-    		})
-    	}
-    
-    	getSingleFavBtn(itemID) {
-    		return this.arrFavBtns.find(fav => fav.dataset.id == itemID)
-    	}
-    
-    	setFavValues(_arrFav) {
-    		let items_counter = 0;
-    		items_counter = _arrFav.length;
-    		$favItemsCounter.innerText = items_counter;
-    		$navbarFavCounter.innerText = items_counter;
-    	}
-    
-    	addToFavourites(favItem) {
-    		const article = document.createElement('article');
-    		article.classList.add('item');
-    		article.setAttribute('data-id', `${favItem.id}`);
-    		article.innerHTML = `
-    			<figure class="item__figure">
-    				<img class="item__img" src=${arrObj[favItem.id-1]} alt="watch-brown-white-${favItem.title}" />
-    			</figure>
-    
-    			<div class="item__informations">
-    				<h3 class="item__title">${favItem.title}</h3>
-    				<h4 class="item__subtitle">${favItem.brand}</h4>
-    				<p class="item__price">$ ${favItem.price}</p>
-    			</div>
-    
-    			<svg xmlns="http://www.w3.org/2000/svg" data-id=${favItem.id} class="item__icon item__icon--add-to-bag" width="16.5" height="21.786" viewBox="0 0 16.5 21.786">
-    				<path d="M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z" transform="translate(6397 2299.001)"/>
-    			</svg>
-    
-    			<svg xmlns="http://www.w3.org/2000/svg" data-id=${favItem.id} class="item__icon item__icon--remove-from-fav" width="17.499" height="20.783" viewBox="0 0 17.499 20.783">
-    				<path d="M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z" transform="translate(6397 2299)"/>
-    			</svg>
-    		`;
-    
-    		$favItems.appendChild(article);
-    	}
-    
-    	deleteFromFavourites(itemID) {
-    		this.arrFav = this.arrFav.filter(item => item.id != itemID);
-    		this.setFavValues(this.arrFav);
-    		Storage.saveFav(this.arrFav);
-    
-    		let favBtn = this.getSingleFavBtn(itemID);
-    		this.removeLikedClass(favBtn);
-    	}
-    
-    	removeLikedClass(favBtn) {
-    		favBtn.classList.remove('card__fav--liked');
-    	}
-    	addLikedClass(favBtn) {
-    		favBtn.classList.add('card__fav--liked');
-    	}
-    
-    	clearFav() {
-    		let favItemsIDs = this.arrFav.map(item => item.id);
-    		favItemsIDs.forEach(itemID => this.deleteFromFavourites(itemID));
-    
-    		// let $currItem = document.querySelector(`[data-id="${itemID}"]`);
-    		// console.log($favItems);
-    		// console.log($currItem);
-    		// $favItems.removeChild($currItem);
-    
-    		// console.log($favItems.children);
-    
-    		while($favItems.children.length > 0) {
-    			$favItems.removeChild($favItems.children[0])
-    		}
-    
-    		this.closeBagFav($fav, 'fav--open')
-    	}
-    
-    	populateFav(_arrFav) {
-    		_arrFav.forEach(item => this.addToFavourites(item))
-    	}
-    
-    	favLogic() {
-    		$clearFavBtn.addEventListener('click', () => {
-    			this.clearFav();
-    		});
-    
-    		$favItems.addEventListener('click', e => {
-    			if(e.target.closest('.item__icon--remove-from-fav')) {
-    				let $deleteItemFromFavBtn = e.target;
-    				let itemID = $deleteItemFromFavBtn.dataset.id;
-    
-    				$deleteItemFromFavBtn.parentElement.classList.add('item--deleted');
-    				setTimeout(() => {
-    					this.deleteFromFavourites(itemID);
-    					$favItems.removeChild($deleteItemFromFavBtn.parentElement);
-    					$deleteItemFromFavBtn.parentElement.classList.remove('item--deleted');
-    				}, 400);
-    
-    			} else if(e.target.closest('.item__icon--add-to-bag')) {
-    				// console.log(e.target);
-    				let $addItemToBagBtn = e.target;
-    				let itemID = $addItemToBagBtn.dataset.id;
-    				// console.log(itemID);
-    				let forBagItem = {...Storage.getProduct(itemID), amount: 1 };
-    
-    				$addItemToBagBtn.parentElement.classList.add('item--deleted');
-    			
-    				this.arrBag = [...this.arrBag, forBagItem];
-    				Storage.saveBag(this.arrBag);
-    				this.setBagValues(this.arrBag);
-    				this.addToBag(forBagItem);
-    
-    				//! how to match btn on card and item which is added to bag from fav
-    				let cardAddToBagBtn = document.querySelector('.card .btn-addtobag');
-    				if(cardAddToBagBtn.dataset.id == itemID) {
-    					console.log(cardAddToBagBtn);
-    					// cardAddToBagBtn.closest('.card').classList.add('card--added');
-    					// cardAddToBagBtn.disabled = true;
-    				}
-    
-    				this.deleteFromFavourites(itemID); // delete iz LS
-    				setTimeout(() => {
-    					$favItems.removeChild($addItemToBagBtn.parentElement);
-    					$addItemToBagBtn.parentElement.classList.remove('item--deleted');
-    				}, 400);
-    			}
-    		})
-    
-    	}
-    
-    */
-    // SETUP_APP() {
-    // 	this.arrBag = Storage.getBag();
-    // 	this.setBagValues(this.arrBag);
-    // 	this.populateBag(this.arrBag);
-    // 	this.arrFav = Storage.getFav();
-    // 	this.setFavValues(this.arrFav);
-    // 	this.populateFav(this.arrFav);
-    // 	this.addClickListenersToNavbarIcons($navbarBag, $closeBagBtn, $bag, 'bag--open');
-    // 	this.addClickListenersToNavbarIcons($navbarFav, $closeFavBtn, $fav, 'fav--open');
-    // 	this.addListenerToBurger();
-    // }
-
   }, {
     key: "SETUP_UI",
     value: function SETUP_UI() {
@@ -7117,18 +6687,6 @@ var UI = /*#__PURE__*/function () {
     }
   }], [{
     key: "openBagFav",
-    // arrBag = [];
-    // arrAddToBagBtns = [];
-    // arrFav = [];
-    // arrFavBtns = [];
-    // arrObjImgs = Object.values(images);
-    // static get arrObjImgs() { return this.arrObjImgs }
-    // get arrBag() {
-    // 	return this.arrBag;
-    // }
-    // set arrBag(newValue) {
-    // 	this.arrBag = newValue;
-    // }
     value: function openBagFav(_el, _class) {
       if (!_el.classList.contains(_class)) _el.classList.add(_class); // console.log(this);
     }
@@ -7143,7 +6701,7 @@ var UI = /*#__PURE__*/function () {
 }();
 
 exports.default = UI;
-},{"./storage":"scripts/classes/storage.js"}],"scripts/classes/products.js":[function(require,module,exports) {
+},{}],"scripts/classes/Products.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7232,6 +6790,74 @@ var Products = /*#__PURE__*/function () {
 }();
 
 exports.default = Products;
+},{}],"scripts/classes/Storage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+//* localstorage
+var Storage = /*#__PURE__*/function () {
+  function Storage() {
+    _classCallCheck(this, Storage);
+  }
+
+  _createClass(Storage, null, [{
+    key: "saveProducts",
+    value: function saveProducts(all_products) {
+      localStorage.setItem('all_products', JSON.stringify(all_products));
+    } // posto je static metod ne moramo da kreiramo instancu new Storage tamo gde zelimo da koristimo ovaj metod. zasto je to on uradio ovako, nisam sigurna
+
+  }, {
+    key: "getProduct",
+    value: function getProduct(id) {
+      // static jer zelimo da koristimo i u drugim klasama?
+      var arrProducts = JSON.parse(localStorage.getItem('all_products'));
+      return arrProducts.find(function (product) {
+        return product.id == id;
+      });
+    }
+  }, {
+    key: "getAllProducts",
+    value: function getAllProducts() {
+      // static jer zelimo da koristimo i u drugim klasama?
+      var arrProducts = JSON.parse(localStorage.getItem('all_products'));
+      return arrProducts || [];
+    }
+  }, {
+    key: "saveBag",
+    value: function saveBag(arrBag) {
+      localStorage.setItem('arrBag', JSON.stringify(arrBag));
+    }
+  }, {
+    key: "saveFav",
+    value: function saveFav(arrFav) {
+      localStorage.setItem('arrFav', JSON.stringify(arrFav));
+    }
+  }, {
+    key: "getBag",
+    value: function getBag() {
+      return localStorage.getItem('arrBag') ? JSON.parse(localStorage.getItem('arrBag')) : [];
+    }
+  }, {
+    key: "getFav",
+    value: function getFav() {
+      return localStorage.getItem('arrFav') ? JSON.parse(localStorage.getItem('arrFav')) : [];
+    }
+  }]);
+
+  return Storage;
+}();
+
+exports.default = Storage;
 },{}],"assets/products/001.png":[function(require,module,exports) {
 module.exports = "/001.2ebb18a9.png";
 },{}],"assets/products/002.png":[function(require,module,exports) {
@@ -7352,7 +6978,7 @@ module.exports = {
   "038": require("./038.png"),
   "039": require("./039.png")
 };
-},{"./001.png":"assets/products/001.png","./002.png":"assets/products/002.png","./003.png":"assets/products/003.png","./004.png":"assets/products/004.png","./005.png":"assets/products/005.png","./006.png":"assets/products/006.png","./007.png":"assets/products/007.png","./008.png":"assets/products/008.png","./009.png":"assets/products/009.png","./010.png":"assets/products/010.png","./011.png":"assets/products/011.png","./012.png":"assets/products/012.png","./013.png":"assets/products/013.png","./014.png":"assets/products/014.png","./015.png":"assets/products/015.png","./016.png":"assets/products/016.png","./017.png":"assets/products/017.png","./018.png":"assets/products/018.png","./019.png":"assets/products/019.png","./020.png":"assets/products/020.png","./021.png":"assets/products/021.png","./022.png":"assets/products/022.png","./023.png":"assets/products/023.png","./024.png":"assets/products/024.png","./025.png":"assets/products/025.png","./026.png":"assets/products/026.png","./027.png":"assets/products/027.png","./028.png":"assets/products/028.png","./029.png":"assets/products/029.png","./030.png":"assets/products/030.png","./031.png":"assets/products/031.png","./032.png":"assets/products/032.png","./033.png":"assets/products/033.png","./034.png":"assets/products/034.png","./035.png":"assets/products/035.png","./036.png":"assets/products/036.png","./037.png":"assets/products/037.png","./038.png":"assets/products/038.png","./039.png":"assets/products/039.png"}],"scripts/classes/filter.js":[function(require,module,exports) {
+},{"./001.png":"assets/products/001.png","./002.png":"assets/products/002.png","./003.png":"assets/products/003.png","./004.png":"assets/products/004.png","./005.png":"assets/products/005.png","./006.png":"assets/products/006.png","./007.png":"assets/products/007.png","./008.png":"assets/products/008.png","./009.png":"assets/products/009.png","./010.png":"assets/products/010.png","./011.png":"assets/products/011.png","./012.png":"assets/products/012.png","./013.png":"assets/products/013.png","./014.png":"assets/products/014.png","./015.png":"assets/products/015.png","./016.png":"assets/products/016.png","./017.png":"assets/products/017.png","./018.png":"assets/products/018.png","./019.png":"assets/products/019.png","./020.png":"assets/products/020.png","./021.png":"assets/products/021.png","./022.png":"assets/products/022.png","./023.png":"assets/products/023.png","./024.png":"assets/products/024.png","./025.png":"assets/products/025.png","./026.png":"assets/products/026.png","./027.png":"assets/products/027.png","./028.png":"assets/products/028.png","./029.png":"assets/products/029.png","./030.png":"assets/products/030.png","./031.png":"assets/products/031.png","./032.png":"assets/products/032.png","./033.png":"assets/products/033.png","./034.png":"assets/products/034.png","./035.png":"assets/products/035.png","./036.png":"assets/products/036.png","./037.png":"assets/products/037.png","./038.png":"assets/products/038.png","./039.png":"assets/products/039.png"}],"scripts/classes/bag.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7360,114 +6986,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _ = _interopRequireDefault(require("../../assets/products/*.png"));
+var _Storage = _interopRequireDefault(require("./Storage"));
 
-var _storage = _interopRequireDefault(require("./storage"));
+var _UI = _interopRequireDefault(require("./UI"));
 
-var _bag = _interopRequireDefault(require("./bag"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var $arrFilterWomenBtns = document.querySelectorAll('.filter--women');
-var $arrFilterMenBtns = document.querySelectorAll('.filter--men');
-var $arrFilterAllProductsBtns = document.querySelectorAll('.filter--all');
-var $productsContainer = document.querySelector('.allwatches__cards');
-var $title = document.querySelector('.allwatches__cards-section .title'); // let arrAllProducts = JSON.parse(window.localStorage.all_products);
-// let arrAllProducts = Storage.getAllProducts();
-// let arrWomen = arrAllProducts.filter(product => product.gender == 'unisex' || product.gender == 'female');
-// let arrMen = arrAllProducts.filter(product => product.gender == 'unisex' || product.gender == 'male')
-// let arrObj = Object.values(images);
-
-var Filter = /*#__PURE__*/function () {
-  function Filter() {
-    _classCallCheck(this, Filter);
-
-    _defineProperty(this, "arrAllProducts", _storage.default.getAllProducts());
-
-    _defineProperty(this, "arrWomen", this.arrAllProducts.filter(function (product) {
-      return product.gender == 'unisex' || product.gender == 'female';
-    }));
-
-    _defineProperty(this, "arrMen", this.arrAllProducts.filter(function (product) {
-      return product.gender == 'unisex' || product.gender == 'male';
-    }));
-  }
-
-  _createClass(Filter, [{
-    key: "displayProducts",
-    value: function displayProducts(products) {
-      var productsRender = '';
-      var arrImgs = this.constructor.arrObjImgs;
-      products.forEach(function (product) {
-        productsRender += "\n\t\t\t\t<article class=\"card\">\n\t\t\t\t\t<figure class=\"card__figure\">\n\t\t\t\t\t\t<img src=\"".concat(arrImgs[product.id - 1], "\" alt=\"hand-watch-with-title-").concat(product.title, "\" class=\"card__img\" />\n\t\t\t\t\t</figure>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"card__informations\">\n\t\t\t\t\t\t<h3 class=\"card__title\">").concat(product.title, "</h3>\n\t\t\t\t\t\t<h4 class=\"card__subtitle\">").concat(product.brand, "</h4>\n\t\t\t\t\t\t<p class=\"card__price\">$ ").concat(product.price, "</p>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<button class=\"btn-addtobag\" data-id=").concat(product.id, ">\n\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16.5\" height=\"21.786\" viewBox=\"0 0 16.5 21.786\"><path d=\"M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z\" transform=\"translate(6397 2299.001)\"/></svg>\n\t\t\t\t\t</button>\n\n\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" data-id=").concat(product.id, " class=\"card__fav card-fav-btn\" width=\"43.938\" height=\"39.367\" viewBox=\"0 0 43.938 39.367\">\n\t\t\t\t\t\t<path d=\"M38.151,3.608A11.143,11.143,0,0,0,29.863,0a10.425,10.425,0,0,0-6.511,2.247A13.321,13.321,0,0,0,20.72,5a13.314,13.314,0,0,0-2.633-2.749A10.423,10.423,0,0,0,11.576,0,11.143,11.143,0,0,0,3.287,3.608,12.953,12.953,0,0,0,0,12.453c0,3.5,1.306,6.712,4.11,10.1,2.508,3.026,6.113,6.1,10.288,9.656,1.426,1.215,3.041,2.592,4.719,4.059a2.433,2.433,0,0,0,3.2,0C24,34.8,25.615,33.42,27.042,32.2c4.174-3.557,7.779-6.629,10.287-9.656,2.8-3.383,4.11-6.591,4.11-10.1a12.951,12.951,0,0,0-3.287-8.845Zm0,0\" transform=\"translate(1.25 1.25)\"/>\n\t\t\t\t\t</svg>\n\t\t\t\t</article>\n\t\t\t");
-      });
-      $productsContainer.innerHTML = productsRender;
-    }
-  }, {
-    key: "filterProducts",
-    value: function filterProducts(_filterArrBtns, _arrForDisplay, _title) {
-      var _this = this;
-
-      _filterArrBtns.forEach(function (filterBtn) {
-        filterBtn.addEventListener('click', function () {
-          // this.displayProducts(_arrForDisplay);
-          _this.displayProducts(_arrForDisplay);
-
-          _this.changeTitle(_title); // new Bag().getAddToBagBtns();
-
-        });
-      });
-    }
-  }, {
-    key: "changeTitle",
-    value: function changeTitle(title) {
-      if ($title) {
-        // $title.classList.add('title--anim');
-        $title.innerText = title; // setTimeout(() => {
-        // 	$title.classList.remove('title--anim');
-        // }, 500);
-      } //todo dodati animaciju
-
-    }
-  }, {
-    key: "setup_filter",
-    value: function setup_filter() {
-      this.filterProducts($arrFilterWomenBtns, this.arrWomen, 'for women');
-      this.filterProducts($arrFilterMenBtns, this.arrMen, 'for men');
-      this.filterProducts($arrFilterAllProductsBtns, this.arrAllProducts, 'all watches');
-    }
-  }], [{
-    key: "arrObjImgs",
-    get: function get() {
-      return Object.values(_.default);
-    }
-  }]);
-
-  return Filter;
-}();
-
-exports.default = Filter;
-},{"../../assets/products/*.png":"assets/products/*.png","./storage":"scripts/classes/storage.js","./bag":"scripts/classes/bag.js"}],"scripts/classes/bag.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _storage = _interopRequireDefault(require("./storage"));
-
-var _ui = _interopRequireDefault(require("./ui"));
-
-var _filter = _interopRequireDefault(require("./filter"));
+var _Filter = _interopRequireDefault(require("./Filter"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7537,7 +7060,7 @@ var Bag = /*#__PURE__*/function () {
         }
 
         btn.addEventListener('click', function (e) {
-          if (window.location.pathname == '/index.html') {
+          if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
             e.target.classList.add('btn--added');
             e.target.innerHTML = 'ADDED &nbsp;&#10003;';
           } else if (window.location.pathname == '/allwatches.html') {
@@ -7546,14 +7069,14 @@ var Bag = /*#__PURE__*/function () {
 
           e.target.disabled = true; //? 1. get product from products
 
-          var bagItem = _objectSpread({}, _storage.default.getProduct(id), {
+          var bagItem = _objectSpread({}, _Storage.default.getProduct(id), {
             amount: 1
           }); //? 2. add products to the bag
 
 
           _this.arrBag = [].concat(_toConsumableArray(_this.arrBag), [bagItem]); //? 3. save bag in ls
 
-          _storage.default.saveBag(_this.arrBag); //? 4. set bag values
+          _Storage.default.saveBag(_this.arrBag); //? 4. set bag values
 
 
           _this.setBagValues(_this.arrBag); //? 5. display bag item
@@ -7562,13 +7085,14 @@ var Bag = /*#__PURE__*/function () {
           _this.addToBag(bagItem); //? 5. show the bag
 
 
-          _ui.default.openBagFav($bag, 'bag--open');
+          _UI.default.openBagFav($bag, 'bag--open');
         });
       });
     }
   }, {
     key: "setBagValues",
     value: function setBagValues(_arrBag) {
+      console.log(this.arrBag);
       var total_price = 0;
       var items_counter = 0;
 
@@ -7583,7 +7107,7 @@ var Bag = /*#__PURE__*/function () {
   }, {
     key: "addToBag",
     value: function addToBag(bagItem) {
-      var arr_obj_imgs = _filter.default.arrObjImgs;
+      var arr_obj_imgs = _Filter.default.arrObjImgs;
       var article = document.createElement('article');
       article.classList.add('item');
       article.innerHTML = "\n\t\t\t<figure class=\"item__figure\">\n\t\t\t\t<img class=\"item__img\" src=".concat(arr_obj_imgs[bagItem.id - 1], " alt=\"watch-brown-white-").concat(bagItem.title, "\" />\n\t\t\t</figure>\n\n\t\t\t<div class=\"item__informations\">\n\t\t\t\t<h3 class=\"item__title\">").concat(bagItem.title, "</h3>\n\t\t\t\t<h4 class=\"item__subtitle\">").concat(bagItem.brand, "</h4>\n\t\t\t\t<p class=\"item__price\">$ ").concat(bagItem.price, "</p>\n\t\t\t</div>\n\n\t\t\t<div class=\"item__controller\">\n\t\t\t\t<div class=\"item__add\" data-id=").concat(bagItem.id, ">+</div>\n\t\t\t\t<div class=\"item__amount\">").concat(bagItem.amount, "</div>\n\t\t\t\t<div class=\"item__remove\" data-id=").concat(bagItem.id, ">-</div>\n\t\t\t</div>\n\n\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"item__icon item__icon--delete\" data-id=").concat(bagItem.id, " width=\"17.499\" height=\"20.783\" viewBox=\"0 0 17.499 20.783\">\n\t\t\t\t<path d=\"M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z\" transform=\"translate(6397 2299)\"/>\n\t\t\t</svg>\n\t\t");
@@ -7630,9 +7154,11 @@ var Bag = /*#__PURE__*/function () {
             return item.id == _itemID;
           });
 
+          console.log(_this3.arrBag); //! []
+
           currItem.amount = currItem.amount + 1;
 
-          _storage.default.saveBag(_this3.arrBag);
+          _Storage.default.saveBag(_this3.arrBag);
 
           _this3.setBagValues(_this3.arrBag);
 
@@ -7648,7 +7174,7 @@ var Bag = /*#__PURE__*/function () {
           _currItem.amount = _currItem.amount - 1;
 
           if (_currItem.amount > 0) {
-            _storage.default.saveBag(_this3.arrBag);
+            _Storage.default.saveBag(_this3.arrBag);
 
             _this3.setBagValues(_this3.arrBag);
 
@@ -7683,7 +7209,7 @@ var Bag = /*#__PURE__*/function () {
         $bagItems.removeChild($bagItems.children[0]);
       }
 
-      _ui.default.closeBagFav($bag, 'bag--open');
+      _UI.default.closeBagFav($bag, 'bag--open');
     }
   }, {
     key: "deleteFromBag",
@@ -7693,15 +7219,19 @@ var Bag = /*#__PURE__*/function () {
       });
       this.setBagValues(this.arrBag);
 
-      _storage.default.saveBag(this.arrBag);
+      _Storage.default.saveBag(this.arrBag);
 
       var ATBbtn = this.getSingleATBbtn(itemID);
       ATBbtn.disabled = false;
 
-      if (window.location.pathname == '/index.html') {
+      if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
         ATBbtn.classList.remove('btn--added');
-        ATBbtn.innerHTML = "\n\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16.5\" height=\"21.786\" viewBox=\"0 0 16.5 21.786\">\n\t\t\t\t\t<path d=\"M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z\" transform=\"translate(6397 2299.001)\"/>\n\t\t\t\t</svg>\n\t\t\t\tadd to bag\n\t\t\t";
-        console.log(ATBbtn);
+
+        if (ATBbtn.parentElement.className == 'feature__footer') {
+          ATBbtn.innerText = 'add to bag';
+        } else {
+          ATBbtn.innerHTML = "\n\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16.5\" height=\"21.786\" viewBox=\"0 0 16.5 21.786\">\n\t\t\t\t\t\t<path d=\"M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z\" transform=\"translate(6397 2299.001)\"/>\n\t\t\t\t\t</svg>\n\t\t\t\t\tadd to bag\n\t\t\t\t";
+        }
       } else if (window.location.pathname == '/allwatches.html') {
         ATBbtn.closest('.card').classList.remove('card--added');
       }
@@ -7716,7 +7246,7 @@ var Bag = /*#__PURE__*/function () {
   }, {
     key: "SETUP_BAG",
     value: function SETUP_BAG() {
-      this.arrBag = _storage.default.getBag();
+      this.arrBag = _Storage.default.getBag();
       this.setBagValues(this.arrBag);
       this.populateBag(this.arrBag);
     }
@@ -7734,7 +7264,7 @@ var Bag = /*#__PURE__*/function () {
 }();
 
 exports.default = Bag;
-},{"./storage":"scripts/classes/storage.js","./ui":"scripts/classes/ui.js","./filter":"scripts/classes/filter.js"}],"scripts/classes/fav.js":[function(require,module,exports) {
+},{"./Storage":"scripts/classes/Storage.js","./UI":"scripts/classes/UI.js","./Filter":"scripts/classes/Filter.js"}],"scripts/classes/Fav.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7744,11 +7274,11 @@ exports.default = void 0;
 
 var _bag = _interopRequireDefault(require("./bag"));
 
-var _storage = _interopRequireDefault(require("./storage"));
+var _Storage = _interopRequireDefault(require("./Storage"));
 
-var _ui = _interopRequireDefault(require("./ui"));
+var _UI = _interopRequireDefault(require("./UI"));
 
-var _filter = _interopRequireDefault(require("./filter"));
+var _Filter = _interopRequireDefault(require("./Filter"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7840,13 +7370,13 @@ var Favourites = /*#__PURE__*/function (_Bag) {
           if (!fav.classList.contains('card-fav-btn--liked')) {
             fav.classList.add('card-fav-btn--liked');
 
-            var favItem = _objectSpread({}, _storage.default.getProduct(itemID), {
+            var favItem = _objectSpread({}, _Storage.default.getProduct(itemID), {
               amount: 1
             });
 
             _this2.arrFav = [].concat(_toConsumableArray(_this2.arrFav), [favItem]);
 
-            _storage.default.saveFav(_this2.arrFav);
+            _Storage.default.saveFav(_this2.arrFav);
 
             _this2.setFavValues(_this2.arrFav);
 
@@ -7885,7 +7415,7 @@ var Favourites = /*#__PURE__*/function (_Bag) {
   }, {
     key: "addToFavourites",
     value: function addToFavourites(favItem) {
-      var arr_obj_imgs = _filter.default.arrObjImgs;
+      var arr_obj_imgs = _Filter.default.arrObjImgs;
       var article = document.createElement('article');
       article.classList.add('item');
       article.setAttribute('data-id', "".concat(favItem.id));
@@ -7900,7 +7430,7 @@ var Favourites = /*#__PURE__*/function (_Bag) {
       });
       this.setFavValues(this.arrFav);
 
-      _storage.default.saveFav(this.arrFav);
+      _Storage.default.saveFav(this.arrFav);
 
       var favBtn = this.getSingleFavBtn(itemID);
       this.removeLikedClass(favBtn);
@@ -7931,7 +7461,7 @@ var Favourites = /*#__PURE__*/function (_Bag) {
         $favItems.removeChild($favItems.children[0]);
       }
 
-      _ui.default.closeBagFav($fav, 'fav--open');
+      _UI.default.closeBagFav($fav, 'fav--open');
     }
   }, {
     key: "populateFav",
@@ -7965,11 +7495,11 @@ var Favourites = /*#__PURE__*/function (_Bag) {
           var $addItemToBagBtn = e.target;
           var _itemID = $addItemToBagBtn.dataset.id;
 
-          var forBagItem = _objectSpread({}, _storage.default.getProduct(_itemID), {
+          var forBagItem = _objectSpread({}, _Storage.default.getProduct(_itemID), {
             amount: 1
           });
 
-          var arr_bag = _storage.default.getBag();
+          var arr_bag = _Storage.default.getBag();
 
           var isAlreadyInBag = arr_bag.find(function (item) {
             return item.id == forBagItem.id;
@@ -7981,9 +7511,7 @@ var Favourites = /*#__PURE__*/function (_Bag) {
 
             _set(_getPrototypeOf(Favourites.prototype), "arrBag", arr_bag, _this5, true);
 
-            _storage.default.saveBag(_get(_getPrototypeOf(Favourites.prototype), "arrBag", _this5));
-
-            console.log(_get(_getPrototypeOf(Favourites.prototype), "arrBag", _this5));
+            _Storage.default.saveBag(_get(_getPrototypeOf(Favourites.prototype), "arrBag", _this5));
 
             _get(_getPrototypeOf(Favourites.prototype), "setBagValues", _this5).call(_this5, _get(_getPrototypeOf(Favourites.prototype), "arrBag", _this5));
 
@@ -7993,7 +7521,7 @@ var Favourites = /*#__PURE__*/function (_Bag) {
               return item.id != _itemID;
             });
 
-            _storage.default.saveFav(_this5.arrFav);
+            _Storage.default.saveFav(_this5.arrFav);
 
             $addItemToBagBtn.parentElement.classList.add('item--deleted');
 
@@ -8024,7 +7552,7 @@ var Favourites = /*#__PURE__*/function (_Bag) {
   }, {
     key: "SETUP_FAV",
     value: function SETUP_FAV() {
-      this.arrFav = _storage.default.getFav();
+      this.arrFav = _Storage.default.getFav();
       this.setFavValues(this.arrFav);
       this.populateFav(this.arrFav);
     }
@@ -8050,7 +7578,525 @@ var Favourites = /*#__PURE__*/function (_Bag) {
 }(_bag.default);
 
 exports.default = Favourites;
-},{"./bag":"scripts/classes/bag.js","./storage":"scripts/classes/storage.js","./ui":"scripts/classes/ui.js","./filter":"scripts/classes/filter.js"}],"scripts/about.js":[function(require,module,exports) {
+},{"./bag":"scripts/classes/bag.js","./Storage":"scripts/classes/Storage.js","./UI":"scripts/classes/UI.js","./Filter":"scripts/classes/Filter.js"}],"scripts/classes/Filter.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require("../../assets/products/*.png"));
+
+var _Storage = _interopRequireDefault(require("./Storage"));
+
+var _Bag = _interopRequireDefault(require("./Bag"));
+
+var _Fav = _interopRequireDefault(require("./Fav"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var $arrFilterWomenBtns = document.querySelectorAll('.filter--women');
+var $arrFilterMenBtns = document.querySelectorAll('.filter--men');
+var $arrFilterAllProductsBtns = document.querySelectorAll('.filter--all');
+var $productsContainer = document.querySelector('.allwatches__cards');
+var $title = document.querySelector('.allwatches__cards-section .title');
+var $priceSorting = document.querySelectorAll('.price-sorting');
+
+var Filter = /*#__PURE__*/function () {
+  function Filter() {
+    _classCallCheck(this, Filter);
+
+    _defineProperty(this, "arrAllProducts", _Storage.default.getAllProducts());
+
+    _defineProperty(this, "arrWomen", this.arrAllProducts.filter(function (product) {
+      return product.gender == 'unisex' || product.gender == 'female';
+    }));
+
+    _defineProperty(this, "arrMen", this.arrAllProducts.filter(function (product) {
+      return product.gender == 'unisex' || product.gender == 'male';
+    }));
+
+    _defineProperty(this, "arrBag", _Storage.default.getBag());
+
+    _defineProperty(this, "$cards", void 0);
+
+    _defineProperty(this, "$arrWomen", void 0);
+
+    _defineProperty(this, "$arrMen", void 0);
+
+    _defineProperty(this, "$arrAllWatch", void 0);
+  }
+
+  _createClass(Filter, [{
+    key: "displayProducts",
+    value: function displayProducts(products) {
+      var productsRender = '';
+      var arrImgs = this.constructor.arrObjImgs;
+      products.forEach(function (product) {
+        productsRender += "\n\t\t\t\t<article class=\"card\" data-gender=".concat(product.gender, " data-id=").concat(product.id, ">\n\t\t\t\t\t<figure class=\"card__figure\">\n\t\t\t\t\t\t<img src=\"").concat(arrImgs[product.id - 1], "\" alt=\"hand-watch-with-title-").concat(product.title, "\" class=\"card__img\" />\n\t\t\t\t\t</figure>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"card__informations\">\n\t\t\t\t\t\t<h3 class=\"card__title\">").concat(product.title, "</h3>\n\t\t\t\t\t\t<h4 class=\"card__subtitle\">").concat(product.brand, "</h4>\n\t\t\t\t\t\t<p class=\"card__price\" data-price=").concat(product.price, ">$ ").concat(product.price, "</p>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<button class=\"btn-addtobag\" data-id=").concat(product.id, ">\n\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16.5\" height=\"21.786\" viewBox=\"0 0 16.5 21.786\"><path d=\"M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z\" transform=\"translate(6397 2299.001)\"/></svg>\n\t\t\t\t\t</button>\n\n\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" data-id=").concat(product.id, " class=\"card__fav card-fav-btn\" width=\"43.938\" height=\"39.367\" viewBox=\"0 0 43.938 39.367\">\n\t\t\t\t\t\t<path d=\"M38.151,3.608A11.143,11.143,0,0,0,29.863,0a10.425,10.425,0,0,0-6.511,2.247A13.321,13.321,0,0,0,20.72,5a13.314,13.314,0,0,0-2.633-2.749A10.423,10.423,0,0,0,11.576,0,11.143,11.143,0,0,0,3.287,3.608,12.953,12.953,0,0,0,0,12.453c0,3.5,1.306,6.712,4.11,10.1,2.508,3.026,6.113,6.1,10.288,9.656,1.426,1.215,3.041,2.592,4.719,4.059a2.433,2.433,0,0,0,3.2,0C24,34.8,25.615,33.42,27.042,32.2c4.174-3.557,7.779-6.629,10.287-9.656,2.8-3.383,4.11-6.591,4.11-10.1a12.951,12.951,0,0,0-3.287-8.845Zm0,0\" transform=\"translate(1.25 1.25)\"/>\n\t\t\t\t\t</svg>\n\t\t\t\t</article>\n\t\t\t");
+      });
+      $productsContainer.innerHTML = productsRender;
+      this.$cards = document.querySelectorAll('.allwatches__cards-section .card');
+      this.makeDOMarrays(_toConsumableArray(this.$cards));
+    }
+  }, {
+    key: "makeDOMarrays",
+    value: function makeDOMarrays(_cards) {
+      var arrUnisex = document.querySelectorAll("[data-gender=\"unisex\"]");
+      this.arrWomen = [].concat(_toConsumableArray(document.querySelectorAll("[data-gender=\"female\"]")), _toConsumableArray(arrUnisex));
+      this.arrMen = [].concat(_toConsumableArray(document.querySelectorAll("[data-gender=\"male\"]")), _toConsumableArray(arrUnisex));
+      this.arrAllWatches = this.$cards;
+    }
+  }, {
+    key: "filterProducts",
+    value: function filterProducts(_filterArrBtns, _arrForDisplay, _title) {
+      var _this = this;
+
+      var _bag = new _Bag.default();
+
+      var _fav = new _Fav.default();
+
+      _filterArrBtns.forEach(function (filterBtn) {
+        filterBtn.addEventListener('click', function () {
+          // this.displayProducts(_arrForDisplay);
+          _this.displayProducts(_arrForDisplay);
+
+          _bag.getAddToBagBtns();
+
+          _bag.bagLogic();
+
+          _fav.getFavBtns();
+
+          _fav.favLogic();
+
+          _this.changeTitle(_title); // new Bag().getAddToBagBtns();
+
+        });
+      });
+    }
+  }, {
+    key: "filtering",
+    value: function filtering(_filterArrBtns, _arrForDisplay, _title, _gender) {
+      var _this2 = this;
+
+      // document.body.removeAttribute('class');
+      _filterArrBtns.forEach(function (filterBtn) {
+        filterBtn.addEventListener('click', function () {
+          _this2.appendingChild(_arrForDisplay, _gender);
+
+          _this2.changeTitle(_title);
+        });
+      });
+    }
+  }, {
+    key: "cardsFilter",
+    value: function cardsFilter(_gender, _title) {
+      this.$cards.forEach(function (card) {
+        if (card.dataset.gender == _gender || card.dataset.gender == 'unisex') {
+          card.style.display = 'block';
+        } else if (_gender == 'all') {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  }, {
+    key: "changeTitle",
+    value: function changeTitle(title) {
+      if ($title) {
+        // $title.classList.add('title--anim');
+        $title.innerText = title; // setTimeout(() => {
+        // 	$title.classList.remove('title--anim');
+        // }, 500);
+      } //todo dodati animaciju
+
+    }
+  }, {
+    key: "priceSort",
+    value: function priceSort() {
+      var _this3 = this;
+
+      $priceSorting.forEach(function (selectEl) {
+        selectEl.addEventListener('change', function (e) {
+          console.log(e.srcElement.selectedIndex);
+
+          if (e.srcElement.selectedIndex == 1) {
+            //todo fkn priceToHigh
+            _this3.priceToHigh();
+          } else if (e.srcElement.selectedIndex == 2) {
+            //todo fkn priceToLow\
+            _this3.priceToLow();
+          }
+        });
+      });
+    }
+  }, {
+    key: "priceToHigh",
+    value: function priceToHigh() {
+      // const $cardsParent = document.querySelector('.allwatches__cards');
+      var $arrCards = _toConsumableArray(document.querySelectorAll('.card'));
+
+      $arrCards.sort(function (a, b) {
+        a = parseFloat(a.querySelector('.card__price').dataset.price);
+        b = parseFloat(b.querySelector('.card__price').dataset.price);
+        if (a > b) return 1;else if (a < b) return -1;else return 0;
+      });
+      console.log($arrCards);
+      this.appendingChild($arrCards); // $arrCards.forEach(card => {
+      // 	$cardsParent.appendChild(card);
+      // })
+    }
+  }, {
+    key: "priceToLow",
+    value: function priceToLow() {
+      var $cardsParent = document.querySelector('.allwatches__cards');
+
+      var $arrCards = _toConsumableArray(document.querySelectorAll('.card'));
+
+      $arrCards.sort(function (a, b) {
+        a = parseFloat(a.querySelector('.card__price').dataset.price);
+        b = parseFloat(b.querySelector('.card__price').dataset.price);
+        if (a > b) return -1;else if (a < b) return 1;else return 0;
+      });
+      console.log($arrCards);
+      $arrCards.forEach(function (card) {
+        $cardsParent.appendChild(card);
+      });
+    }
+  }, {
+    key: "appendingChild",
+    value: function appendingChild(_arrForEach, _gender) {
+      var $cardsParent = document.querySelector('.allwatches__cards');
+      $cardsParent.innerHTML = '';
+
+      _arrForEach.forEach(function (card) {
+        $cardsParent.insertAdjacentElement('afterbegin', card);
+      });
+    }
+  }, {
+    key: "setup_filter",
+    value: function setup_filter() {
+      this.filtering($arrFilterWomenBtns, this.arrWomen, 'for her');
+      this.filtering($arrFilterMenBtns, this.arrMen, 'for him');
+      this.filtering($arrFilterAllProductsBtns, this.arrAllWatches, 'all watches');
+      this.priceSort();
+    }
+  }], [{
+    key: "arrObjImgs",
+    get: function get() {
+      return Object.values(_.default);
+    }
+  }]);
+
+  return Filter;
+}();
+
+exports.default = Filter;
+},{"../../assets/products/*.png":"assets/products/*.png","./Storage":"scripts/classes/Storage.js","./Bag":"scripts/classes/Bag.js","./Fav":"scripts/classes/Fav.js"}],"scripts/classes/Bag.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Storage = _interopRequireDefault(require("./Storage"));
+
+var _UI = _interopRequireDefault(require("./UI"));
+
+var _Filter = _interopRequireDefault(require("./Filter"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var $navbarBagCounter = document.querySelector('.navbar__bag-counter'); // koliko itemsa imamo u bagu
+
+var $bag = document.querySelector('.bag');
+var $clearBagBtn = document.querySelector('.bag .btn-clearbag');
+var $bagTotal = document.querySelector('.bag .total-price-items');
+var $bagItems = document.querySelector('.bag .items');
+var arrAddToBagBtns = [];
+
+var Bag = /*#__PURE__*/function () {
+  function Bag() {
+    _classCallCheck(this, Bag);
+
+    this._arrBag = [];
+  }
+
+  _createClass(Bag, [{
+    key: "getAddToBagBtns",
+    value: function getAddToBagBtns() {
+      var _this = this;
+
+      var $addToBagBtns;
+
+      if (window.location.pathname == '/index.html' || window.location.pathname == '/') {
+        $addToBagBtns = _toConsumableArray(document.querySelectorAll('.add-to-bag'));
+      } else if (window.location.pathname == '/allwatches.html') {
+        $addToBagBtns = _toConsumableArray(document.querySelectorAll('.btn-addtobag'));
+      }
+
+      arrAddToBagBtns = $addToBagBtns;
+      $addToBagBtns.forEach(function (btn) {
+        var id = btn.dataset.id;
+
+        var itemInBag = _this.arrBag.find(function (item) {
+          return item.id == id;
+        });
+
+        if (itemInBag && window.location.pathname == '/index.html') {
+          btn.classList.add('btn--added');
+          btn.innerHTML = 'ADDED &nbsp;&#10003;';
+          btn.disabled = true;
+        } else if (itemInBag && window.location.pathname == '/allwatches.html') {
+          btn.closest('.card').classList.add('card--added');
+          btn.disabled = true;
+        }
+
+        btn.addEventListener('click', function (e) {
+          if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
+            e.target.classList.add('btn--added');
+            e.target.innerHTML = 'ADDED &nbsp;&#10003;';
+          } else if (window.location.pathname == '/allwatches.html') {
+            e.target.closest('.card').classList.add('card--added');
+          }
+
+          e.target.disabled = true; //? 1. get product from products
+
+          var bagItem = _objectSpread({}, _Storage.default.getProduct(id), {
+            amount: 1
+          }); //? 2. add products to the bag
+
+
+          _this.arrBag = [].concat(_toConsumableArray(_this.arrBag), [bagItem]); //? 3. save bag in ls
+
+          _Storage.default.saveBag(_this.arrBag); //? 4. set bag values
+
+
+          _this.setBagValues(_this.arrBag); //? 5. display bag item
+
+
+          _this.addToBag(bagItem); //? 5. show the bag
+
+
+          _UI.default.openBagFav($bag, 'bag--open');
+        });
+      });
+    }
+  }, {
+    key: "setBagValues",
+    value: function setBagValues(_arrBag) {
+      console.log(this.arrBag);
+      var total_price = 0;
+      var items_counter = 0;
+
+      _arrBag.map(function (item) {
+        total_price += item.price * item.amount;
+        items_counter += item.amount;
+      });
+
+      $bagTotal.innerText = "$ ".concat(parseFloat(total_price.toFixed(2)));
+      $navbarBagCounter.innerText = items_counter;
+    }
+  }, {
+    key: "addToBag",
+    value: function addToBag(bagItem) {
+      var arr_obj_imgs = _Filter.default.arrObjImgs;
+      var article = document.createElement('article');
+      article.classList.add('item');
+      article.innerHTML = "\n\t\t\t<figure class=\"item__figure\">\n\t\t\t\t<img class=\"item__img\" src=".concat(arr_obj_imgs[bagItem.id - 1], " alt=\"watch-brown-white-").concat(bagItem.title, "\" />\n\t\t\t</figure>\n\n\t\t\t<div class=\"item__informations\">\n\t\t\t\t<h3 class=\"item__title\">").concat(bagItem.title, "</h3>\n\t\t\t\t<h4 class=\"item__subtitle\">").concat(bagItem.brand, "</h4>\n\t\t\t\t<p class=\"item__price\">$ ").concat(bagItem.price, "</p>\n\t\t\t</div>\n\n\t\t\t<div class=\"item__controller\">\n\t\t\t\t<div class=\"item__add\" data-id=").concat(bagItem.id, ">+</div>\n\t\t\t\t<div class=\"item__amount\">").concat(bagItem.amount, "</div>\n\t\t\t\t<div class=\"item__remove\" data-id=").concat(bagItem.id, ">-</div>\n\t\t\t</div>\n\n\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"item__icon item__icon--delete\" data-id=").concat(bagItem.id, " width=\"17.499\" height=\"20.783\" viewBox=\"0 0 17.499 20.783\">\n\t\t\t\t<path d=\"M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z\" transform=\"translate(6397 2299)\"/>\n\t\t\t</svg>\n\t\t");
+      $bagItems.appendChild(article);
+    }
+  }, {
+    key: "populateBag",
+    value: function populateBag(_arrBag) {
+      var _this2 = this;
+
+      _arrBag.forEach(function (item) {
+        return _this2.addToBag(item);
+      });
+    }
+  }, {
+    key: "bagLogic",
+    value: function bagLogic() {
+      var _this3 = this;
+
+      $clearBagBtn.addEventListener('click', function () {
+        _this3.clearBag();
+      }); //? bag functionallity
+
+      $bagItems.addEventListener('click', function (e) {
+        //* delete item
+        if (e.target.closest('.item__icon--delete')) {
+          // ! da nisam stavila pointer-events: none; u css-u za sve childove svg elementa, morala bih closest() da koristim, a ne match()
+          var $deleteItemBtn = e.target;
+          var itemID = $deleteItemBtn.dataset.id;
+          $deleteItemBtn.parentElement.classList.add('item--deleted');
+          setTimeout(function () {
+            _this3.deleteFromBag(itemID); // uklonili smo iz arrBag, ali nismo i iz DOM-a
+            // $bagItems.removeChild(deleteItemBtn.parentElement) || $bagItems.removeChild(deleteItemBtn.parentNode); // za mozilu kao radi parentNode
+
+
+            $bagItems.removeChild($deleteItemBtn.parentElement);
+            $deleteItemBtn.parentElement.classList.remove('item--deleted');
+          }, 400); //* add item amount
+        } else if (e.target.matches('.item__add')) {
+          var $increaseAmountBtn = e.target;
+          var _itemID = $increaseAmountBtn.dataset.id;
+
+          var currItem = _this3.arrBag.find(function (item) {
+            return item.id == _itemID;
+          });
+
+          console.log(_this3.arrBag); //! []
+
+          currItem.amount = currItem.amount + 1;
+
+          _Storage.default.saveBag(_this3.arrBag);
+
+          _this3.setBagValues(_this3.arrBag);
+
+          $increaseAmountBtn.nextElementSibling.innerText = currItem.amount;
+        } else if (e.target.matches('.item__remove')) {
+          var $decreaseAmountBtn = e.target;
+          var _itemID2 = $decreaseAmountBtn.dataset.id;
+
+          var _currItem = _this3.arrBag.find(function (item) {
+            return item.id == _itemID2;
+          });
+
+          _currItem.amount = _currItem.amount - 1;
+
+          if (_currItem.amount > 0) {
+            _Storage.default.saveBag(_this3.arrBag);
+
+            _this3.setBagValues(_this3.arrBag);
+
+            $decreaseAmountBtn.previousElementSibling.innerText = _currItem.amount;
+          } else {
+            $decreaseAmountBtn.parentElement.parentElement.classList.add('item--deleted');
+            setTimeout(function () {
+              $bagItems.removeChild($decreaseAmountBtn.parentElement.parentElement);
+
+              _this3.deleteFromBag(_itemID2);
+
+              $decreaseAmountBtn.parentElement.parentElement.classList.remove('item--deleted');
+            }, 400);
+          }
+        }
+      });
+    }
+  }, {
+    key: "clearBag",
+    value: function clearBag() {
+      var _this4 = this;
+
+      // console.log(this); // kad stavim aa addEventListener this.clearBag() on vrati da se this odnosi na UI{} dakle ono sto bi nam trebalo, a kad stavimo this.clearBAg bez zagrada, onda za referencu vraca button na koji smo kliknuli tj clearBagBtn, on kaze da je u ovim slucajevima bolje koristini () => { this.clearBtn()} nego bez () => {}
+      var bagItemsIDs = this.arrBag.map(function (item) {
+        return item.id;
+      });
+      bagItemsIDs.forEach(function (itemID) {
+        return _this4.deleteFromBag(itemID);
+      }); // console.log($bagItems.children);
+
+      while ($bagItems.children.length > 0) {
+        $bagItems.removeChild($bagItems.children[0]);
+      }
+
+      _UI.default.closeBagFav($bag, 'bag--open');
+    }
+  }, {
+    key: "deleteFromBag",
+    value: function deleteFromBag(itemID) {
+      this.arrBag = this.arrBag.filter(function (item) {
+        return item.id != itemID;
+      });
+      this.setBagValues(this.arrBag);
+
+      _Storage.default.saveBag(this.arrBag);
+
+      var ATBbtn = this.getSingleATBbtn(itemID);
+      ATBbtn.disabled = false;
+
+      if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
+        ATBbtn.classList.remove('btn--added');
+
+        if (ATBbtn.parentElement.className == 'feature__footer') {
+          ATBbtn.innerText = 'add to bag';
+        } else {
+          ATBbtn.innerHTML = "\n\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16.5\" height=\"21.786\" viewBox=\"0 0 16.5 21.786\">\n\t\t\t\t\t\t<path d=\"M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z\" transform=\"translate(6397 2299.001)\"/>\n\t\t\t\t\t</svg>\n\t\t\t\t\tadd to bag\n\t\t\t\t";
+        }
+      } else if (window.location.pathname == '/allwatches.html') {
+        ATBbtn.closest('.card').classList.remove('card--added');
+      }
+    }
+  }, {
+    key: "getSingleATBbtn",
+    value: function getSingleATBbtn(itemID) {
+      return arrAddToBagBtns.find(function (btn) {
+        return btn.dataset.id == itemID;
+      });
+    }
+  }, {
+    key: "SETUP_BAG",
+    value: function SETUP_BAG() {
+      this.arrBag = _Storage.default.getBag();
+      this.setBagValues(this.arrBag);
+      this.populateBag(this.arrBag);
+    }
+  }, {
+    key: "arrBag",
+    get: function get() {
+      return this._arrBag;
+    },
+    set: function set(value) {
+      this._arrBag = value;
+    }
+  }]);
+
+  return Bag;
+}();
+
+exports.default = Bag;
+},{"./Storage":"scripts/classes/Storage.js","./UI":"scripts/classes/UI.js","./Filter":"scripts/classes/Filter.js"}],"scripts/about.js":[function(require,module,exports) {
 "use strict";
 
 require("core-js/modules/es6.array.copy-within");
@@ -8317,17 +8363,17 @@ require("core-js/modules/web.dom.iterable");
 
 require("regenerator-runtime/runtime");
 
-var _ui2 = _interopRequireDefault(require("./classes/ui"));
+var _UI = _interopRequireDefault(require("./classes/UI"));
 
-var _products2 = _interopRequireDefault(require("./classes/products"));
+var _Products = _interopRequireDefault(require("./classes/Products"));
 
-var _storage = _interopRequireDefault(require("./classes/storage"));
+var _Storage = _interopRequireDefault(require("./classes/Storage"));
 
-var _bag2 = _interopRequireDefault(require("./classes/bag"));
+var _Bag = _interopRequireDefault(require("./classes/Bag"));
 
-var _fav2 = _interopRequireDefault(require("./classes/fav"));
+var _Fav = _interopRequireDefault(require("./classes/Fav"));
 
-var _filter2 = _interopRequireDefault(require("./classes/filter"));
+var _Filter = _interopRequireDefault(require("./classes/Filter"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8366,15 +8412,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //     });
 // })
 document.addEventListener('DOMContentLoaded', function () {
-  var _ui = new _ui2.default();
+  var _ui = new _UI.default();
 
-  var _bag = new _bag2.default();
+  var _bag = new _Bag.default();
 
-  var _fav = new _fav2.default();
+  var _fav = new _Fav.default();
 
-  var _products = new _products2.default();
+  var _products = new _Products.default();
 
-  var _filter = new _filter2.default(); // // _ui.SETUP_APP();
+  var _filter = new _Filter.default(); // // _ui.SETUP_APP();
 
 
   _bag.SETUP_BAG();
@@ -8389,7 +8435,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // new Filter().displayProducts(all_products);
     _filter.displayProducts(all_products);
 
-    _storage.default.saveProducts(all_products);
+    _Storage.default.saveProducts(all_products);
   }).then(function () {
     // _ui.getAddToBagBtns();
     // _ui.getFavBtns();
@@ -8406,7 +8452,7 @@ document.addEventListener('DOMContentLoaded', function () {
     _filter.setup_filter();
   });
 });
-},{"core-js/modules/es6.array.copy-within":"../node_modules/core-js/modules/es6.array.copy-within.js","core-js/modules/es6.array.fill":"../node_modules/core-js/modules/es6.array.fill.js","core-js/modules/es6.array.find":"../node_modules/core-js/modules/es6.array.find.js","core-js/modules/es6.array.find-index":"../node_modules/core-js/modules/es6.array.find-index.js","core-js/modules/es7.array.flat-map":"../node_modules/core-js/modules/es7.array.flat-map.js","core-js/modules/es6.array.from":"../node_modules/core-js/modules/es6.array.from.js","core-js/modules/es7.array.includes":"../node_modules/core-js/modules/es7.array.includes.js","core-js/modules/es6.array.iterator":"../node_modules/core-js/modules/es6.array.iterator.js","core-js/modules/es6.array.of":"../node_modules/core-js/modules/es6.array.of.js","core-js/modules/es6.array.sort":"../node_modules/core-js/modules/es6.array.sort.js","core-js/modules/es6.array.species":"../node_modules/core-js/modules/es6.array.species.js","core-js/modules/es6.date.to-json":"../node_modules/core-js/modules/es6.date.to-json.js","core-js/modules/es6.date.to-primitive":"../node_modules/core-js/modules/es6.date.to-primitive.js","core-js/modules/es6.date.to-string":"../node_modules/core-js/modules/es6.date.to-string.js","core-js/modules/es6.function.has-instance":"../node_modules/core-js/modules/es6.function.has-instance.js","core-js/modules/es6.function.name":"../node_modules/core-js/modules/es6.function.name.js","core-js/modules/es6.map":"../node_modules/core-js/modules/es6.map.js","core-js/modules/es6.math.acosh":"../node_modules/core-js/modules/es6.math.acosh.js","core-js/modules/es6.math.asinh":"../node_modules/core-js/modules/es6.math.asinh.js","core-js/modules/es6.math.atanh":"../node_modules/core-js/modules/es6.math.atanh.js","core-js/modules/es6.math.cbrt":"../node_modules/core-js/modules/es6.math.cbrt.js","core-js/modules/es6.math.clz32":"../node_modules/core-js/modules/es6.math.clz32.js","core-js/modules/es6.math.cosh":"../node_modules/core-js/modules/es6.math.cosh.js","core-js/modules/es6.math.expm1":"../node_modules/core-js/modules/es6.math.expm1.js","core-js/modules/es6.math.fround":"../node_modules/core-js/modules/es6.math.fround.js","core-js/modules/es6.math.hypot":"../node_modules/core-js/modules/es6.math.hypot.js","core-js/modules/es6.math.imul":"../node_modules/core-js/modules/es6.math.imul.js","core-js/modules/es6.math.log1p":"../node_modules/core-js/modules/es6.math.log1p.js","core-js/modules/es6.math.log10":"../node_modules/core-js/modules/es6.math.log10.js","core-js/modules/es6.math.log2":"../node_modules/core-js/modules/es6.math.log2.js","core-js/modules/es6.math.sign":"../node_modules/core-js/modules/es6.math.sign.js","core-js/modules/es6.math.sinh":"../node_modules/core-js/modules/es6.math.sinh.js","core-js/modules/es6.math.tanh":"../node_modules/core-js/modules/es6.math.tanh.js","core-js/modules/es6.math.trunc":"../node_modules/core-js/modules/es6.math.trunc.js","core-js/modules/es6.number.constructor":"../node_modules/core-js/modules/es6.number.constructor.js","core-js/modules/es6.number.epsilon":"../node_modules/core-js/modules/es6.number.epsilon.js","core-js/modules/es6.number.is-finite":"../node_modules/core-js/modules/es6.number.is-finite.js","core-js/modules/es6.number.is-integer":"../node_modules/core-js/modules/es6.number.is-integer.js","core-js/modules/es6.number.is-nan":"../node_modules/core-js/modules/es6.number.is-nan.js","core-js/modules/es6.number.is-safe-integer":"../node_modules/core-js/modules/es6.number.is-safe-integer.js","core-js/modules/es6.number.max-safe-integer":"../node_modules/core-js/modules/es6.number.max-safe-integer.js","core-js/modules/es6.number.min-safe-integer":"../node_modules/core-js/modules/es6.number.min-safe-integer.js","core-js/modules/es6.number.parse-float":"../node_modules/core-js/modules/es6.number.parse-float.js","core-js/modules/es6.number.parse-int":"../node_modules/core-js/modules/es6.number.parse-int.js","core-js/modules/es6.object.assign":"../node_modules/core-js/modules/es6.object.assign.js","core-js/modules/es7.object.define-getter":"../node_modules/core-js/modules/es7.object.define-getter.js","core-js/modules/es7.object.define-setter":"../node_modules/core-js/modules/es7.object.define-setter.js","core-js/modules/es7.object.entries":"../node_modules/core-js/modules/es7.object.entries.js","core-js/modules/es6.object.freeze":"../node_modules/core-js/modules/es6.object.freeze.js","core-js/modules/es6.object.get-own-property-descriptor":"../node_modules/core-js/modules/es6.object.get-own-property-descriptor.js","core-js/modules/es7.object.get-own-property-descriptors":"../node_modules/core-js/modules/es7.object.get-own-property-descriptors.js","core-js/modules/es6.object.get-own-property-names":"../node_modules/core-js/modules/es6.object.get-own-property-names.js","core-js/modules/es6.object.get-prototype-of":"../node_modules/core-js/modules/es6.object.get-prototype-of.js","core-js/modules/es7.object.lookup-getter":"../node_modules/core-js/modules/es7.object.lookup-getter.js","core-js/modules/es7.object.lookup-setter":"../node_modules/core-js/modules/es7.object.lookup-setter.js","core-js/modules/es6.object.prevent-extensions":"../node_modules/core-js/modules/es6.object.prevent-extensions.js","core-js/modules/es6.object.to-string":"../node_modules/core-js/modules/es6.object.to-string.js","core-js/modules/es6.object.is":"../node_modules/core-js/modules/es6.object.is.js","core-js/modules/es6.object.is-frozen":"../node_modules/core-js/modules/es6.object.is-frozen.js","core-js/modules/es6.object.is-sealed":"../node_modules/core-js/modules/es6.object.is-sealed.js","core-js/modules/es6.object.is-extensible":"../node_modules/core-js/modules/es6.object.is-extensible.js","core-js/modules/es6.object.keys":"../node_modules/core-js/modules/es6.object.keys.js","core-js/modules/es6.object.seal":"../node_modules/core-js/modules/es6.object.seal.js","core-js/modules/es6.object.set-prototype-of":"../node_modules/core-js/modules/es6.object.set-prototype-of.js","core-js/modules/es7.object.values":"../node_modules/core-js/modules/es7.object.values.js","core-js/modules/es6.promise":"../node_modules/core-js/modules/es6.promise.js","core-js/modules/es7.promise.finally":"../node_modules/core-js/modules/es7.promise.finally.js","core-js/modules/es6.reflect.apply":"../node_modules/core-js/modules/es6.reflect.apply.js","core-js/modules/es6.reflect.construct":"../node_modules/core-js/modules/es6.reflect.construct.js","core-js/modules/es6.reflect.define-property":"../node_modules/core-js/modules/es6.reflect.define-property.js","core-js/modules/es6.reflect.delete-property":"../node_modules/core-js/modules/es6.reflect.delete-property.js","core-js/modules/es6.reflect.get":"../node_modules/core-js/modules/es6.reflect.get.js","core-js/modules/es6.reflect.get-own-property-descriptor":"../node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js","core-js/modules/es6.reflect.get-prototype-of":"../node_modules/core-js/modules/es6.reflect.get-prototype-of.js","core-js/modules/es6.reflect.has":"../node_modules/core-js/modules/es6.reflect.has.js","core-js/modules/es6.reflect.is-extensible":"../node_modules/core-js/modules/es6.reflect.is-extensible.js","core-js/modules/es6.reflect.own-keys":"../node_modules/core-js/modules/es6.reflect.own-keys.js","core-js/modules/es6.reflect.prevent-extensions":"../node_modules/core-js/modules/es6.reflect.prevent-extensions.js","core-js/modules/es6.reflect.set":"../node_modules/core-js/modules/es6.reflect.set.js","core-js/modules/es6.reflect.set-prototype-of":"../node_modules/core-js/modules/es6.reflect.set-prototype-of.js","core-js/modules/es6.regexp.constructor":"../node_modules/core-js/modules/es6.regexp.constructor.js","core-js/modules/es6.regexp.flags":"../node_modules/core-js/modules/es6.regexp.flags.js","core-js/modules/es6.regexp.match":"../node_modules/core-js/modules/es6.regexp.match.js","core-js/modules/es6.regexp.replace":"../node_modules/core-js/modules/es6.regexp.replace.js","core-js/modules/es6.regexp.split":"../node_modules/core-js/modules/es6.regexp.split.js","core-js/modules/es6.regexp.search":"../node_modules/core-js/modules/es6.regexp.search.js","core-js/modules/es6.regexp.to-string":"../node_modules/core-js/modules/es6.regexp.to-string.js","core-js/modules/es6.set":"../node_modules/core-js/modules/es6.set.js","core-js/modules/es6.symbol":"../node_modules/core-js/modules/es6.symbol.js","core-js/modules/es7.symbol.async-iterator":"../node_modules/core-js/modules/es7.symbol.async-iterator.js","core-js/modules/es6.string.anchor":"../node_modules/core-js/modules/es6.string.anchor.js","core-js/modules/es6.string.big":"../node_modules/core-js/modules/es6.string.big.js","core-js/modules/es6.string.blink":"../node_modules/core-js/modules/es6.string.blink.js","core-js/modules/es6.string.bold":"../node_modules/core-js/modules/es6.string.bold.js","core-js/modules/es6.string.code-point-at":"../node_modules/core-js/modules/es6.string.code-point-at.js","core-js/modules/es6.string.ends-with":"../node_modules/core-js/modules/es6.string.ends-with.js","core-js/modules/es6.string.fixed":"../node_modules/core-js/modules/es6.string.fixed.js","core-js/modules/es6.string.fontcolor":"../node_modules/core-js/modules/es6.string.fontcolor.js","core-js/modules/es6.string.fontsize":"../node_modules/core-js/modules/es6.string.fontsize.js","core-js/modules/es6.string.from-code-point":"../node_modules/core-js/modules/es6.string.from-code-point.js","core-js/modules/es6.string.includes":"../node_modules/core-js/modules/es6.string.includes.js","core-js/modules/es6.string.italics":"../node_modules/core-js/modules/es6.string.italics.js","core-js/modules/es6.string.iterator":"../node_modules/core-js/modules/es6.string.iterator.js","core-js/modules/es6.string.link":"../node_modules/core-js/modules/es6.string.link.js","core-js/modules/es7.string.pad-start":"../node_modules/core-js/modules/es7.string.pad-start.js","core-js/modules/es7.string.pad-end":"../node_modules/core-js/modules/es7.string.pad-end.js","core-js/modules/es6.string.raw":"../node_modules/core-js/modules/es6.string.raw.js","core-js/modules/es6.string.repeat":"../node_modules/core-js/modules/es6.string.repeat.js","core-js/modules/es6.string.small":"../node_modules/core-js/modules/es6.string.small.js","core-js/modules/es6.string.starts-with":"../node_modules/core-js/modules/es6.string.starts-with.js","core-js/modules/es6.string.strike":"../node_modules/core-js/modules/es6.string.strike.js","core-js/modules/es6.string.sub":"../node_modules/core-js/modules/es6.string.sub.js","core-js/modules/es6.string.sup":"../node_modules/core-js/modules/es6.string.sup.js","core-js/modules/es7.string.trim-left":"../node_modules/core-js/modules/es7.string.trim-left.js","core-js/modules/es7.string.trim-right":"../node_modules/core-js/modules/es7.string.trim-right.js","core-js/modules/es6.typed.array-buffer":"../node_modules/core-js/modules/es6.typed.array-buffer.js","core-js/modules/es6.typed.data-view":"../node_modules/core-js/modules/es6.typed.data-view.js","core-js/modules/es6.typed.int8-array":"../node_modules/core-js/modules/es6.typed.int8-array.js","core-js/modules/es6.typed.uint8-array":"../node_modules/core-js/modules/es6.typed.uint8-array.js","core-js/modules/es6.typed.uint8-clamped-array":"../node_modules/core-js/modules/es6.typed.uint8-clamped-array.js","core-js/modules/es6.typed.int16-array":"../node_modules/core-js/modules/es6.typed.int16-array.js","core-js/modules/es6.typed.uint16-array":"../node_modules/core-js/modules/es6.typed.uint16-array.js","core-js/modules/es6.typed.int32-array":"../node_modules/core-js/modules/es6.typed.int32-array.js","core-js/modules/es6.typed.uint32-array":"../node_modules/core-js/modules/es6.typed.uint32-array.js","core-js/modules/es6.typed.float32-array":"../node_modules/core-js/modules/es6.typed.float32-array.js","core-js/modules/es6.typed.float64-array":"../node_modules/core-js/modules/es6.typed.float64-array.js","core-js/modules/es6.weak-map":"../node_modules/core-js/modules/es6.weak-map.js","core-js/modules/es6.weak-set":"../node_modules/core-js/modules/es6.weak-set.js","core-js/modules/web.timers":"../node_modules/core-js/modules/web.timers.js","core-js/modules/web.immediate":"../node_modules/core-js/modules/web.immediate.js","core-js/modules/web.dom.iterable":"../node_modules/core-js/modules/web.dom.iterable.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","./classes/ui":"scripts/classes/ui.js","./classes/products":"scripts/classes/products.js","./classes/storage":"scripts/classes/storage.js","./classes/bag":"scripts/classes/bag.js","./classes/fav":"scripts/classes/fav.js","./classes/filter":"scripts/classes/filter.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"core-js/modules/es6.array.copy-within":"../node_modules/core-js/modules/es6.array.copy-within.js","core-js/modules/es6.array.fill":"../node_modules/core-js/modules/es6.array.fill.js","core-js/modules/es6.array.find":"../node_modules/core-js/modules/es6.array.find.js","core-js/modules/es6.array.find-index":"../node_modules/core-js/modules/es6.array.find-index.js","core-js/modules/es7.array.flat-map":"../node_modules/core-js/modules/es7.array.flat-map.js","core-js/modules/es6.array.from":"../node_modules/core-js/modules/es6.array.from.js","core-js/modules/es7.array.includes":"../node_modules/core-js/modules/es7.array.includes.js","core-js/modules/es6.array.iterator":"../node_modules/core-js/modules/es6.array.iterator.js","core-js/modules/es6.array.of":"../node_modules/core-js/modules/es6.array.of.js","core-js/modules/es6.array.sort":"../node_modules/core-js/modules/es6.array.sort.js","core-js/modules/es6.array.species":"../node_modules/core-js/modules/es6.array.species.js","core-js/modules/es6.date.to-json":"../node_modules/core-js/modules/es6.date.to-json.js","core-js/modules/es6.date.to-primitive":"../node_modules/core-js/modules/es6.date.to-primitive.js","core-js/modules/es6.date.to-string":"../node_modules/core-js/modules/es6.date.to-string.js","core-js/modules/es6.function.has-instance":"../node_modules/core-js/modules/es6.function.has-instance.js","core-js/modules/es6.function.name":"../node_modules/core-js/modules/es6.function.name.js","core-js/modules/es6.map":"../node_modules/core-js/modules/es6.map.js","core-js/modules/es6.math.acosh":"../node_modules/core-js/modules/es6.math.acosh.js","core-js/modules/es6.math.asinh":"../node_modules/core-js/modules/es6.math.asinh.js","core-js/modules/es6.math.atanh":"../node_modules/core-js/modules/es6.math.atanh.js","core-js/modules/es6.math.cbrt":"../node_modules/core-js/modules/es6.math.cbrt.js","core-js/modules/es6.math.clz32":"../node_modules/core-js/modules/es6.math.clz32.js","core-js/modules/es6.math.cosh":"../node_modules/core-js/modules/es6.math.cosh.js","core-js/modules/es6.math.expm1":"../node_modules/core-js/modules/es6.math.expm1.js","core-js/modules/es6.math.fround":"../node_modules/core-js/modules/es6.math.fround.js","core-js/modules/es6.math.hypot":"../node_modules/core-js/modules/es6.math.hypot.js","core-js/modules/es6.math.imul":"../node_modules/core-js/modules/es6.math.imul.js","core-js/modules/es6.math.log1p":"../node_modules/core-js/modules/es6.math.log1p.js","core-js/modules/es6.math.log10":"../node_modules/core-js/modules/es6.math.log10.js","core-js/modules/es6.math.log2":"../node_modules/core-js/modules/es6.math.log2.js","core-js/modules/es6.math.sign":"../node_modules/core-js/modules/es6.math.sign.js","core-js/modules/es6.math.sinh":"../node_modules/core-js/modules/es6.math.sinh.js","core-js/modules/es6.math.tanh":"../node_modules/core-js/modules/es6.math.tanh.js","core-js/modules/es6.math.trunc":"../node_modules/core-js/modules/es6.math.trunc.js","core-js/modules/es6.number.constructor":"../node_modules/core-js/modules/es6.number.constructor.js","core-js/modules/es6.number.epsilon":"../node_modules/core-js/modules/es6.number.epsilon.js","core-js/modules/es6.number.is-finite":"../node_modules/core-js/modules/es6.number.is-finite.js","core-js/modules/es6.number.is-integer":"../node_modules/core-js/modules/es6.number.is-integer.js","core-js/modules/es6.number.is-nan":"../node_modules/core-js/modules/es6.number.is-nan.js","core-js/modules/es6.number.is-safe-integer":"../node_modules/core-js/modules/es6.number.is-safe-integer.js","core-js/modules/es6.number.max-safe-integer":"../node_modules/core-js/modules/es6.number.max-safe-integer.js","core-js/modules/es6.number.min-safe-integer":"../node_modules/core-js/modules/es6.number.min-safe-integer.js","core-js/modules/es6.number.parse-float":"../node_modules/core-js/modules/es6.number.parse-float.js","core-js/modules/es6.number.parse-int":"../node_modules/core-js/modules/es6.number.parse-int.js","core-js/modules/es6.object.assign":"../node_modules/core-js/modules/es6.object.assign.js","core-js/modules/es7.object.define-getter":"../node_modules/core-js/modules/es7.object.define-getter.js","core-js/modules/es7.object.define-setter":"../node_modules/core-js/modules/es7.object.define-setter.js","core-js/modules/es7.object.entries":"../node_modules/core-js/modules/es7.object.entries.js","core-js/modules/es6.object.freeze":"../node_modules/core-js/modules/es6.object.freeze.js","core-js/modules/es6.object.get-own-property-descriptor":"../node_modules/core-js/modules/es6.object.get-own-property-descriptor.js","core-js/modules/es7.object.get-own-property-descriptors":"../node_modules/core-js/modules/es7.object.get-own-property-descriptors.js","core-js/modules/es6.object.get-own-property-names":"../node_modules/core-js/modules/es6.object.get-own-property-names.js","core-js/modules/es6.object.get-prototype-of":"../node_modules/core-js/modules/es6.object.get-prototype-of.js","core-js/modules/es7.object.lookup-getter":"../node_modules/core-js/modules/es7.object.lookup-getter.js","core-js/modules/es7.object.lookup-setter":"../node_modules/core-js/modules/es7.object.lookup-setter.js","core-js/modules/es6.object.prevent-extensions":"../node_modules/core-js/modules/es6.object.prevent-extensions.js","core-js/modules/es6.object.to-string":"../node_modules/core-js/modules/es6.object.to-string.js","core-js/modules/es6.object.is":"../node_modules/core-js/modules/es6.object.is.js","core-js/modules/es6.object.is-frozen":"../node_modules/core-js/modules/es6.object.is-frozen.js","core-js/modules/es6.object.is-sealed":"../node_modules/core-js/modules/es6.object.is-sealed.js","core-js/modules/es6.object.is-extensible":"../node_modules/core-js/modules/es6.object.is-extensible.js","core-js/modules/es6.object.keys":"../node_modules/core-js/modules/es6.object.keys.js","core-js/modules/es6.object.seal":"../node_modules/core-js/modules/es6.object.seal.js","core-js/modules/es6.object.set-prototype-of":"../node_modules/core-js/modules/es6.object.set-prototype-of.js","core-js/modules/es7.object.values":"../node_modules/core-js/modules/es7.object.values.js","core-js/modules/es6.promise":"../node_modules/core-js/modules/es6.promise.js","core-js/modules/es7.promise.finally":"../node_modules/core-js/modules/es7.promise.finally.js","core-js/modules/es6.reflect.apply":"../node_modules/core-js/modules/es6.reflect.apply.js","core-js/modules/es6.reflect.construct":"../node_modules/core-js/modules/es6.reflect.construct.js","core-js/modules/es6.reflect.define-property":"../node_modules/core-js/modules/es6.reflect.define-property.js","core-js/modules/es6.reflect.delete-property":"../node_modules/core-js/modules/es6.reflect.delete-property.js","core-js/modules/es6.reflect.get":"../node_modules/core-js/modules/es6.reflect.get.js","core-js/modules/es6.reflect.get-own-property-descriptor":"../node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js","core-js/modules/es6.reflect.get-prototype-of":"../node_modules/core-js/modules/es6.reflect.get-prototype-of.js","core-js/modules/es6.reflect.has":"../node_modules/core-js/modules/es6.reflect.has.js","core-js/modules/es6.reflect.is-extensible":"../node_modules/core-js/modules/es6.reflect.is-extensible.js","core-js/modules/es6.reflect.own-keys":"../node_modules/core-js/modules/es6.reflect.own-keys.js","core-js/modules/es6.reflect.prevent-extensions":"../node_modules/core-js/modules/es6.reflect.prevent-extensions.js","core-js/modules/es6.reflect.set":"../node_modules/core-js/modules/es6.reflect.set.js","core-js/modules/es6.reflect.set-prototype-of":"../node_modules/core-js/modules/es6.reflect.set-prototype-of.js","core-js/modules/es6.regexp.constructor":"../node_modules/core-js/modules/es6.regexp.constructor.js","core-js/modules/es6.regexp.flags":"../node_modules/core-js/modules/es6.regexp.flags.js","core-js/modules/es6.regexp.match":"../node_modules/core-js/modules/es6.regexp.match.js","core-js/modules/es6.regexp.replace":"../node_modules/core-js/modules/es6.regexp.replace.js","core-js/modules/es6.regexp.split":"../node_modules/core-js/modules/es6.regexp.split.js","core-js/modules/es6.regexp.search":"../node_modules/core-js/modules/es6.regexp.search.js","core-js/modules/es6.regexp.to-string":"../node_modules/core-js/modules/es6.regexp.to-string.js","core-js/modules/es6.set":"../node_modules/core-js/modules/es6.set.js","core-js/modules/es6.symbol":"../node_modules/core-js/modules/es6.symbol.js","core-js/modules/es7.symbol.async-iterator":"../node_modules/core-js/modules/es7.symbol.async-iterator.js","core-js/modules/es6.string.anchor":"../node_modules/core-js/modules/es6.string.anchor.js","core-js/modules/es6.string.big":"../node_modules/core-js/modules/es6.string.big.js","core-js/modules/es6.string.blink":"../node_modules/core-js/modules/es6.string.blink.js","core-js/modules/es6.string.bold":"../node_modules/core-js/modules/es6.string.bold.js","core-js/modules/es6.string.code-point-at":"../node_modules/core-js/modules/es6.string.code-point-at.js","core-js/modules/es6.string.ends-with":"../node_modules/core-js/modules/es6.string.ends-with.js","core-js/modules/es6.string.fixed":"../node_modules/core-js/modules/es6.string.fixed.js","core-js/modules/es6.string.fontcolor":"../node_modules/core-js/modules/es6.string.fontcolor.js","core-js/modules/es6.string.fontsize":"../node_modules/core-js/modules/es6.string.fontsize.js","core-js/modules/es6.string.from-code-point":"../node_modules/core-js/modules/es6.string.from-code-point.js","core-js/modules/es6.string.includes":"../node_modules/core-js/modules/es6.string.includes.js","core-js/modules/es6.string.italics":"../node_modules/core-js/modules/es6.string.italics.js","core-js/modules/es6.string.iterator":"../node_modules/core-js/modules/es6.string.iterator.js","core-js/modules/es6.string.link":"../node_modules/core-js/modules/es6.string.link.js","core-js/modules/es7.string.pad-start":"../node_modules/core-js/modules/es7.string.pad-start.js","core-js/modules/es7.string.pad-end":"../node_modules/core-js/modules/es7.string.pad-end.js","core-js/modules/es6.string.raw":"../node_modules/core-js/modules/es6.string.raw.js","core-js/modules/es6.string.repeat":"../node_modules/core-js/modules/es6.string.repeat.js","core-js/modules/es6.string.small":"../node_modules/core-js/modules/es6.string.small.js","core-js/modules/es6.string.starts-with":"../node_modules/core-js/modules/es6.string.starts-with.js","core-js/modules/es6.string.strike":"../node_modules/core-js/modules/es6.string.strike.js","core-js/modules/es6.string.sub":"../node_modules/core-js/modules/es6.string.sub.js","core-js/modules/es6.string.sup":"../node_modules/core-js/modules/es6.string.sup.js","core-js/modules/es7.string.trim-left":"../node_modules/core-js/modules/es7.string.trim-left.js","core-js/modules/es7.string.trim-right":"../node_modules/core-js/modules/es7.string.trim-right.js","core-js/modules/es6.typed.array-buffer":"../node_modules/core-js/modules/es6.typed.array-buffer.js","core-js/modules/es6.typed.data-view":"../node_modules/core-js/modules/es6.typed.data-view.js","core-js/modules/es6.typed.int8-array":"../node_modules/core-js/modules/es6.typed.int8-array.js","core-js/modules/es6.typed.uint8-array":"../node_modules/core-js/modules/es6.typed.uint8-array.js","core-js/modules/es6.typed.uint8-clamped-array":"../node_modules/core-js/modules/es6.typed.uint8-clamped-array.js","core-js/modules/es6.typed.int16-array":"../node_modules/core-js/modules/es6.typed.int16-array.js","core-js/modules/es6.typed.uint16-array":"../node_modules/core-js/modules/es6.typed.uint16-array.js","core-js/modules/es6.typed.int32-array":"../node_modules/core-js/modules/es6.typed.int32-array.js","core-js/modules/es6.typed.uint32-array":"../node_modules/core-js/modules/es6.typed.uint32-array.js","core-js/modules/es6.typed.float32-array":"../node_modules/core-js/modules/es6.typed.float32-array.js","core-js/modules/es6.typed.float64-array":"../node_modules/core-js/modules/es6.typed.float64-array.js","core-js/modules/es6.weak-map":"../node_modules/core-js/modules/es6.weak-map.js","core-js/modules/es6.weak-set":"../node_modules/core-js/modules/es6.weak-set.js","core-js/modules/web.timers":"../node_modules/core-js/modules/web.timers.js","core-js/modules/web.immediate":"../node_modules/core-js/modules/web.immediate.js","core-js/modules/web.dom.iterable":"../node_modules/core-js/modules/web.dom.iterable.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","./classes/UI":"scripts/classes/UI.js","./classes/Products":"scripts/classes/Products.js","./classes/Storage":"scripts/classes/Storage.js","./classes/Bag":"scripts/classes/Bag.js","./classes/Fav":"scripts/classes/Fav.js","./classes/Filter":"scripts/classes/Filter.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -8434,7 +8480,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54507" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61473" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

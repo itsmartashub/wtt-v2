@@ -933,7 +933,8 @@ h4 {
   .item__title {
     color: rgba(41, 17, 8, 0.8); }
   .item__subtitle, .item__amount {
-    color: #6E4D43; }
+    color: #6E4D43;
+    text-transform: uppercase; }
   .item__price {
     margin-top: 0.5rem; }
   .item__controller {
@@ -1490,9 +1491,6 @@ h4 {
 .collections .btn-primary {
   margin: 10rem auto; }
 
-.collections .card-fav-btn--liked {
-  fill: #A6724A !important; }
-
 @media only screen and (max-width: 75em) {
   .collections {
     grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
@@ -1745,6 +1743,9 @@ h4 {
   .body-home .intro__shipping {
     -webkit-animation-delay: 2100ms;
             animation-delay: 2100ms; } }
+
+.card-fav-btn--liked {
+  fill: #A6724A !important; }
 
 
 /*# sourceMappingURL=/styles.434540e1.css.map */

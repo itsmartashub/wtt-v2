@@ -936,7 +936,8 @@ h4 {
   .item__title {
     color: rgba(41, 17, 8, 0.8); }
   .item__subtitle, .item__amount {
-    color: #6E4D43; }
+    color: #6E4D43;
+    text-transform: uppercase; }
   .item__price {
     margin-top: 0.5rem; }
   .item__controller {
@@ -1475,9 +1476,20 @@ h4 {
       -webkit-transform: translateY(0%) rotateZ(0deg);
           -ms-transform: translateY(0%) rotate(0deg);
               transform: translateY(0%) rotateZ(0deg); }
-
-.card-fav-btn--liked {
-  fill: #A6724A !important; }
+  .card--hidden {
+    display: none !important; }
+  .card--anim {
+    -webkit-animation: fadeInScale 1.5s backwards cubic-bezier(0.215, 0.61, 0.355, 1) !important;
+            animation: fadeInScale 1.5s backwards cubic-bezier(0.215, 0.61, 0.355, 1) !important; }
+    .card--anim:nth-of-type(1) {
+      -webkit-animation-delay: 0.6s;
+              animation-delay: 0.6s; }
+    .card--anim:nth-of-type(2) {
+      -webkit-animation-delay: 0.4s;
+              animation-delay: 0.4s; }
+    .card--anim:nth-of-type(3) {
+      -webkit-animation-delay: 0.5s;
+              animation-delay: 0.5s; }
 
 .header {
   height: 100vh; }
@@ -1553,7 +1565,7 @@ h4 {
   min-height: 100vh; }
   .allwatches__cards {
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    grid-gap: 15rem 10rem; }
+    grid-gap: 20rem 12rem; }
     @media only screen and (max-width: 31.25em) {
       .allwatches__cards {
         grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
@@ -1578,27 +1590,27 @@ h4 {
   -webkit-animation: fadeInScale 1.5s backwards cubic-bezier(0.215, 0.61, 0.355, 1);
           animation: fadeInScale 1.5s backwards cubic-bezier(0.215, 0.61, 0.355, 1); }
   .body-allwatches .card:nth-of-type(1) {
-    -webkit-animation-delay: 0.3s;
-            animation-delay: 0.3s; }
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s; }
   .body-allwatches .card:nth-of-type(2) {
-    -webkit-animation-delay: 0.2s;
-            animation-delay: 0.2s; }
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s; }
   .body-allwatches .card:nth-of-type(3) {
-    -webkit-animation-delay: 0.3s;
-            animation-delay: 0.3s; }
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s; }
 
 .body-allwatches .btn-addtobag {
   -webkit-animation: fadeInY 1.5s backwards cubic-bezier(0.215, 0.61, 0.355, 1);
           animation: fadeInY 1.5s backwards cubic-bezier(0.215, 0.61, 0.355, 1); }
   .body-allwatches .btn-addtobag:nth-of-type(1) {
-    -webkit-animation-delay: 0.7s;
-            animation-delay: 0.7s; }
-  .body-allwatches .btn-addtobag:nth-of-type(2) {
-    -webkit-animation-delay: 0.8s;
-            animation-delay: 0.8s; }
-  .body-allwatches .btn-addtobag:nth-of-type(3) {
     -webkit-animation-delay: 0.9s;
             animation-delay: 0.9s; }
+  .body-allwatches .btn-addtobag:nth-of-type(2) {
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s; }
+  .body-allwatches .btn-addtobag:nth-of-type(3) {
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s; }
 
 .body-allwatches .filters {
   -webkit-animation: scaleX 1s backwards cubic-bezier(0.77, 0, 0.175, 1);
@@ -1611,18 +1623,18 @@ h4 {
   .body-allwatches .filters--anim:nth-child(2) {
     -webkit-animation: fadeInScale 1.5s backwards;
             animation: fadeInScale 1.5s backwards;
-    -webkit-animation-delay: 0.6s;
-            animation-delay: 0.6s; }
+    -webkit-animation-delay: 0.7s;
+            animation-delay: 0.7s; }
   .body-allwatches .filters--anim:nth-child(3) {
     -webkit-animation: fadeInScale 1.5s backwards;
             animation: fadeInScale 1.5s backwards;
-    -webkit-animation-delay: 0.7s;
-            animation-delay: 0.7s; }
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s; }
   .body-allwatches .filters--anim:nth-child(4) {
     -webkit-animation: fadeInScale 1.5s backwards;
             animation: fadeInScale 1.5s backwards;
-    -webkit-animation-delay: 0.6s;
-            animation-delay: 0.6s; }
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s; }
 
 @media only screen and (max-width: 56.25em) {
   .body-allwatches .filters, .body-allwatches .filters--anim {
@@ -1635,26 +1647,29 @@ h4 {
     -webkit-animation-delay: 500ms;
             animation-delay: 500ms; }
   .body-allwatches .card:nth-of-type(1) {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .body-allwatches .card:nth-of-type(2) {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .body-allwatches .card:nth-of-type(3) {
     -webkit-animation-delay: 0.4s;
             animation-delay: 0.4s; }
-  .body-allwatches .card:nth-of-type(2) {
-    -webkit-animation-delay: 0.3s;
-            animation-delay: 0.3s; }
-  .body-allwatches .card:nth-of-type(3) {
-    -webkit-animation-delay: 0.3s;
-            animation-delay: 0.3s; }
   .body-allwatches .btn-addtobag:nth-of-type(1) {
-    -webkit-animation-delay: 1s;
-            animation-delay: 1s; }
-  .body-allwatches .btn-addtobag:nth-of-type(2) {
     -webkit-animation-delay: 0.6s;
             animation-delay: 0.6s; }
+  .body-allwatches .btn-addtobag:nth-of-type(2) {
+    -webkit-animation-delay: 0.9s;
+            animation-delay: 0.9s; }
   .body-allwatches .btn-addtobag:nth-of-type(3) {
-    -webkit-animation-delay: 0.7s;
-            animation-delay: 0.7s; }
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s; }
   .body-allwatches .filtermobile {
     -webkit-animation: fadeIn 1.5s backwards cubic-bezier(0.215, 0.61, 0.355, 1) 1s;
             animation: fadeIn 1.5s backwards cubic-bezier(0.215, 0.61, 0.355, 1) 1s; } }
+
+.card-fav-btn--liked {
+  fill: #A6724A !important; }
 
 
 /*# sourceMappingURL=/page-allwatches.7fa45dd6.css.map */

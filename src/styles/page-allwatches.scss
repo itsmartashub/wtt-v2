@@ -17,6 +17,7 @@
 @import './components/filter-sidebar';
 @import './components/filter-mobile';
 @import './components/main-card';
+@import './components/alert-notification';
 
 @import './layouts/header';
 // @import './layouts/intro';
@@ -27,3 +28,5 @@
 @import './layouts/footer';
 @import './layouts/allwatches';
 @import './layouts/body-allwatches';
+
+@import './base/shared';

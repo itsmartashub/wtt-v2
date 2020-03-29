@@ -1,9 +1,9 @@
 // import images from '../../assets/products/*.png';
 
 import Bag from './bag';
-import Storage from './storage'
-import UI from './ui'
-import Filter from './filter'
+import Storage from './Storage'
+import UI from './UI'
+import Filter from './Filter'
 
 const $navbarFavCounter = document.querySelector('.navbar__favs-counter');
 const $fav = document.querySelector('.fav');
@@ -178,7 +178,6 @@ export default class Favourites extends Bag {
 					arr_bag = [...arr_bag, forBagItem];
 					super.arrBag = arr_bag;
 					Storage.saveBag(super.arrBag);
-					console.log(super.arrBag);
 					super.setBagValues(super.arrBag);
 					super.addToBag(forBagItem);
 					this.arrFav = this.arrFav.filter(item => item.id != itemID);
