@@ -6,7 +6,7 @@
 		grid-template-columns: repeat(2, minmax(auto, 50rem));
 		grid-gap: 10vw;
 
-		&:not(:last-child) { margin-bottom: 10vw; }
+		&:not(:last-child) { margin-bottom: 25vw; }
 
 		&:nth-child(odd) {
 			.feature__figure {

@@ -46,6 +46,18 @@ a {
 
 svg > * { pointer-events: none; }
 
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+	background: $bg;
+	width: 1rem;
+}
+::-webkit-scrollbar-thumb {
+	width: 1rem;
+	background: $primary;
+	@extend %border-r;
+	border: 1px solid darken($primary, 6%);
+}
+
 
 .bp {
 	font-size: 2rem;

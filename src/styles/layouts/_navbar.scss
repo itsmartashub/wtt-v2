@@ -10,21 +10,24 @@
 	grid-template-columns: max-content 1fr max-content;
 	grid-gap: 5vw;
 	z-index: $z-navbar;
+	transition: all .5s $inOutQuad;
 
 	&--scrolled {
-		background: rgba($primary, 1);
+		background: $primary !important;
 		box-shadow: 0px 3px 10px 0px rgba($primary, .5);
 		padding: .8rem 10vw;
 
 		.navbar__logo {
-			svg { height: 5rem; width: auto; }
+			padding: .5rem 0;
+			svg { height: 4rem; width: auto; }
 		}
 		.navbar__favs {
-			svg { height: 2.2rem; width: auto; }
+			svg { height: 2.2rem; width: auto;  }
 		}
 		.navbar__bag {
 			svg { height: 2.5rem; width: auto; }
 		}
+		.navbar__nav { a { color: darken($text, 15%); @extend %fw-500; }}
 	}
 
 	&--transparent {
@@ -36,7 +39,7 @@
 		svg {
 			width: auto;
 			height: 5rem;
-			stroke-width: 1px;
+			stroke-width: .5px;
 			stroke: currentColor;
 			fill: $text;
 		}
@@ -114,124 +117,31 @@
 		}
 		&__iconsContainer { grid-column: 3/4; }
 
-		// &__label {
-		// 	grid-column: 1/2;
-		// 	display: block;
-		// }
 		&__burger {
 			grid-column: 1/2;
 			display: block;
-			// z-index: $z-burger-open;
 		}
 
 		&__nav {
 			display: none;
-			// display: grid;
-			// place-items: center;
-			// align-content: center;
-			// grid-gap: 5vh;
-			// grid-template-rows:	2fr 1fr;
-			// text-align: center;
-			// position: fixed;
-			// top: 0;
-			// left: 0;
-			// // bottom: 0;
-			// // right: 0;
-			// background: linear-gradient(to top left, $bag-gr-2, $bag-gr-1);
-			// width: 100%;
-			// min-height: 100vh;
-			// visibility: hidden;
-			// z-index: -1;
-			// transform: translateX(-100%);
-			// transition: all .9s $outSmooth;
-			// overflow-y: auto;
-			// // z-index: $z-navbar-menu;
-
-			// ul, &--footer {
-			// 	transform: scale(0);
-			// 	transition: transform .9s $outSmooth;
-			// 	transition-delay: 0s;
-			// }
-
-			// ul {
-			// 	flex: 1;
-			// 	grid-auto-flow: row;
-			// 	justify-content: center;
-			// 	grid-gap: 3rem 0;
-			// 	margin-top: 30vh;
-				
-			// 	a {
-			// 		font-size: 3rem;
-			// 		font-weight: 500;
-			// 		display: flex;
-			// 		justify-content: center;
-			// 		align-items: center;
-			// 	}
-			// 	span {
-			// 		font-size: 1rem;
-			// 		margin: 0 1.5rem;
-			// 	}
-			// 	li:hover {span{ display: initial; color: $text; }}
-			// }
-			// &--footer {
-			// 	display: grid;
-			// 	grid-gap: 1.5rem;
-			// 	padding: 4rem 0;
-			// 	&::before {
-			// 		// content: '- contacts -';
-			// 		content: '\2022 \0020 \2022 \0020 \2022';
-			// 		color: currentColor;
-			// 		opacity: .8;
-			// 		font-size: 1.2rem;
-			// 	}
-			// 	.email {
-			// 		font-size: 1.8rem;
-			// 		font-weight: 700;
-			// 		text-decoration: underline;
-			// 	}
-			// 	.social {
-			// 		a {
-			// 			&:not(:last-child) { margin-right: 2rem; }
-			// 			&:hover { svg { fill: $card-title;} }
-			// 		}
-			// 		svg {
-			// 			height: 2.8rem;
-			// 			width: auto;
-			// 			fill: currentColor;
-			// 		}
-			// 	}
-			// 	.copyright, .build { font-weight: 500;}
-			// 	.build {font-size: 1.4rem; a { font-weight: 700; text-decoration: underline;} }
-			// }
 		}
 
+		&--scrolled {
+			background: $primary !important;
+			box-shadow: 0px 3px 10px 0px rgba($primary, .5);
 
-		// &__checkbox:checked ~ &__label {
-		// 	&::after, &::before { transform: translate(-48%, -58%) scale(1); }
-		// 	&::before { opacity: .7; }
-		// 	&::after { opacity: .5; }
-
-		// 	.burger-line {
-		// 		background: transparent;
-		// 		&::after,
-		// 		&::before {
-		// 			width: 100%;
-		// 			top: .8rem;
-		// 		}
-		// 		&::after { transform: rotate(45deg); }
-		// 		&::before { transform: rotate(-45deg); }
-		// 	}
-		// }
-		// &__checkbox:checked ~ &__nav {
-		// 	transform: translateX(0%);
-		// 	visibility: visible;
-			
-		// 	ul, .navbar__nav--footer {
-		// 		transform: scale(1);
-		// 		transition: transform .9s $outSmooth .3s;
-		// 	}
-		// 	.navbar__nav--footer { transition-delay: .5s;}
-		// }
+			.navbar__logo {
+				// padding: .5rem 0;
+				svg { height: 5rem; width: auto; }
+			}
+			.navbar__favs {
+				svg { height: 2.7rem; width: auto;  }
+			}
+			.navbar__bag {
+				svg { height: 3.1rem; width: auto; }
+			}
+			.navbar__nav { a { color: darken($text, 15%); }}
+		}
 	}
 
 

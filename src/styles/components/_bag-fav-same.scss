@@ -13,22 +13,36 @@
 	transform: translateX(100%);
 	transition: transform .8s $inOutExpo;
 
-	> * {
+	>* {
 		transform: scale(0);
 		opacity: 0;
 		transition: all 1s $outSmooth;
 	}
 
-	&__header { flex: 1; }
+	// &__header { flex: 1; }
+
+
+	&--if-no-items {
+		text-align: center;
+		font-size: 2rem;
+
+		span {
+			@extend %fw-700;
+		}
+	}
 
 	&__total {
 		font-size: 2rem;
 		margin: 8vh auto 6vh auto;
-		span { @extend %fw-700; }
+
+		span {
+			@extend %fw-700;
+		}
 	}
 
 	&__footer {
 		@extend %text-center;
+
 		svg {
 			stroke-width: 1px;
 			stroke: currentColor;
@@ -38,7 +52,7 @@
 	&--open {
 		transform: translateX(0%) !important;
 
-		> * {
+		>* {
 			transform: scale(1) !important;
 			opacity: 1 !important;
 			transition-delay: .5s;
@@ -48,6 +62,8 @@
 	@include device(tab) {
 		width: 100%;
 		padding: 5rem 10rem 10rem 10rem;
+
+
 
 		.btn-checkout,
 		.btn-clearbag {
@@ -60,12 +76,19 @@
 
 		&__header {
 			padding: 0rem 2.5rem;
+			flex: 1;
 		}
+
+		.items {
+			max-height: 60%;
+		}
+
 		&__footer {
 			display: grid;
 			grid-auto-flow: column;
 			align-items: center;
 		}
+
 		// &__buttons {
 		// 	justify-self: flex-end;
 		// }
@@ -79,13 +102,20 @@
 			border-bottom-right-radius: 0;
 			margin: auto 0 auto auto;
 
-			.btn-icon-wrapper { background: transparent; }
+			.btn-icon-wrapper {
+				background: transparent;
+			}
+
 			svg {
 				width: auto;
 				height: 1.5rem;
 			}
 		}
-		.btn-clearbag { margin-top: 2.5rem; }
+
+		.btn-clearbag {
+			margin-top: 2.5rem;
+		}
+
 		.total-price-items {
 			display: block;
 			font-size: 3rem;
@@ -98,10 +128,13 @@
 	}
 
 
-	@include device(phone-ant) {		
+	@include device(phone-ant) {
 		&__total {
 			padding: 0 3vw;
-			.total-price-items { font-size: 2rem;}
+
+			.total-price-items {
+				font-size: 2rem;
+			}
 		}
 	}
 }

@@ -26,14 +26,10 @@
 		@extend %grid-center;
 		grid-gap: 3rem;
 		margin-top: 25vh;
+		font-size: 3rem;
+		font-weight: 500;
 
-		a {
-			font-size: 3rem;
-			font-weight: 500;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
+		a { @extend %flex-center; }
 		span {
 			font-size: 1rem;
 			margin: 0 1.5rem;
@@ -41,7 +37,12 @@
 			transform: scale(0);
 			transition: all .5s $outSmooth;
 		}
-		li:hover {span{ opacity: 1; transform: scale(1); color: $text; }}
+		li:hover {
+			@extend %flex-center;
+			@extend %cursor;
+			color: $card-title;
+			span { opacity: 1; transform: scale(1); color: $text !important; }
+		}
 	}
 
 	&__footer {

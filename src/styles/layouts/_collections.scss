@@ -17,14 +17,14 @@
 		transition: all .4s $outSmooth;
 
 		&:hover {
-			transform: translateY(-3%);
-			box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
+			// transform: translateY(-3%) !important;
+			box-shadow: 2px 10px 40px 1px rgba($card-title, .1);
 			background: rgba($card-collections, .1);
 		}
 
 		&:nth-child(odd) {
-			transform: translateY(5%);
-			&:hover {	transform: translateY(0%); }
+			// transform: translateY(5%);
+			&:hover {	transform: translateY(0%) !important; }
 		}
 	}
 
@@ -77,7 +77,7 @@
 			color: $btn-collection;
 		}
 	}
-	.btn-primary { margin: 10rem auto; }
+	.btn-primary { margin: 15rem auto; display: inline-block; }
 
 
 
@@ -96,7 +96,6 @@
 		}
 		&__img { height: 15vw; }
 	}
-
 
 	@include device(tab) {
 		&__card { width: 25rem; }
@@ -118,10 +117,16 @@
 		}
 	}
 
+	@include device(phone-land) {
+		.btn-primary { margin: 15rem 8rem; display: block; }
+	}
+	
 	@include device(phone) {
 		&__card { width: 30rem; }
 		&__img { height: 30vw; }
 	}
+
+	@include device(phone-ant) { .btn-primary { margin: 15rem auto;} }
 	
 }
 

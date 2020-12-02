@@ -1,12 +1,17 @@
 import Storage from './Storage'
 import UI from './UI'
 import Filter from './Filter'
+import AlertNotification from './AlertNotification'
 
 const $navbarBagCounter = document.querySelector('.navbar__bag-counter'); // koliko itemsa imamo u bagu
 const $bag = document.querySelector('.bag');
+const $bagFooter = document.querySelector('.bag__footer');
+const $noItemsText = document.querySelector('.bag--if-no-items');
 const $clearBagBtn = document.querySelector('.bag .btn-clearbag');
 const $bagTotal = document.querySelector('.bag .total-price-items');
 const $bagItems = document.querySelector('.bag .items');
+
+const _AlertNotification = new AlertNotification();
 
 let arrAddToBagBtns = [];
 
@@ -25,9 +30,9 @@ export default class Bag {
 
 	getAddToBagBtns() {
 		let $addToBagBtns;
-		if(window.location.pathname == '/index.html' || window.location.pathname == '/') {
+		if (window.location.pathname == '/index.html' || window.location.pathname == '/') {
 			$addToBagBtns = [...document.querySelectorAll('.add-to-bag')];
-		} else if(window.location.pathname == '/allwatches.html') {
+		} else if (window.location.pathname == '/allwatches.html') {
 			$addToBagBtns = [...document.querySelectorAll('.btn-addtobag')];
 		}
 
@@ -37,26 +42,29 @@ export default class Bag {
 			let id = btn.dataset.id;
 			let itemInBag = this.arrBag.find(item => item.id == id);
 
-			if(itemInBag && window.location.pathname == '/index.html') {
+			if (itemInBag && (window.location.pathname == '/' || window.location.pathname == '/index.html')) {
 				btn.classList.add('btn--added');
 				btn.innerHTML = 'ADDED &nbsp;&#10003;';
 				btn.disabled = true;
-			} else if(itemInBag && window.location.pathname == '/allwatches.html') {
+			} else if (itemInBag && window.location.pathname == '/allwatches.html') {
 				btn.closest('.card').classList.add('card--added');
-				btn.disabled = true; 
+				btn.disabled = true;
 			}
 
 			btn.addEventListener('click', e => {
-				if(window.location.pathname == '/' || window.location.pathname == '/index.html') {
+				if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
 					e.target.classList.add('btn--added');
 					e.target.innerHTML = 'ADDED &nbsp;&#10003;';
-				} else if(window.location.pathname == '/allwatches.html') {
+				} else if (window.location.pathname == '/allwatches.html') {
 					e.target.closest('.card').classList.add('card--added');
 				}
 				e.target.disabled = true;
 
 				//? 1. get product from products
-				let bagItem = { ...Storage.getProduct(id), amount: 1 };
+				let bagItem = {
+					...Storage.getProduct(id),
+					amount: 1
+				};
 
 				//? 2. add products to the bag
 				this.arrBag = [...this.arrBag, bagItem];
@@ -70,14 +78,19 @@ export default class Bag {
 				//? 5. display bag item
 				this.addToBag(bagItem);
 
-				//? 5. show the bag
+				_AlertNotification.addNotification({
+					display: true,
+					text: `${bagItem.title} has been added to Bag!`
+				});
+
+				//? 6. show the bag
 				UI.openBagFav($bag, 'bag--open');
 			})
 		})
 	}
 
 	setBagValues(_arrBag) {
-		console.log(this.arrBag);
+		// console.log(this.arrBag);
 		let total_price = 0;
 		let items_counter = 0;
 
@@ -117,6 +130,8 @@ export default class Bag {
 		`;
 
 		$bagItems.appendChild(article);
+		UI.displayNoneTitleNoItems('.bag--if-no-items')
+		// this.setStyleCondition();
 	}
 
 	populateBag(_arrBag) {
@@ -131,24 +146,31 @@ export default class Bag {
 		//? bag functionallity
 		$bagItems.addEventListener('click', e => {
 			//* delete item
-			if(e.target.closest('.item__icon--delete')) { // ! da nisam stavila pointer-events: none; u css-u za sve childove svg elementa, morala bih closest() da koristim, a ne match()
+			if (e.target.closest('.item__icon--delete')) { // ! da nisam stavila pointer-events: none; u css-u za sve childove svg elementa, morala bih closest() da koristim, a ne match()
 				let $deleteItemBtn = e.target;
 				let itemID = $deleteItemBtn.dataset.id;
+				let currItem = this.arrBag.find(item => item.id == itemID);
 
 				$deleteItemBtn.parentElement.classList.add('item--deleted');
+				_AlertNotification.addNotification({
+					text: `${currItem.title} has been removed from Bag!`,
+					alertClass: 'alert__item--removed'
+				});
 
 				setTimeout(() => {
-						this.deleteFromBag(itemID); // uklonili smo iz arrBag, ali nismo i iz DOM-a
+					this.deleteFromBag(itemID); // uklonili smo iz arrBag, ali nismo i iz DOM-a
 					// $bagItems.removeChild(deleteItemBtn.parentElement) || $bagItems.removeChild(deleteItemBtn.parentNode); // za mozilu kao radi parentNode
 					$bagItems.removeChild($deleteItemBtn.parentElement);
 					$deleteItemBtn.parentElement.classList.remove('item--deleted');
 				}, 400);
 
-			//* add item amount
-			} else if(e.target.matches('.item__add')) {
+				//* add item amount
+			} else if (e.target.matches('.item__add')) {
 				let $increaseAmountBtn = e.target;
 				let itemID = $increaseAmountBtn.dataset.id;
 				let currItem = this.arrBag.find(item => item.id == itemID);
+
+				//todo problem je sto je this.arrBag [], nema nista i onda je i currItem undefined i amount samim itm i sve ostalo
 
 				console.log(this.arrBag); //! []
 
@@ -156,18 +178,23 @@ export default class Bag {
 				Storage.saveBag(this.arrBag);
 				this.setBagValues(this.arrBag);
 				$increaseAmountBtn.nextElementSibling.innerText = currItem.amount;
-			} else if(e.target.matches('.item__remove')) {
+			} else if (e.target.matches('.item__remove')) {
 				let $decreaseAmountBtn = e.target;
 				let itemID = $decreaseAmountBtn.dataset.id;
 				let currItem = this.arrBag.find(item => item.id == itemID);
 				currItem.amount = currItem.amount - 1;
 
-				if(currItem.amount > 0) {
+				if (currItem.amount > 0) {
 					Storage.saveBag(this.arrBag);
 					this.setBagValues(this.arrBag);
 					$decreaseAmountBtn.previousElementSibling.innerText = currItem.amount;
 				} else {
 					$decreaseAmountBtn.parentElement.parentElement.classList.add('item--deleted');
+					_AlertNotification.addNotification({
+						// text: `${currItem.title} has been removed from Bag!`,
+						text: `Watch has been removed from the Bag!`,
+						alertClass: 'alert__item--removed'
+					});
 
 					setTimeout(() => {
 						$bagItems.removeChild($decreaseAmountBtn.parentElement.parentElement);
@@ -186,24 +213,55 @@ export default class Bag {
 
 		// console.log($bagItems.children);
 
-		while($bagItems.children.length > 0) {
+		while ($bagItems.children.length > 0) {
 			$bagItems.removeChild($bagItems.children[0])
 		}
 
+		// this.setStyle({bagFooter: 'none', noItems: 'block'});
+		// this.displayBlockTitleNoItems()
+		UI.displayBlockTitleNoItems('.bag--if-no-items')
+
+		_AlertNotification.addNotification({
+			text: `Your Bag is empty!`,
+			alertClass: 'alert__item--remove'
+		});
+
 		UI.closeBagFav($bag, 'bag--open')
 	}
-	
+
+	setStyle({
+		bagFooter,
+		noItems
+	}) {
+		$bagFooter.style.display = bagFooter;
+		$noItemsText.style.display = noItems;
+	}
+	setStyleCondition() {
+		if (this.arrBag.length <= 0) {
+			this.setStyle({
+				bagFooter: 'none',
+				noItems: 'block'
+			});
+		} else {
+			this.setStyle({
+				bagFooter: 'block',
+				noItems: 'none'
+			});
+		}
+	}
+
 	deleteFromBag(itemID) {
 		this.arrBag = this.arrBag.filter(item => item.id != itemID);
 		this.setBagValues(this.arrBag);
 		Storage.saveBag(this.arrBag);
+		// this.setStyleCondition();
 		let ATBbtn = this.getSingleATBbtn(itemID);
 		ATBbtn.disabled = false;
 
-		if(window.location.pathname == '/' || window.location.pathname == '/index.html') {
+		if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
 			ATBbtn.classList.remove('btn--added');
 
-			if(ATBbtn.parentElement.className == 'feature__footer') {
+			if (ATBbtn.parentElement.className == 'feature__footer') {
 				ATBbtn.innerText = 'add to bag';
 			} else {
 				ATBbtn.innerHTML = `
@@ -222,10 +280,18 @@ export default class Bag {
 		return arrAddToBagBtns.find(btn => btn.dataset.id == itemID)
 	}
 
+	// displayNoneTitleNoItems() {
+	// 	document.querySelector('.bag--if-no-items').style.display = 'none'
+	// }
+	// displayBlockTitleNoItems() {
+	// 	document.querySelector('.bag--if-no-items').style.display = 'block'
+	// }
+
 	SETUP_BAG() {
 		this.arrBag = Storage.getBag();
 		this.setBagValues(this.arrBag);
 		this.populateBag(this.arrBag);
+		// this.setStyleCondition();
 	}
 
 }

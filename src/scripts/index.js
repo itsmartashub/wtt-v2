@@ -5,7 +5,7 @@ import Storage from './classes/Storage';
 import Products from './classes/Products';
 import Bag from './classes/Bag';
 import Favourites from './classes/Fav';
-import Filter from './classes/Filter';
+import Observer from './classes/Observer';
 
 // class Proba {
 // 	name = "Rorors";
@@ -58,30 +58,32 @@ import Filter from './classes/Filter';
 document.addEventListener('DOMContentLoaded', () => {
 	const _ui = new UI();
 	const _products = new Products();
-	// const _filter = new Filter();
 	const _bag = new Bag();
 	const _fav = new Favourites();
+	const _observe = new Observer();
 
-	// _ui.SETUP_APP();
 	_ui.SETUP_UI();
 	_bag.SETUP_BAG();
 	_fav.SETUP_FAV();
 
+	if(!!window.IntersectionObserver) {
+		_observe.scroll_observer('collections', 'intro', 'footer');
+	}
+
 	_products.fetchProducts().then(all_products => {
-		// _ui.displayProducts(all_products);
-		// _filter.displayProducts(all_products);
 		Storage.saveProducts(all_products);
 	}).then(() => {
-		// _ui.getAddToBagBtns();
-		// _ui.getFavBtns();
-		// _ui.bagLogic();
-		// _ui.favLogic();
 		_bag.getAddToBagBtns();
 		_fav.getFavBtns();
 		_bag.bagLogic();
 		_fav.favLogic();
-		
-		// _filter.setup_filter();
-		new Filter().setup_filter();
+
+		if(!!window.IntersectionObserver) {
+			_observe.animation_observer();
+		} else {
+			 //todo dodati style za sve elemente da su vidljivi i bez transforma
+			_observe.browserDontSupportObserver();
+			console.log('NE PODRZAVA OBSERVER');
+		}
 	});
 })

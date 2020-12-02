@@ -172,5 +172,6 @@
 
 	@include device(tab) {
 		display: block;
+		&--hidden { display: none; }
 	}
 }

@@ -1,1 +1,4 @@
-novi content
+todo:
+	NA MOBILE VERZIJI:
+	* animation za card prepraviti za manje uredjaje, konkretno za odd elemente transform
+	* 

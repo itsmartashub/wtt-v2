@@ -1,20 +1,21 @@
-// import images from '../../assets/products/*.png';
-
 import Bag from './bag';
 import Storage from './Storage'
 import UI from './UI'
 import Filter from './Filter'
+import AlertNotification from './AlertNotification'
+
 
 const $navbarFavCounter = document.querySelector('.navbar__favs-counter');
 const $fav = document.querySelector('.fav');
+const $favFooter = document.querySelector('.fav__footer');
+const $noItemsText = document.querySelector('.fav--if-no-items');
 
 const $clearFavBtn = document.querySelector('.fav .btn-clearfav');
 const $favItemsCounter = document.querySelector('.fav .total-price-items');
 const $favItems = document.querySelector('.fav .items');
 
-// const _UI = new UI();
-// const _Bag = new Bag();
-// const _Filter = new Filter();
+const _AlertNotification = new AlertNotification();
+
 let arrFavBtns = [];
 
 export default class Favourites extends Bag {
@@ -43,37 +44,48 @@ export default class Favourites extends Bag {
 	// }
 	// arrFav = [];
 	// arrFavBtns = [];
-	
+
 	getFavBtns() {
 		const $favBtns = [...document.querySelectorAll('.card-fav-btn')];
 		arrFavBtns = $favBtns;
-		
+
 		arrFavBtns.forEach(fav => {
 			let itemID = fav.dataset.id;
 			let itemInFav = this.arrFav.find(item => item.id == itemID);
 
-			if(itemInFav) fav.classList.add('card-fav-btn--liked');
+			if (itemInFav) fav.classList.add('card-fav-btn--liked');
 
 			fav.addEventListener('click', () => {
-				if(!fav.classList.contains('card-fav-btn--liked')) {
+				if (!fav.classList.contains('card-fav-btn--liked')) {
 					fav.classList.add('card-fav-btn--liked');
-					let favItem = { ...Storage.getProduct(itemID), amount: 1 };
+					let favItem = {
+						...Storage.getProduct(itemID),
+						amount: 1
+					};
 					this.arrFav = [...this.arrFav, favItem];
 					Storage.saveFav(this.arrFav);
 					this.setFavValues(this.arrFav);
 					this.addToFavourites(favItem);
 
 					//todo dodati alert notify kada dodamo item
+					_AlertNotification.addNotification({
+						text: `${favItem.title} has been added to Favourites!`,
+						alertClass: 'alert__item--added'
+					});
 				} else {
 					fav.classList.remove('card-fav-btn--liked');
 					this.deleteFromFavourites(itemID);
 
 					document.querySelectorAll('.fav .item').forEach(item => {
-						if(item.dataset.id == itemID) $favItems.removeChild(item);
+						if (item.dataset.id == itemID) $favItems.removeChild(item);
 					})
 					this.setFavValues(this.arrFav);
 
 					//todo dodati alert notify kada obrisemo item
+					_AlertNotification.addNotification({
+						text: `Watch has been removed from Favourites!`,
+						alertClass: 'alert__item--removed'
+					});
 				}
 			})
 		})
@@ -116,12 +128,15 @@ export default class Favourites extends Bag {
 		`;
 
 		$favItems.appendChild(article);
+		UI.displayNoneTitleNoItems('.fav--if-no-items')
+		// this.setStyleCondition();
 	}
 
 	deleteFromFavourites(itemID) {
 		this.arrFav = this.arrFav.filter(item => item.id != itemID);
 		this.setFavValues(this.arrFav);
 		Storage.saveFav(this.arrFav);
+		// this.setStyleCondition();
 
 		let favBtn = this.getSingleFavBtn(itemID);
 		this.removeLikedClass(favBtn);
@@ -138,11 +153,39 @@ export default class Favourites extends Bag {
 		let favItemsIDs = this.arrFav.map(item => item.id);
 		favItemsIDs.forEach(itemID => this.deleteFromFavourites(itemID));
 
-		while($favItems.children.length > 0) {
+		while ($favItems.children.length > 0) {
 			$favItems.removeChild($favItems.children[0])
 		}
 
+		// this.setStyle({favFooter: 'none', noItems: 'block'})
+		UI.displayBlockTitleNoItems('.fav--if-no-items')
+
+		_AlertNotification.addNotification({
+			text: `Your Favourites are empty!`,
+			alertClass: 'alert__item--remove'
+		});
+
 		UI.closeBagFav($fav, 'fav--open')
+	}
+	setStyleCondition() {
+		if (this.arrFav.length <= 0) {
+			this.setStyle({
+				favFooter: 'none',
+				noItems: 'block'
+			});
+		} else {
+			this.setStyle({
+				favFooter: 'block',
+				noItems: 'none'
+			});
+		}
+	}
+	setStyle({
+		favFooter,
+		noItems
+	}) {
+		$favFooter.style.display = favFooter;
+		$noItemsText.style.display = noItems;
 	}
 
 	populateFav(_arrFav) {
@@ -155,33 +198,47 @@ export default class Favourites extends Bag {
 		});
 
 		$favItems.addEventListener('click', e => {
-			if(e.target.closest('.item__icon--remove-from-fav')) {
+			if (e.target.closest('.item__icon--remove-from-fav')) {
 				let $deleteItemFromFavBtn = e.target;
 				let itemID = $deleteItemFromFavBtn.dataset.id;
 
 				$deleteItemFromFavBtn.parentElement.classList.add('item--deleted');
+				_AlertNotification.addNotification({
+					text: `Watch has been removed from Favourites!`,
+					alertClass: 'alert__item--removed'
+				});
 				setTimeout(() => {
 					this.deleteFromFavourites(itemID);
 					$favItems.removeChild($deleteItemFromFavBtn.parentElement);
 					$deleteItemFromFavBtn.parentElement.classList.remove('item--deleted');
 				}, 400);
 
-			} else if(e.target.closest('.item__icon--add-to-bag')) {
+			} else if (e.target.closest('.item__icon--add-to-bag')) {
 				let $addItemToBagBtn = e.target;
 				let itemID = $addItemToBagBtn.dataset.id;
-				let forBagItem = {...Storage.getProduct(itemID), amount: 1 };
+				let forBagItem = {
+					...Storage.getProduct(itemID),
+					amount: 1
+				};
 				let arr_bag = Storage.getBag();
 				let isAlreadyInBag = arr_bag.find(item => item.id == forBagItem.id);
 
-				if(!isAlreadyInBag) {
+				if (!isAlreadyInBag) {
 					$addItemToBagBtn.parentElement.classList.add('item--deleted');
 					arr_bag = [...arr_bag, forBagItem];
 					super.arrBag = arr_bag;
 					Storage.saveBag(super.arrBag);
 					super.setBagValues(super.arrBag);
+					// Storage.saveBag(arr_bag);
+					// super.setBagValues(arr_bag);
 					super.addToBag(forBagItem);
+
 					this.arrFav = this.arrFav.filter(item => item.id != itemID);
 					Storage.saveFav(this.arrFav);
+
+					console.log(arr_bag);
+					console.log(super.arrBag);
+
 
 					$addItemToBagBtn.parentElement.classList.add('item--deleted');
 					this.deleteFromFavourites(itemID); // delete iz LS
@@ -191,10 +248,14 @@ export default class Favourites extends Bag {
 						$addItemToBagBtn.parentElement.classList.remove('item--deleted');
 					}, 400);
 
+					_AlertNotification.addNotification({
+						text: `${forBagItem.title} has been added to the Bag!`,
+						alertClass: 'alert__item--added'
+					});
 					//! how to match btn on card and item which is added to bag from fav
-					if(window.location.pathname == '/allwatches.html') {
+					if (window.location.pathname == '/allwatches.html') {
 						let cardAddToBagBtn = document.querySelector('.card .btn-addtobag');
-						if(cardAddToBagBtn.dataset.id == itemID) {
+						if (cardAddToBagBtn.dataset.id == itemID) {
 							cardAddToBagBtn.closest('.card').classList.add('card--added');
 							cardAddToBagBtn.disabled = true;
 						}
@@ -202,10 +263,10 @@ export default class Favourites extends Bag {
 					// this.bagFunctionallity();
 				} else {
 					alert(`${forBagItem.title} watch is already in Bag! You can only remove this item from the Favourites.`)
-					return 
+					return
 				}
 
-				
+
 			}
 		})
 
@@ -216,5 +277,6 @@ export default class Favourites extends Bag {
 		this.arrFav = Storage.getFav();
 		this.setFavValues(this.arrFav);
 		this.populateFav(this.arrFav);
+		// this.setStyleCondition();
 	}
 }

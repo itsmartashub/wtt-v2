@@ -6,6 +6,7 @@ import Storage from './classes/Storage';
 import Bag from './classes/Bag';
 import Favourites from './classes/Fav';
 import Filter from './classes/Filter';
+import Observer from './classes/Observer';
 
 // class Proba {
 // 	name = "Rorors";
@@ -34,7 +35,7 @@ import Filter from './classes/Filter';
 // 		console.log('KEY ' + key);
 // 		console.log('VALUE ' +value);
 // 	})
-	
+
 // 	// LAZY LOADING
 // 	const pages = {
 // 		about: import('./pages/about'),
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const _bag = new Bag();
 	const _fav = new Favourites();
 	const _products = new Products();
+	const _observe = new Observer();
 
 	const _filter = new Filter();
 
@@ -68,22 +70,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	_fav.SETUP_FAV();
 	_ui.SETUP_UI();
 
+	if (!!window.IntersectionObserver) {
+		_observe.scroll_observer('footer', 'title', 'footer');
+	}
+
 	_products.fetchProducts().then(all_products => {
-		// _ui.displayProducts(all_products);
-		// console.log(all_products);
-		// new Filter().displayProducts(all_products);
 		_filter.displayProducts(all_products);
 		Storage.saveProducts(all_products);
 	}).then(() => {
-		// _ui.getAddToBagBtns();
-		// _ui.getFavBtns();
-		// _ui.bagLogic();
-		// _ui.favLogic();
 		_bag.getAddToBagBtns();
 		_fav.getFavBtns();
 		_bag.bagLogic();
 		_fav.favLogic();
-		
+
 		_filter.setup_filter();
 	});
 })

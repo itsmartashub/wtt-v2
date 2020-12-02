@@ -1,7 +1,20 @@
 .items {
-	max-height: 60%;
+	// max-height: 60%;
 	@extend %overflow-hidden;
 	overflow-y: auto;
+
+	&::-webkit-scrollbar,
+	&::-webkit-scrollbar-track {
+		background: $bg;
+		width: 1rem;
+		@extend %border-r;
+	}
+	&::-webkit-scrollbar-thumb {
+		width: 1rem;
+		background: $primary;
+		@extend %border-r;
+		border: 1px solid darken($primary, 6%);
+	}
 }
 
 .item {

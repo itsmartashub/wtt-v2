@@ -22,7 +22,7 @@
 	@include device(tab) {
 		.filters { &, &--anim { animation: none; }}
 
-		.navbar { animation-delay: 1200ms; }
+		.navbar { animation-delay: 1200ms; background: none; }
 
 		.title { animation-delay: 500ms; }
 

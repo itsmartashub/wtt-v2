@@ -40,6 +40,7 @@
 		font-size: 1.4rem;
 		margin-top: .7rem;
 	}
+	&__subtitle { text-transform: uppercase; }
 	&__price {
 		@extend %fw-700;
 		font-size: 2rem;

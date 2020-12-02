@@ -1,7 +1,5 @@
 import images from '../../assets/products/*.png';
 import Storage from './Storage';
-import Bag from './Bag';
-import Favourites from './Fav';
 
 const $arrFilterWomenBtns = document.querySelectorAll('.filter--women');
 const $arrFilterMenBtns = document.querySelectorAll('.filter--men');
@@ -10,13 +8,21 @@ const $productsContainer = document.querySelector('.allwatches__cards');
 const $title = document.querySelector('.allwatches__cards-section .title');
 const $priceSorting = document.querySelectorAll('.price-sorting');
 
+
+// const $filterlinks_women = document.querySelectorAll('.filterlinks--women');
+// const $filterlinks_men = document.querySelectorAll('.filterlinks--men');
+
+const $filtermobile_women = document.querySelector('.filtermobile--women');
+const $filtermobile_men = document.querySelector('.filtermobile--men');
+const $filtermobile_all = document.querySelector('.filtermobile--all');
+
+
+
+const $filtermobileChb = document.querySelector('#filtermobile__chb');
+
 export default class Filter {
-	arrAllProducts = Storage.getAllProducts();
-	arrWomen = this.arrAllProducts.filter(product => product.gender == 'unisex' || product.gender == 'female');
-	arrMen = this.arrAllProducts.filter(product => product.gender == 'unisex' || product.gender == 'male');
 	arrBag = Storage.getBag();
 	$cards;
-
 	$arrWomen;
 	$arrMen;
 	$arrAllWatch;
@@ -59,63 +65,31 @@ export default class Filter {
 
 	makeDOMarrays(_cards) {
 		let arrUnisex = document.querySelectorAll(`[data-gender="unisex"]`);
-		this.arrWomen = [...document.querySelectorAll(`[data-gender="female"]`), ...arrUnisex];
-		this.arrMen = [...document.querySelectorAll(`[data-gender="male"]`), ...arrUnisex];
-		this.arrAllWatches = this.$cards;
+		this.$arrWomen = [...document.querySelectorAll(`[data-gender="female"]`), ...arrUnisex];
+		this.$arrMen = [...document.querySelectorAll(`[data-gender="male"]`), ...arrUnisex];
+		this.$arrAllWatches = this.$cards;
 	}
 
-	filterProducts(_filterArrBtns, _arrForDisplay, _title) {
-		const _bag = new Bag();
-		const _fav = new Favourites();
-
+	filtering(_filterArrBtns, _arrForDisplay, _title) {
 		_filterArrBtns.forEach(filterBtn => {
 			filterBtn.addEventListener('click', () => {
-				// this.displayProducts(_arrForDisplay);
-				this.displayProducts(_arrForDisplay);
-				_bag.getAddToBagBtns();
-				_bag.bagLogic();
-				_fav.getFavBtns();
-				_fav.favLogic();
-				
-				this.changeTitle(_title);
-				// new Bag().getAddToBagBtns();
-			})
-		})
-	}
-
-	filtering(_filterArrBtns, _arrForDisplay, _title, _gender) {
-		// document.body.removeAttribute('class');
-
-		_filterArrBtns.forEach(filterBtn => {
-			filterBtn.addEventListener('click', () => {
-				this.appendingChild(_arrForDisplay, _gender);
+				this.appendingChild(_arrForDisplay);
 				this.changeTitle(_title);
 			})
 		})
 	}
 
-	cardsFilter(_gender, _title) {
-		this.$cards.forEach(card => {
-			if(card.dataset.gender == _gender || card.dataset.gender == 'unisex' ) {
-				card.style.display = 'block';
-
-			} else if(_gender == 'all') {
-				card.style.display = 'block';
-
-			} else {
-				card.style.display = 'none';
-			}
+	filteringMobile(_filterBtn, _arrForDisplay, _title) {
+		_filterBtn.addEventListener('click', () => {
+			this.appendingChild(_arrForDisplay);
+			this.changeTitle(_title);
+			this.closeFiltermobileChb(false);
 		})
 	}
 
 	changeTitle(title) {
 		if($title) {
-			// $title.classList.add('title--anim');
 			$title.innerText = title;
-
-			// setTimeout(() => {
-			// 	$title.classList.remove('title--anim');
-			// }, 500);
 		}
 		//todo dodati animaciju
 	}
@@ -123,14 +97,15 @@ export default class Filter {
 	priceSort() {
 		$priceSorting.forEach(selectEl => {
 			selectEl.addEventListener('change', (e) => {
-				console.log(e.srcElement.selectedIndex);
 				if(e.srcElement.selectedIndex == 1) {
 					//todo fkn priceToHigh
 					this.priceToHigh();
+					this.closeFiltermobileChb(false);
 
 				} else if (e.srcElement.selectedIndex == 2) {
 					//todo fkn priceToLow\
 					this.priceToLow();
+					this.closeFiltermobileChb(false);
 				}
 			})
 		})
@@ -138,28 +113,7 @@ export default class Filter {
 
 	priceToHigh() {
 		// const $cardsParent = document.querySelector('.allwatches__cards');
-		let $arrCards = [...document.querySelectorAll('.card')]
-		
-		$arrCards.sort((a, b) => {
-			a = parseFloat(a.querySelector('.card__price').dataset.price);
-			b = parseFloat(b.querySelector('.card__price').dataset.price);
-
-			if(a > b) return 1
-			else if(a < b) return -1
-			else return 0;
-		});
-		
-		console.log($arrCards);
-		this.appendingChild($arrCards)
-
-		// $arrCards.forEach(card => {
-		// 	$cardsParent.appendChild(card);
-		// })
-	}
-
-	priceToLow() {
-		const $cardsParent = document.querySelector('.allwatches__cards');
-		let $arrCards = [...document.querySelectorAll('.card')]
+		let $arrCards = [...document.querySelectorAll('.card')];
 		
 		$arrCards.sort((a, b) => {
 			a = parseFloat(a.querySelector('.card__price').dataset.price);
@@ -170,28 +124,64 @@ export default class Filter {
 			else return 0;
 		});
 		
-		console.log($arrCards);
+		this.appendingChild($arrCards)
 
-		$arrCards.forEach(card => {
-			$cardsParent.appendChild(card);
-		})
+		// $arrCards.forEach(card => {
+		// 	$cardsParent.appendChild(card);
+		// })
+	}
+
+	priceToLow() {
+		// const $cardsParent = document.querySelector('.allwatches__cards');
+		let $arrCards = [...document.querySelectorAll('.card')];
+		
+		$arrCards.sort((a, b) => {
+			a = parseFloat(a.querySelector('.card__price').dataset.price);
+			b = parseFloat(b.querySelector('.card__price').dataset.price);
+
+			if(a > b) return 1
+			else if(a < b) return -1
+			else return 0;
+		});
+
+		this.appendingChild($arrCards);
+
+		// console.log($filtermobileChb);
+
+
+		
+		// $arrCards.forEach(card => {
+		// 	$cardsParent.appendChild(card);
+		// })
 	}
 
 	appendingChild(_arrForEach, _gender) {
 		const $cardsParent = document.querySelector('.allwatches__cards');
-		$cardsParent.innerHTML = '';
+		$cardsParent.innerHTML = ''; // da nestanu cards koje nisu u ternutno arrayu
 
 		_arrForEach.forEach(card => {
 			$cardsParent.insertAdjacentElement('afterbegin', card);
+			// $cardsParent.appendChild(card);
 		})
 	}
 
+	closeFiltermobileChb(_isChecked) {
+		$filtermobileChb.checked = _isChecked;
+	}
+
+
+
 	setup_filter() {
-		this.filtering($arrFilterWomenBtns, this.arrWomen, 'for her');
-		this.filtering($arrFilterMenBtns, this.arrMen, 'for him');
-		this.filtering($arrFilterAllProductsBtns, this.arrAllWatches, 'all watches');
+		this.filtering($arrFilterWomenBtns, this.$arrWomen, 'for her');
+		this.filtering($arrFilterMenBtns, this.$arrMen, 'for him');
+		this.filtering($arrFilterAllProductsBtns, this.$arrAllWatches, 'all watches');
+
+		this.filteringMobile($filtermobile_women, this.$arrWomen, 'for her');
+		this.filteringMobile($filtermobile_men, this.$arrMen, 'for him');
+		this.filteringMobile($filtermobile_all, this.$arrAllWatches, 'all watches');
 
 		this.priceSort();
 
+		this.closeFiltermobileChb();
 	};
 }

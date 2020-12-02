@@ -4,10 +4,10 @@
   "description": "",
   "main": "src/index.html",
   "scripts": {
-    "start": "parcel src/index.html -p 1234",
-    "build:parcel": "parcel build src/index.html --out-dir prod",
-    "clean": "rm -rf dist/*",
-    "build": "npm run clean && npm run build:parcel"
+	"dev": "parcel src/index.html --port 1234 --open --no-source-maps --no-cache",
+	"build:parcel": "parcel build src/index.html --no-source-maps --no-cache",
+	"clean": "rm -rf dist/*",
+	"build": "npm run clean && npm run build:parcel"
   },
   "keywords": [],
   "author": "Marta Bires",

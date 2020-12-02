@@ -6632,6 +6632,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var $navbar = document.querySelector('.navbar');
+var $navmob = document.querySelector('.navmob');
 var $navbarBag = document.querySelector('.navbar__bag');
 var $bag = document.querySelector('.bag');
 var $closeBagBtn = document.querySelector('.bag .btn-close');
@@ -6660,9 +6661,7 @@ var UI = /*#__PURE__*/function () {
     key: "addListenerToBurger",
     value: function addListenerToBurger() {
       $burger.addEventListener('click', function () {
-        var $navbar = document.querySelector('.navbar');
-        var $navmob = document.querySelector('.navmob');
-
+        // const $navmob = document.querySelector('.navmob');
         if (!$burger.classList.contains('burger--opened')) {
           $burger.classList.add('burger--opened');
           $navmob.classList.add('navmob--opened');
@@ -6678,7 +6677,7 @@ var UI = /*#__PURE__*/function () {
     key: "resizeNavbarOnScroll",
     value: function resizeNavbarOnScroll() {
       window.addEventListener('scroll', function () {
-        if (window.pageYOffset > 30) {
+        if (window.pageYOffset > 30 && !$navmob.classList.contains('navmob--opened')) {
           $navbar.classList.add('navbar--scrolled');
           return;
         }
@@ -6708,6 +6707,16 @@ var UI = /*#__PURE__*/function () {
     key: "closeBagFav",
     value: function closeBagFav(_el, _class) {
       if (_el.classList.contains(_class)) _el.classList.remove(_class); // console.log(this);
+    }
+  }, {
+    key: "displayNoneTitleNoItems",
+    value: function displayNoneTitleNoItems(_selector) {
+      document.querySelector(_selector).style.display = 'none';
+    }
+  }, {
+    key: "displayBlockTitleNoItems",
+    value: function displayBlockTitleNoItems(_selector) {
+      document.querySelector(_selector).style.display = 'block';
     }
   }]);
 
@@ -7027,7 +7036,13 @@ var $arrFilterMenBtns = document.querySelectorAll('.filter--men');
 var $arrFilterAllProductsBtns = document.querySelectorAll('.filter--all');
 var $productsContainer = document.querySelector('.allwatches__cards');
 var $title = document.querySelector('.allwatches__cards-section .title');
-var $priceSorting = document.querySelectorAll('.price-sorting');
+var $priceSorting = document.querySelectorAll('.price-sorting'); // const $filterlinks_women = document.querySelectorAll('.filterlinks--women');
+// const $filterlinks_men = document.querySelectorAll('.filterlinks--men');
+
+var $filtermobile_women = document.querySelector('.filtermobile--women');
+var $filtermobile_men = document.querySelector('.filtermobile--men');
+var $filtermobile_all = document.querySelector('.filtermobile--all');
+var $filtermobileChb = document.querySelector('#filtermobile__chb');
 
 var Filter = /*#__PURE__*/function () {
   function Filter() {
@@ -7066,15 +7081,28 @@ var Filter = /*#__PURE__*/function () {
     }
   }, {
     key: "filtering",
-    value: function filtering(_filterArrBtns, _arrForDisplay, _title, _gender) {
+    value: function filtering(_filterArrBtns, _arrForDisplay, _title) {
       var _this = this;
 
       _filterArrBtns.forEach(function (filterBtn) {
         filterBtn.addEventListener('click', function () {
-          _this.appendingChild(_arrForDisplay, _gender);
+          _this.appendingChild(_arrForDisplay);
 
           _this.changeTitle(_title);
         });
+      });
+    }
+  }, {
+    key: "filteringMobile",
+    value: function filteringMobile(_filterBtn, _arrForDisplay, _title) {
+      var _this2 = this;
+
+      _filterBtn.addEventListener('click', function () {
+        _this2.appendingChild(_arrForDisplay);
+
+        _this2.changeTitle(_title);
+
+        _this2.closeFiltermobileChb(false);
       });
     }
   }, {
@@ -7088,16 +7116,20 @@ var Filter = /*#__PURE__*/function () {
   }, {
     key: "priceSort",
     value: function priceSort() {
-      var _this2 = this;
+      var _this3 = this;
 
       $priceSorting.forEach(function (selectEl) {
         selectEl.addEventListener('change', function (e) {
           if (e.srcElement.selectedIndex == 1) {
             //todo fkn priceToHigh
-            _this2.priceToHigh();
+            _this3.priceToHigh();
+
+            _this3.closeFiltermobileChb(false);
           } else if (e.srcElement.selectedIndex == 2) {
             //todo fkn priceToLow\
-            _this2.priceToLow();
+            _this3.priceToLow();
+
+            _this3.closeFiltermobileChb(false);
           }
         });
       });
@@ -7111,7 +7143,7 @@ var Filter = /*#__PURE__*/function () {
       $arrCards.sort(function (a, b) {
         a = parseFloat(a.querySelector('.card__price').dataset.price);
         b = parseFloat(b.querySelector('.card__price').dataset.price);
-        if (a > b) return 1;else if (a < b) return -1;else return 0;
+        if (a > b) return -1;else if (a < b) return 1;else return 0;
       });
       this.appendingChild($arrCards); // $arrCards.forEach(card => {
       // 	$cardsParent.appendChild(card);
@@ -7126,9 +7158,10 @@ var Filter = /*#__PURE__*/function () {
       $arrCards.sort(function (a, b) {
         a = parseFloat(a.querySelector('.card__price').dataset.price);
         b = parseFloat(b.querySelector('.card__price').dataset.price);
-        if (a > b) return -1;else if (a < b) return 1;else return 0;
+        if (a > b) return 1;else if (a < b) return -1;else return 0;
       });
-      this.appendingChild($arrCards); // $arrCards.forEach(card => {
+      this.appendingChild($arrCards); // console.log($filtermobileChb);
+      // $arrCards.forEach(card => {
       // 	$cardsParent.appendChild(card);
       // })
     }
@@ -7143,12 +7176,21 @@ var Filter = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "closeFiltermobileChb",
+    value: function closeFiltermobileChb(_isChecked) {
+      $filtermobileChb.checked = _isChecked;
+    }
+  }, {
     key: "setup_filter",
     value: function setup_filter() {
       this.filtering($arrFilterWomenBtns, this.$arrWomen, 'for her');
       this.filtering($arrFilterMenBtns, this.$arrMen, 'for him');
       this.filtering($arrFilterAllProductsBtns, this.$arrAllWatches, 'all watches');
+      this.filteringMobile($filtermobile_women, this.$arrWomen, 'for her');
+      this.filteringMobile($filtermobile_men, this.$arrMen, 'for him');
+      this.filteringMobile($filtermobile_all, this.$arrAllWatches, 'all watches');
       this.priceSort();
+      this.closeFiltermobileChb();
     }
   }], [{
     key: "arrObjImgs",
@@ -7214,7 +7256,6 @@ var AlertNotification = /*#__PURE__*/function () {
         article.style.display = 'none'; // article.style.opacity = '0';
         // setTimeout(() => article.style.display = 'none', 500);
       }, 3000);
-      console.log(article);
     } // displayNotification({ display, text, alertClass}) {
     // 	const $alertItem = document.querySelector('.alert');
     // 	if(display) {
@@ -7284,6 +7325,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var $navbarBagCounter = document.querySelector('.navbar__bag-counter'); // koliko itemsa imamo u bagu
 
 var $bag = document.querySelector('.bag');
+var $bagFooter = document.querySelector('.bag__footer');
+var $noItemsText = document.querySelector('.bag--if-no-items');
 var $clearBagBtn = document.querySelector('.bag .btn-clearbag');
 var $bagTotal = document.querySelector('.bag .total-price-items');
 var $bagItems = document.querySelector('.bag .items');
@@ -7320,7 +7363,7 @@ var Bag = /*#__PURE__*/function () {
           return item.id == id;
         });
 
-        if (itemInBag && window.location.pathname == '/index.html') {
+        if (itemInBag && (window.location.pathname == '/' || window.location.pathname == '/index.html')) {
           btn.classList.add('btn--added');
           btn.innerHTML = 'ADDED &nbsp;&#10003;';
           btn.disabled = true;
@@ -7367,7 +7410,7 @@ var Bag = /*#__PURE__*/function () {
   }, {
     key: "setBagValues",
     value: function setBagValues(_arrBag) {
-      console.log(this.arrBag);
+      // console.log(this.arrBag);
       var total_price = 0;
       var items_counter = 0;
 
@@ -7387,6 +7430,9 @@ var Bag = /*#__PURE__*/function () {
       article.classList.add('item');
       article.innerHTML = "\n\t\t\t<figure class=\"item__figure\">\n\t\t\t\t<img class=\"item__img\" src=".concat(arr_obj_imgs[bagItem.id - 1], " alt=\"watch-brown-white-").concat(bagItem.title, "\" />\n\t\t\t</figure>\n\n\t\t\t<div class=\"item__informations\">\n\t\t\t\t<h3 class=\"item__title\">").concat(bagItem.title, "</h3>\n\t\t\t\t<h4 class=\"item__subtitle\">").concat(bagItem.brand, "</h4>\n\t\t\t\t<p class=\"item__price\">$ ").concat(bagItem.price, "</p>\n\t\t\t</div>\n\n\t\t\t<div class=\"item__controller\">\n\t\t\t\t<div class=\"item__add\" data-id=").concat(bagItem.id, ">+</div>\n\t\t\t\t<div class=\"item__amount\">").concat(bagItem.amount, "</div>\n\t\t\t\t<div class=\"item__remove\" data-id=").concat(bagItem.id, ">-</div>\n\t\t\t</div>\n\n\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"item__icon item__icon--delete\" data-id=").concat(bagItem.id, " width=\"17.499\" height=\"20.783\" viewBox=\"0 0 17.499 20.783\">\n\t\t\t\t<path d=\"M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z\" transform=\"translate(6397 2299)\"/>\n\t\t\t</svg>\n\t\t");
       $bagItems.appendChild(article);
+
+      _UI.default.displayNoneTitleNoItems('.bag--if-no-items'); // this.setStyleCondition();
+
     }
   }, {
     key: "populateBag",
@@ -7438,7 +7484,8 @@ var Bag = /*#__PURE__*/function () {
 
           var _currItem = _this3.arrBag.find(function (item) {
             return item.id == _itemID;
-          });
+          }); //todo problem je sto je this.arrBag [], nema nista i onda je i currItem undefined i amount samim itm i sve ostalo
+
 
           console.log(_this3.arrBag); //! []
 
@@ -7469,7 +7516,8 @@ var Bag = /*#__PURE__*/function () {
             $decreaseAmountBtn.parentElement.parentElement.classList.add('item--deleted');
 
             _AlertNotification.addNotification({
-              text: "".concat(_currItem2.title, " has been removed from Bag!"),
+              // text: `${currItem.title} has been removed from Bag!`,
+              text: "Watch has been removed from the Bag!",
               alertClass: 'alert__item--removed'
             });
 
@@ -7499,7 +7547,11 @@ var Bag = /*#__PURE__*/function () {
 
       while ($bagItems.children.length > 0) {
         $bagItems.removeChild($bagItems.children[0]);
-      }
+      } // this.setStyle({bagFooter: 'none', noItems: 'block'});
+      // this.displayBlockTitleNoItems()
+
+
+      _UI.default.displayBlockTitleNoItems('.bag--if-no-items');
 
       _AlertNotification.addNotification({
         text: "Your Bag is empty!",
@@ -7509,6 +7561,29 @@ var Bag = /*#__PURE__*/function () {
       _UI.default.closeBagFav($bag, 'bag--open');
     }
   }, {
+    key: "setStyle",
+    value: function setStyle(_ref) {
+      var bagFooter = _ref.bagFooter,
+          noItems = _ref.noItems;
+      $bagFooter.style.display = bagFooter;
+      $noItemsText.style.display = noItems;
+    }
+  }, {
+    key: "setStyleCondition",
+    value: function setStyleCondition() {
+      if (this.arrBag.length <= 0) {
+        this.setStyle({
+          bagFooter: 'none',
+          noItems: 'block'
+        });
+      } else {
+        this.setStyle({
+          bagFooter: 'block',
+          noItems: 'none'
+        });
+      }
+    }
+  }, {
     key: "deleteFromBag",
     value: function deleteFromBag(itemID) {
       this.arrBag = this.arrBag.filter(function (item) {
@@ -7516,7 +7591,8 @@ var Bag = /*#__PURE__*/function () {
       });
       this.setBagValues(this.arrBag);
 
-      _Storage.default.saveBag(this.arrBag);
+      _Storage.default.saveBag(this.arrBag); // this.setStyleCondition();
+
 
       var ATBbtn = this.getSingleATBbtn(itemID);
       ATBbtn.disabled = false;
@@ -7539,13 +7615,19 @@ var Bag = /*#__PURE__*/function () {
       return arrAddToBagBtns.find(function (btn) {
         return btn.dataset.id == itemID;
       });
-    }
+    } // displayNoneTitleNoItems() {
+    // 	document.querySelector('.bag--if-no-items').style.display = 'none'
+    // }
+    // displayBlockTitleNoItems() {
+    // 	document.querySelector('.bag--if-no-items').style.display = 'block'
+    // }
+
   }, {
     key: "SETUP_BAG",
     value: function SETUP_BAG() {
       this.arrBag = _Storage.default.getBag();
       this.setBagValues(this.arrBag);
-      this.populateBag(this.arrBag);
+      this.populateBag(this.arrBag); // this.setStyleCondition();
     }
   }, {
     key: "arrBag",
@@ -7602,6 +7684,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var $navbarBagCounter = document.querySelector('.navbar__bag-counter'); // koliko itemsa imamo u bagu
 
 var $bag = document.querySelector('.bag');
+var $bagFooter = document.querySelector('.bag__footer');
+var $noItemsText = document.querySelector('.bag--if-no-items');
 var $clearBagBtn = document.querySelector('.bag .btn-clearbag');
 var $bagTotal = document.querySelector('.bag .total-price-items');
 var $bagItems = document.querySelector('.bag .items');
@@ -7638,7 +7722,7 @@ var Bag = /*#__PURE__*/function () {
           return item.id == id;
         });
 
-        if (itemInBag && window.location.pathname == '/index.html') {
+        if (itemInBag && (window.location.pathname == '/' || window.location.pathname == '/index.html')) {
           btn.classList.add('btn--added');
           btn.innerHTML = 'ADDED &nbsp;&#10003;';
           btn.disabled = true;
@@ -7685,7 +7769,7 @@ var Bag = /*#__PURE__*/function () {
   }, {
     key: "setBagValues",
     value: function setBagValues(_arrBag) {
-      console.log(this.arrBag);
+      // console.log(this.arrBag);
       var total_price = 0;
       var items_counter = 0;
 
@@ -7705,6 +7789,9 @@ var Bag = /*#__PURE__*/function () {
       article.classList.add('item');
       article.innerHTML = "\n\t\t\t<figure class=\"item__figure\">\n\t\t\t\t<img class=\"item__img\" src=".concat(arr_obj_imgs[bagItem.id - 1], " alt=\"watch-brown-white-").concat(bagItem.title, "\" />\n\t\t\t</figure>\n\n\t\t\t<div class=\"item__informations\">\n\t\t\t\t<h3 class=\"item__title\">").concat(bagItem.title, "</h3>\n\t\t\t\t<h4 class=\"item__subtitle\">").concat(bagItem.brand, "</h4>\n\t\t\t\t<p class=\"item__price\">$ ").concat(bagItem.price, "</p>\n\t\t\t</div>\n\n\t\t\t<div class=\"item__controller\">\n\t\t\t\t<div class=\"item__add\" data-id=").concat(bagItem.id, ">+</div>\n\t\t\t\t<div class=\"item__amount\">").concat(bagItem.amount, "</div>\n\t\t\t\t<div class=\"item__remove\" data-id=").concat(bagItem.id, ">-</div>\n\t\t\t</div>\n\n\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"item__icon item__icon--delete\" data-id=").concat(bagItem.id, " width=\"17.499\" height=\"20.783\" viewBox=\"0 0 17.499 20.783\">\n\t\t\t\t<path d=\"M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z\" transform=\"translate(6397 2299)\"/>\n\t\t\t</svg>\n\t\t");
       $bagItems.appendChild(article);
+
+      _UI.default.displayNoneTitleNoItems('.bag--if-no-items'); // this.setStyleCondition();
+
     }
   }, {
     key: "populateBag",
@@ -7756,7 +7843,8 @@ var Bag = /*#__PURE__*/function () {
 
           var _currItem = _this3.arrBag.find(function (item) {
             return item.id == _itemID;
-          });
+          }); //todo problem je sto je this.arrBag [], nema nista i onda je i currItem undefined i amount samim itm i sve ostalo
+
 
           console.log(_this3.arrBag); //! []
 
@@ -7787,7 +7875,8 @@ var Bag = /*#__PURE__*/function () {
             $decreaseAmountBtn.parentElement.parentElement.classList.add('item--deleted');
 
             _AlertNotification.addNotification({
-              text: "".concat(_currItem2.title, " has been removed from Bag!"),
+              // text: `${currItem.title} has been removed from Bag!`,
+              text: "Watch has been removed from the Bag!",
               alertClass: 'alert__item--removed'
             });
 
@@ -7817,7 +7906,11 @@ var Bag = /*#__PURE__*/function () {
 
       while ($bagItems.children.length > 0) {
         $bagItems.removeChild($bagItems.children[0]);
-      }
+      } // this.setStyle({bagFooter: 'none', noItems: 'block'});
+      // this.displayBlockTitleNoItems()
+
+
+      _UI.default.displayBlockTitleNoItems('.bag--if-no-items');
 
       _AlertNotification.addNotification({
         text: "Your Bag is empty!",
@@ -7827,6 +7920,29 @@ var Bag = /*#__PURE__*/function () {
       _UI.default.closeBagFav($bag, 'bag--open');
     }
   }, {
+    key: "setStyle",
+    value: function setStyle(_ref) {
+      var bagFooter = _ref.bagFooter,
+          noItems = _ref.noItems;
+      $bagFooter.style.display = bagFooter;
+      $noItemsText.style.display = noItems;
+    }
+  }, {
+    key: "setStyleCondition",
+    value: function setStyleCondition() {
+      if (this.arrBag.length <= 0) {
+        this.setStyle({
+          bagFooter: 'none',
+          noItems: 'block'
+        });
+      } else {
+        this.setStyle({
+          bagFooter: 'block',
+          noItems: 'none'
+        });
+      }
+    }
+  }, {
     key: "deleteFromBag",
     value: function deleteFromBag(itemID) {
       this.arrBag = this.arrBag.filter(function (item) {
@@ -7834,7 +7950,8 @@ var Bag = /*#__PURE__*/function () {
       });
       this.setBagValues(this.arrBag);
 
-      _Storage.default.saveBag(this.arrBag);
+      _Storage.default.saveBag(this.arrBag); // this.setStyleCondition();
+
 
       var ATBbtn = this.getSingleATBbtn(itemID);
       ATBbtn.disabled = false;
@@ -7857,13 +7974,19 @@ var Bag = /*#__PURE__*/function () {
       return arrAddToBagBtns.find(function (btn) {
         return btn.dataset.id == itemID;
       });
-    }
+    } // displayNoneTitleNoItems() {
+    // 	document.querySelector('.bag--if-no-items').style.display = 'none'
+    // }
+    // displayBlockTitleNoItems() {
+    // 	document.querySelector('.bag--if-no-items').style.display = 'block'
+    // }
+
   }, {
     key: "SETUP_BAG",
     value: function SETUP_BAG() {
       this.arrBag = _Storage.default.getBag();
       this.setBagValues(this.arrBag);
-      this.populateBag(this.arrBag);
+      this.populateBag(this.arrBag); // this.setStyleCondition();
     }
   }, {
     key: "arrBag",
@@ -7941,6 +8064,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var $navbarFavCounter = document.querySelector('.navbar__favs-counter');
 var $fav = document.querySelector('.fav');
+var $favFooter = document.querySelector('.fav__footer');
+var $noItemsText = document.querySelector('.fav--if-no-items');
 var $clearFavBtn = document.querySelector('.fav .btn-clearfav');
 var $favItemsCounter = document.querySelector('.fav .total-price-items');
 var $favItems = document.querySelector('.fav .items');
@@ -8048,6 +8173,9 @@ var Favourites = /*#__PURE__*/function (_Bag) {
       article.setAttribute('data-id', "".concat(favItem.id));
       article.innerHTML = "\n\t\t\t<figure class=\"item__figure\">\n\t\t\t\t<img class=\"item__img\" src=".concat(arr_obj_imgs[favItem.id - 1], " alt=\"watch-brown-white-").concat(favItem.title, "\" />\n\t\t\t</figure>\n\n\t\t\t<div class=\"item__informations\">\n\t\t\t\t<h3 class=\"item__title\">").concat(favItem.title, "</h3>\n\t\t\t\t<h4 class=\"item__subtitle\">").concat(favItem.brand, "</h4>\n\t\t\t\t<p class=\"item__price\">$ ").concat(favItem.price, "</p>\n\t\t\t</div>\n\n\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" data-id=").concat(favItem.id, " class=\"item__icon item__icon--add-to-bag\" width=\"16.5\" height=\"21.786\" viewBox=\"0 0 16.5 21.786\">\n\t\t\t\t<path d=\"M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z\" transform=\"translate(6397 2299.001)\"/>\n\t\t\t</svg>\n\n\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" data-id=").concat(favItem.id, " class=\"item__icon item__icon--remove-from-fav\" width=\"17.499\" height=\"20.783\" viewBox=\"0 0 17.499 20.783\">\n\t\t\t\t<path d=\"M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z\" transform=\"translate(6397 2299)\"/>\n\t\t\t</svg>\n\t\t");
       $favItems.appendChild(article);
+
+      _UI.default.displayNoneTitleNoItems('.fav--if-no-items'); // this.setStyleCondition();
+
     }
   }, {
     key: "deleteFromFavourites",
@@ -8057,7 +8185,8 @@ var Favourites = /*#__PURE__*/function (_Bag) {
       });
       this.setFavValues(this.arrFav);
 
-      _Storage.default.saveFav(this.arrFav);
+      _Storage.default.saveFav(this.arrFav); // this.setStyleCondition();
+
 
       var favBtn = this.getSingleFavBtn(itemID);
       this.removeLikedClass(favBtn);
@@ -8086,7 +8215,10 @@ var Favourites = /*#__PURE__*/function (_Bag) {
 
       while ($favItems.children.length > 0) {
         $favItems.removeChild($favItems.children[0]);
-      }
+      } // this.setStyle({favFooter: 'none', noItems: 'block'})
+
+
+      _UI.default.displayBlockTitleNoItems('.fav--if-no-items');
 
       _AlertNotification.addNotification({
         text: "Your Favourites are empty!",
@@ -8094,6 +8226,29 @@ var Favourites = /*#__PURE__*/function (_Bag) {
       });
 
       _UI.default.closeBagFav($fav, 'fav--open');
+    }
+  }, {
+    key: "setStyleCondition",
+    value: function setStyleCondition() {
+      if (this.arrFav.length <= 0) {
+        this.setStyle({
+          favFooter: 'none',
+          noItems: 'block'
+        });
+      } else {
+        this.setStyle({
+          favFooter: 'block',
+          noItems: 'none'
+        });
+      }
+    }
+  }, {
+    key: "setStyle",
+    value: function setStyle(_ref) {
+      var favFooter = _ref.favFooter,
+          noItems = _ref.noItems;
+      $favFooter.style.display = favFooter;
+      $noItemsText.style.display = noItems;
     }
   }, {
     key: "populateFav",
@@ -8151,7 +8306,9 @@ var Favourites = /*#__PURE__*/function (_Bag) {
 
             _Storage.default.saveBag(_get(_getPrototypeOf(Favourites.prototype), "arrBag", _this5));
 
-            _get(_getPrototypeOf(Favourites.prototype), "setBagValues", _this5).call(_this5, _get(_getPrototypeOf(Favourites.prototype), "arrBag", _this5));
+            _get(_getPrototypeOf(Favourites.prototype), "setBagValues", _this5).call(_this5, _get(_getPrototypeOf(Favourites.prototype), "arrBag", _this5)); // Storage.saveBag(arr_bag);
+            // super.setBagValues(arr_bag);
+
 
             _get(_getPrototypeOf(Favourites.prototype), "addToBag", _this5).call(_this5, forBagItem);
 
@@ -8161,20 +8318,23 @@ var Favourites = /*#__PURE__*/function (_Bag) {
 
             _Storage.default.saveFav(_this5.arrFav);
 
+            console.log(arr_bag);
+            console.log(_get(_getPrototypeOf(Favourites.prototype), "arrBag", _this5));
             $addItemToBagBtn.parentElement.classList.add('item--deleted');
 
             _this5.deleteFromFavourites(_itemID); // delete iz LS
 
 
-            _AlertNotification.addNotification({
-              text: "".concat(isAlreadyInBag.title, " has been added to Bag!"),
-              alertClass: 'alert__item--added'
-            });
-
             setTimeout(function () {
               $favItems.removeChild($addItemToBagBtn.parentElement);
               $addItemToBagBtn.parentElement.classList.remove('item--deleted');
-            }, 400); //! how to match btn on card and item which is added to bag from fav
+            }, 400);
+
+            _AlertNotification.addNotification({
+              text: "".concat(forBagItem.title, " has been added to the Bag!"),
+              alertClass: 'alert__item--added'
+            }); //! how to match btn on card and item which is added to bag from fav
+
 
             if (window.location.pathname == '/allwatches.html') {
               var cardAddToBagBtn = document.querySelector('.card .btn-addtobag');
@@ -8197,7 +8357,7 @@ var Favourites = /*#__PURE__*/function (_Bag) {
     value: function SETUP_FAV() {
       this.arrFav = _Storage.default.getFav();
       this.setFavValues(this.arrFav);
-      this.populateFav(this.arrFav);
+      this.populateFav(this.arrFav); // this.setStyleCondition();
     }
   }, {
     key: "arrBag",
@@ -8221,7 +8381,186 @@ var Favourites = /*#__PURE__*/function (_Bag) {
 }(_bag.default);
 
 exports.default = Favourites;
-},{"./bag":"scripts/classes/bag.js","./Storage":"scripts/classes/Storage.js","./UI":"scripts/classes/UI.js","./Filter":"scripts/classes/Filter.js","./AlertNotification":"scripts/classes/AlertNotification.js"}],"scripts/about.js":[function(require,module,exports) {
+},{"./bag":"scripts/classes/bag.js","./Storage":"scripts/classes/Storage.js","./UI":"scripts/classes/UI.js","./Filter":"scripts/classes/Filter.js","./AlertNotification":"scripts/classes/AlertNotification.js"}],"scripts/classes/Observer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var $scrollTop = document.querySelector('.scrolltop');
+var $scrollDown = document.querySelector('.scrolldown');
+var $filtermobile = document.querySelector('.filtermobile'); //? ANIM
+
+var $from_bottom = document.querySelectorAll('.anim-from-bottom');
+var $from_bottom_cards = document.querySelectorAll('.anim-card-from-bottom');
+var $feature_figure = document.querySelectorAll('.feature__figure');
+var $feature_infos = document.querySelectorAll('.feature__infos');
+var $sliders = [].concat(_toConsumableArray($feature_figure), _toConsumableArray($feature_infos));
+var $anim_text = document.querySelectorAll('.anim-text');
+
+var Observer = /*#__PURE__*/function () {
+  function Observer() {
+    _classCallCheck(this, Observer);
+  }
+
+  _createClass(Observer, [{
+    key: "scroll_observer",
+    value: function scroll_observer(_selectorScrolltopShow, _selectorScrolltopHide, _selectorScrolldownHide) {
+      var _this = this;
+
+      var observer = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          // console.log(entry.target.className);
+          if (entry.isIntersecting && entry.target.className == _selectorScrolltopShow) {
+            _this.showScrollTop();
+
+            _this.showScrollDown();
+          } else if (entry.isIntersecting && entry.target.className == _selectorScrolltopHide) {
+            _this.hideScrollTop();
+          }
+
+          if (entry.isIntersecting && entry.target.className == _selectorScrolldownHide) {
+            _this.hideScrollDown();
+
+            if (window.location.pathname == '/allwatches.html') _this.hideFiltermobile();
+          } else {
+            if (window.location.pathname == '/allwatches.html') {
+              _this.showFiltermobile();
+
+              _this.showScrollDown();
+            }
+
+            ;
+          }
+        });
+      });
+      var showScrolltopTriggerEl = document.querySelectorAll(".".concat(_selectorScrolltopShow));
+      var hideScrolltopTriggerEl = document.querySelectorAll(".".concat(_selectorScrolltopHide));
+      var hideScrolldownTriggerEl = document.querySelectorAll(".".concat(_selectorScrolldownHide));
+      var arrObservingElements = [].concat(_toConsumableArray(showScrolltopTriggerEl), _toConsumableArray(hideScrolltopTriggerEl), _toConsumableArray(hideScrolldownTriggerEl)); // console.log(arrObservingElements);
+
+      arrObservingElements.forEach(function (el) {
+        observer.observe(el);
+      });
+    }
+  }, {
+    key: "showScrollTop",
+    value: function showScrollTop() {
+      $scrollTop.classList.add('scrolltop--show');
+    }
+  }, {
+    key: "hideScrollTop",
+    value: function hideScrollTop() {
+      if ($scrollTop.classList.contains('scrolltop--show')) $scrollTop.classList.remove('scrolltop--show');
+    }
+  }, {
+    key: "hideScrollDown",
+    value: function hideScrollDown() {
+      $scrollDown.classList.add('scrolldown--hidden');
+    }
+  }, {
+    key: "showScrollDown",
+    value: function showScrollDown() {
+      if ($scrollDown.classList.contains('scrolldown--hidden')) $scrollDown.classList.remove('scrolldown--hidden');
+    }
+  }, {
+    key: "hideFiltermobile",
+    value: function hideFiltermobile() {
+      $filtermobile.classList.add('filtermobile--hidden');
+      $filtermobile.style.animation = 'none';
+    }
+  }, {
+    key: "showFiltermobile",
+    value: function showFiltermobile() {
+      if ($filtermobile.classList.contains('filtermobile--hidden')) $filtermobile.classList.remove('filtermobile--hidden');
+    }
+  }, {
+    key: "animation_observer",
+    value: function animation_observer() {
+      var appearOptions = {
+        // threshold: 1, //! zelim da se uverim da je cela recimo slika u view-u pre nego sto se pojavi uopste tj fadeinuje
+        threshold: 0.5,
+        //! ali smo ipak stavili na 0 jer za ovo slide-in gde ..
+        rootMargin: '0px 0px 0px 0px'
+      };
+      var appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) {
+            return;
+          } else {
+            entry.target.classList.add('appear');
+            appearOnScroll.unobserve(entry.target); //! stop looking on something when you've done ur job
+          }
+        });
+      }, appearOptions); // this.addObserveToEls($from_bottom, appearOnScroll);
+      // this.addObserveToEls($from_bottom_cards, appearOnScroll);
+      // this.addObserveToEls($sliders, appearOnScroll);
+      // this.addObserveToEls($anim_text, appearOnScroll);
+
+      $from_bottom.forEach(function (bottom) {
+        appearOnScroll.observe(bottom);
+      });
+      $from_bottom_cards.forEach(function (card) {
+        appearOnScroll.observe(card);
+      });
+      $sliders.forEach(function (slider) {
+        appearOnScroll.observe(slider);
+      });
+      $anim_text.forEach(function (text) {
+        appearOnScroll.observe(text);
+      });
+    }
+  }, {
+    key: "addObserveToEls",
+    value: function addObserveToEls(_arrEls, _nameOfObserver) {
+      _arrEls.forEach(function (el) {
+        _nameOfObserver.observe(el);
+      });
+    }
+  }, {
+    key: "browserDontSupportObserver",
+    value: function browserDontSupportObserver() {
+      $from_bottom.forEach(function (bottom) {
+        bottom.style.cssText = "\n\t\t\t\topacity: 1;\n\t\t\t\ttransform: translate3d(0,0,0);\n\t\t\t";
+      });
+      $from_bottom_cards.forEach(function (card) {
+        card.style.cssText = "\n\t\t\t\topacity: 1;\n\t\t\t\ttransform: inherit;\n\t\t\t";
+      });
+      $sliders.forEach(function (slider) {
+        slider.style.cssText = "\n\t\t\t\topacity: 1;\n\t\t\t\ttransform: translate3d(0,0,0);\n\t\t\t";
+      });
+      $anim_text.forEach(function (text) {
+        text.style.cssText = "\n\t\t\t\topacity: 1;\n\t\t\t\tletter-spacing: inherit;\n\t\t\t";
+      });
+    }
+  }, {
+    key: "SETUP_OBSERVER",
+    value: function SETUP_OBSERVER(_selector) {
+      this.scroll_observer(_selector); // this.animation_observe();
+    }
+  }]);
+
+  return Observer;
+}();
+
+exports.default = Observer;
+},{}],"scripts/all_watches.js":[function(require,module,exports) {
 "use strict";
 
 require("core-js/modules/es6.array.copy-within");
@@ -8500,6 +8839,8 @@ var _Fav = _interopRequireDefault(require("./classes/Fav"));
 
 var _Filter = _interopRequireDefault(require("./classes/Filter"));
 
+var _Observer = _interopRequireDefault(require("./classes/Observer"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // class Proba {
@@ -8545,6 +8886,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var _products = new _Products.default();
 
+  var _observe = new _Observer.default();
+
   var _filter = new _Filter.default(); // // _ui.SETUP_APP();
 
 
@@ -8554,18 +8897,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   _ui.SETUP_UI();
 
+  if (!!window.IntersectionObserver) {
+    _observe.scroll_observer('footer', 'title', 'footer');
+  }
+
   _products.fetchProducts().then(function (all_products) {
-    // _ui.displayProducts(all_products);
-    // console.log(all_products);
-    // new Filter().displayProducts(all_products);
     _filter.displayProducts(all_products);
 
     _Storage.default.saveProducts(all_products);
   }).then(function () {
-    // _ui.getAddToBagBtns();
-    // _ui.getFavBtns();
-    // _ui.bagLogic();
-    // _ui.favLogic();
     _bag.getAddToBagBtns();
 
     _fav.getFavBtns();
@@ -8577,7 +8917,7 @@ document.addEventListener('DOMContentLoaded', function () {
     _filter.setup_filter();
   });
 });
-},{"core-js/modules/es6.array.copy-within":"../node_modules/core-js/modules/es6.array.copy-within.js","core-js/modules/es6.array.fill":"../node_modules/core-js/modules/es6.array.fill.js","core-js/modules/es6.array.find":"../node_modules/core-js/modules/es6.array.find.js","core-js/modules/es6.array.find-index":"../node_modules/core-js/modules/es6.array.find-index.js","core-js/modules/es7.array.flat-map":"../node_modules/core-js/modules/es7.array.flat-map.js","core-js/modules/es6.array.from":"../node_modules/core-js/modules/es6.array.from.js","core-js/modules/es7.array.includes":"../node_modules/core-js/modules/es7.array.includes.js","core-js/modules/es6.array.iterator":"../node_modules/core-js/modules/es6.array.iterator.js","core-js/modules/es6.array.of":"../node_modules/core-js/modules/es6.array.of.js","core-js/modules/es6.array.sort":"../node_modules/core-js/modules/es6.array.sort.js","core-js/modules/es6.array.species":"../node_modules/core-js/modules/es6.array.species.js","core-js/modules/es6.date.to-json":"../node_modules/core-js/modules/es6.date.to-json.js","core-js/modules/es6.date.to-primitive":"../node_modules/core-js/modules/es6.date.to-primitive.js","core-js/modules/es6.date.to-string":"../node_modules/core-js/modules/es6.date.to-string.js","core-js/modules/es6.function.has-instance":"../node_modules/core-js/modules/es6.function.has-instance.js","core-js/modules/es6.function.name":"../node_modules/core-js/modules/es6.function.name.js","core-js/modules/es6.map":"../node_modules/core-js/modules/es6.map.js","core-js/modules/es6.math.acosh":"../node_modules/core-js/modules/es6.math.acosh.js","core-js/modules/es6.math.asinh":"../node_modules/core-js/modules/es6.math.asinh.js","core-js/modules/es6.math.atanh":"../node_modules/core-js/modules/es6.math.atanh.js","core-js/modules/es6.math.cbrt":"../node_modules/core-js/modules/es6.math.cbrt.js","core-js/modules/es6.math.clz32":"../node_modules/core-js/modules/es6.math.clz32.js","core-js/modules/es6.math.cosh":"../node_modules/core-js/modules/es6.math.cosh.js","core-js/modules/es6.math.expm1":"../node_modules/core-js/modules/es6.math.expm1.js","core-js/modules/es6.math.fround":"../node_modules/core-js/modules/es6.math.fround.js","core-js/modules/es6.math.hypot":"../node_modules/core-js/modules/es6.math.hypot.js","core-js/modules/es6.math.imul":"../node_modules/core-js/modules/es6.math.imul.js","core-js/modules/es6.math.log1p":"../node_modules/core-js/modules/es6.math.log1p.js","core-js/modules/es6.math.log10":"../node_modules/core-js/modules/es6.math.log10.js","core-js/modules/es6.math.log2":"../node_modules/core-js/modules/es6.math.log2.js","core-js/modules/es6.math.sign":"../node_modules/core-js/modules/es6.math.sign.js","core-js/modules/es6.math.sinh":"../node_modules/core-js/modules/es6.math.sinh.js","core-js/modules/es6.math.tanh":"../node_modules/core-js/modules/es6.math.tanh.js","core-js/modules/es6.math.trunc":"../node_modules/core-js/modules/es6.math.trunc.js","core-js/modules/es6.number.constructor":"../node_modules/core-js/modules/es6.number.constructor.js","core-js/modules/es6.number.epsilon":"../node_modules/core-js/modules/es6.number.epsilon.js","core-js/modules/es6.number.is-finite":"../node_modules/core-js/modules/es6.number.is-finite.js","core-js/modules/es6.number.is-integer":"../node_modules/core-js/modules/es6.number.is-integer.js","core-js/modules/es6.number.is-nan":"../node_modules/core-js/modules/es6.number.is-nan.js","core-js/modules/es6.number.is-safe-integer":"../node_modules/core-js/modules/es6.number.is-safe-integer.js","core-js/modules/es6.number.max-safe-integer":"../node_modules/core-js/modules/es6.number.max-safe-integer.js","core-js/modules/es6.number.min-safe-integer":"../node_modules/core-js/modules/es6.number.min-safe-integer.js","core-js/modules/es6.number.parse-float":"../node_modules/core-js/modules/es6.number.parse-float.js","core-js/modules/es6.number.parse-int":"../node_modules/core-js/modules/es6.number.parse-int.js","core-js/modules/es6.object.assign":"../node_modules/core-js/modules/es6.object.assign.js","core-js/modules/es7.object.define-getter":"../node_modules/core-js/modules/es7.object.define-getter.js","core-js/modules/es7.object.define-setter":"../node_modules/core-js/modules/es7.object.define-setter.js","core-js/modules/es7.object.entries":"../node_modules/core-js/modules/es7.object.entries.js","core-js/modules/es6.object.freeze":"../node_modules/core-js/modules/es6.object.freeze.js","core-js/modules/es6.object.get-own-property-descriptor":"../node_modules/core-js/modules/es6.object.get-own-property-descriptor.js","core-js/modules/es7.object.get-own-property-descriptors":"../node_modules/core-js/modules/es7.object.get-own-property-descriptors.js","core-js/modules/es6.object.get-own-property-names":"../node_modules/core-js/modules/es6.object.get-own-property-names.js","core-js/modules/es6.object.get-prototype-of":"../node_modules/core-js/modules/es6.object.get-prototype-of.js","core-js/modules/es7.object.lookup-getter":"../node_modules/core-js/modules/es7.object.lookup-getter.js","core-js/modules/es7.object.lookup-setter":"../node_modules/core-js/modules/es7.object.lookup-setter.js","core-js/modules/es6.object.prevent-extensions":"../node_modules/core-js/modules/es6.object.prevent-extensions.js","core-js/modules/es6.object.to-string":"../node_modules/core-js/modules/es6.object.to-string.js","core-js/modules/es6.object.is":"../node_modules/core-js/modules/es6.object.is.js","core-js/modules/es6.object.is-frozen":"../node_modules/core-js/modules/es6.object.is-frozen.js","core-js/modules/es6.object.is-sealed":"../node_modules/core-js/modules/es6.object.is-sealed.js","core-js/modules/es6.object.is-extensible":"../node_modules/core-js/modules/es6.object.is-extensible.js","core-js/modules/es6.object.keys":"../node_modules/core-js/modules/es6.object.keys.js","core-js/modules/es6.object.seal":"../node_modules/core-js/modules/es6.object.seal.js","core-js/modules/es6.object.set-prototype-of":"../node_modules/core-js/modules/es6.object.set-prototype-of.js","core-js/modules/es7.object.values":"../node_modules/core-js/modules/es7.object.values.js","core-js/modules/es6.promise":"../node_modules/core-js/modules/es6.promise.js","core-js/modules/es7.promise.finally":"../node_modules/core-js/modules/es7.promise.finally.js","core-js/modules/es6.reflect.apply":"../node_modules/core-js/modules/es6.reflect.apply.js","core-js/modules/es6.reflect.construct":"../node_modules/core-js/modules/es6.reflect.construct.js","core-js/modules/es6.reflect.define-property":"../node_modules/core-js/modules/es6.reflect.define-property.js","core-js/modules/es6.reflect.delete-property":"../node_modules/core-js/modules/es6.reflect.delete-property.js","core-js/modules/es6.reflect.get":"../node_modules/core-js/modules/es6.reflect.get.js","core-js/modules/es6.reflect.get-own-property-descriptor":"../node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js","core-js/modules/es6.reflect.get-prototype-of":"../node_modules/core-js/modules/es6.reflect.get-prototype-of.js","core-js/modules/es6.reflect.has":"../node_modules/core-js/modules/es6.reflect.has.js","core-js/modules/es6.reflect.is-extensible":"../node_modules/core-js/modules/es6.reflect.is-extensible.js","core-js/modules/es6.reflect.own-keys":"../node_modules/core-js/modules/es6.reflect.own-keys.js","core-js/modules/es6.reflect.prevent-extensions":"../node_modules/core-js/modules/es6.reflect.prevent-extensions.js","core-js/modules/es6.reflect.set":"../node_modules/core-js/modules/es6.reflect.set.js","core-js/modules/es6.reflect.set-prototype-of":"../node_modules/core-js/modules/es6.reflect.set-prototype-of.js","core-js/modules/es6.regexp.constructor":"../node_modules/core-js/modules/es6.regexp.constructor.js","core-js/modules/es6.regexp.flags":"../node_modules/core-js/modules/es6.regexp.flags.js","core-js/modules/es6.regexp.match":"../node_modules/core-js/modules/es6.regexp.match.js","core-js/modules/es6.regexp.replace":"../node_modules/core-js/modules/es6.regexp.replace.js","core-js/modules/es6.regexp.split":"../node_modules/core-js/modules/es6.regexp.split.js","core-js/modules/es6.regexp.search":"../node_modules/core-js/modules/es6.regexp.search.js","core-js/modules/es6.regexp.to-string":"../node_modules/core-js/modules/es6.regexp.to-string.js","core-js/modules/es6.set":"../node_modules/core-js/modules/es6.set.js","core-js/modules/es6.symbol":"../node_modules/core-js/modules/es6.symbol.js","core-js/modules/es7.symbol.async-iterator":"../node_modules/core-js/modules/es7.symbol.async-iterator.js","core-js/modules/es6.string.anchor":"../node_modules/core-js/modules/es6.string.anchor.js","core-js/modules/es6.string.big":"../node_modules/core-js/modules/es6.string.big.js","core-js/modules/es6.string.blink":"../node_modules/core-js/modules/es6.string.blink.js","core-js/modules/es6.string.bold":"../node_modules/core-js/modules/es6.string.bold.js","core-js/modules/es6.string.code-point-at":"../node_modules/core-js/modules/es6.string.code-point-at.js","core-js/modules/es6.string.ends-with":"../node_modules/core-js/modules/es6.string.ends-with.js","core-js/modules/es6.string.fixed":"../node_modules/core-js/modules/es6.string.fixed.js","core-js/modules/es6.string.fontcolor":"../node_modules/core-js/modules/es6.string.fontcolor.js","core-js/modules/es6.string.fontsize":"../node_modules/core-js/modules/es6.string.fontsize.js","core-js/modules/es6.string.from-code-point":"../node_modules/core-js/modules/es6.string.from-code-point.js","core-js/modules/es6.string.includes":"../node_modules/core-js/modules/es6.string.includes.js","core-js/modules/es6.string.italics":"../node_modules/core-js/modules/es6.string.italics.js","core-js/modules/es6.string.iterator":"../node_modules/core-js/modules/es6.string.iterator.js","core-js/modules/es6.string.link":"../node_modules/core-js/modules/es6.string.link.js","core-js/modules/es7.string.pad-start":"../node_modules/core-js/modules/es7.string.pad-start.js","core-js/modules/es7.string.pad-end":"../node_modules/core-js/modules/es7.string.pad-end.js","core-js/modules/es6.string.raw":"../node_modules/core-js/modules/es6.string.raw.js","core-js/modules/es6.string.repeat":"../node_modules/core-js/modules/es6.string.repeat.js","core-js/modules/es6.string.small":"../node_modules/core-js/modules/es6.string.small.js","core-js/modules/es6.string.starts-with":"../node_modules/core-js/modules/es6.string.starts-with.js","core-js/modules/es6.string.strike":"../node_modules/core-js/modules/es6.string.strike.js","core-js/modules/es6.string.sub":"../node_modules/core-js/modules/es6.string.sub.js","core-js/modules/es6.string.sup":"../node_modules/core-js/modules/es6.string.sup.js","core-js/modules/es7.string.trim-left":"../node_modules/core-js/modules/es7.string.trim-left.js","core-js/modules/es7.string.trim-right":"../node_modules/core-js/modules/es7.string.trim-right.js","core-js/modules/es6.typed.array-buffer":"../node_modules/core-js/modules/es6.typed.array-buffer.js","core-js/modules/es6.typed.data-view":"../node_modules/core-js/modules/es6.typed.data-view.js","core-js/modules/es6.typed.int8-array":"../node_modules/core-js/modules/es6.typed.int8-array.js","core-js/modules/es6.typed.uint8-array":"../node_modules/core-js/modules/es6.typed.uint8-array.js","core-js/modules/es6.typed.uint8-clamped-array":"../node_modules/core-js/modules/es6.typed.uint8-clamped-array.js","core-js/modules/es6.typed.int16-array":"../node_modules/core-js/modules/es6.typed.int16-array.js","core-js/modules/es6.typed.uint16-array":"../node_modules/core-js/modules/es6.typed.uint16-array.js","core-js/modules/es6.typed.int32-array":"../node_modules/core-js/modules/es6.typed.int32-array.js","core-js/modules/es6.typed.uint32-array":"../node_modules/core-js/modules/es6.typed.uint32-array.js","core-js/modules/es6.typed.float32-array":"../node_modules/core-js/modules/es6.typed.float32-array.js","core-js/modules/es6.typed.float64-array":"../node_modules/core-js/modules/es6.typed.float64-array.js","core-js/modules/es6.weak-map":"../node_modules/core-js/modules/es6.weak-map.js","core-js/modules/es6.weak-set":"../node_modules/core-js/modules/es6.weak-set.js","core-js/modules/web.timers":"../node_modules/core-js/modules/web.timers.js","core-js/modules/web.immediate":"../node_modules/core-js/modules/web.immediate.js","core-js/modules/web.dom.iterable":"../node_modules/core-js/modules/web.dom.iterable.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","./classes/UI":"scripts/classes/UI.js","./classes/Products":"scripts/classes/Products.js","./classes/Storage":"scripts/classes/Storage.js","./classes/Bag":"scripts/classes/Bag.js","./classes/Fav":"scripts/classes/Fav.js","./classes/Filter":"scripts/classes/Filter.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"core-js/modules/es6.array.copy-within":"../node_modules/core-js/modules/es6.array.copy-within.js","core-js/modules/es6.array.fill":"../node_modules/core-js/modules/es6.array.fill.js","core-js/modules/es6.array.find":"../node_modules/core-js/modules/es6.array.find.js","core-js/modules/es6.array.find-index":"../node_modules/core-js/modules/es6.array.find-index.js","core-js/modules/es7.array.flat-map":"../node_modules/core-js/modules/es7.array.flat-map.js","core-js/modules/es6.array.from":"../node_modules/core-js/modules/es6.array.from.js","core-js/modules/es7.array.includes":"../node_modules/core-js/modules/es7.array.includes.js","core-js/modules/es6.array.iterator":"../node_modules/core-js/modules/es6.array.iterator.js","core-js/modules/es6.array.of":"../node_modules/core-js/modules/es6.array.of.js","core-js/modules/es6.array.sort":"../node_modules/core-js/modules/es6.array.sort.js","core-js/modules/es6.array.species":"../node_modules/core-js/modules/es6.array.species.js","core-js/modules/es6.date.to-json":"../node_modules/core-js/modules/es6.date.to-json.js","core-js/modules/es6.date.to-primitive":"../node_modules/core-js/modules/es6.date.to-primitive.js","core-js/modules/es6.date.to-string":"../node_modules/core-js/modules/es6.date.to-string.js","core-js/modules/es6.function.has-instance":"../node_modules/core-js/modules/es6.function.has-instance.js","core-js/modules/es6.function.name":"../node_modules/core-js/modules/es6.function.name.js","core-js/modules/es6.map":"../node_modules/core-js/modules/es6.map.js","core-js/modules/es6.math.acosh":"../node_modules/core-js/modules/es6.math.acosh.js","core-js/modules/es6.math.asinh":"../node_modules/core-js/modules/es6.math.asinh.js","core-js/modules/es6.math.atanh":"../node_modules/core-js/modules/es6.math.atanh.js","core-js/modules/es6.math.cbrt":"../node_modules/core-js/modules/es6.math.cbrt.js","core-js/modules/es6.math.clz32":"../node_modules/core-js/modules/es6.math.clz32.js","core-js/modules/es6.math.cosh":"../node_modules/core-js/modules/es6.math.cosh.js","core-js/modules/es6.math.expm1":"../node_modules/core-js/modules/es6.math.expm1.js","core-js/modules/es6.math.fround":"../node_modules/core-js/modules/es6.math.fround.js","core-js/modules/es6.math.hypot":"../node_modules/core-js/modules/es6.math.hypot.js","core-js/modules/es6.math.imul":"../node_modules/core-js/modules/es6.math.imul.js","core-js/modules/es6.math.log1p":"../node_modules/core-js/modules/es6.math.log1p.js","core-js/modules/es6.math.log10":"../node_modules/core-js/modules/es6.math.log10.js","core-js/modules/es6.math.log2":"../node_modules/core-js/modules/es6.math.log2.js","core-js/modules/es6.math.sign":"../node_modules/core-js/modules/es6.math.sign.js","core-js/modules/es6.math.sinh":"../node_modules/core-js/modules/es6.math.sinh.js","core-js/modules/es6.math.tanh":"../node_modules/core-js/modules/es6.math.tanh.js","core-js/modules/es6.math.trunc":"../node_modules/core-js/modules/es6.math.trunc.js","core-js/modules/es6.number.constructor":"../node_modules/core-js/modules/es6.number.constructor.js","core-js/modules/es6.number.epsilon":"../node_modules/core-js/modules/es6.number.epsilon.js","core-js/modules/es6.number.is-finite":"../node_modules/core-js/modules/es6.number.is-finite.js","core-js/modules/es6.number.is-integer":"../node_modules/core-js/modules/es6.number.is-integer.js","core-js/modules/es6.number.is-nan":"../node_modules/core-js/modules/es6.number.is-nan.js","core-js/modules/es6.number.is-safe-integer":"../node_modules/core-js/modules/es6.number.is-safe-integer.js","core-js/modules/es6.number.max-safe-integer":"../node_modules/core-js/modules/es6.number.max-safe-integer.js","core-js/modules/es6.number.min-safe-integer":"../node_modules/core-js/modules/es6.number.min-safe-integer.js","core-js/modules/es6.number.parse-float":"../node_modules/core-js/modules/es6.number.parse-float.js","core-js/modules/es6.number.parse-int":"../node_modules/core-js/modules/es6.number.parse-int.js","core-js/modules/es6.object.assign":"../node_modules/core-js/modules/es6.object.assign.js","core-js/modules/es7.object.define-getter":"../node_modules/core-js/modules/es7.object.define-getter.js","core-js/modules/es7.object.define-setter":"../node_modules/core-js/modules/es7.object.define-setter.js","core-js/modules/es7.object.entries":"../node_modules/core-js/modules/es7.object.entries.js","core-js/modules/es6.object.freeze":"../node_modules/core-js/modules/es6.object.freeze.js","core-js/modules/es6.object.get-own-property-descriptor":"../node_modules/core-js/modules/es6.object.get-own-property-descriptor.js","core-js/modules/es7.object.get-own-property-descriptors":"../node_modules/core-js/modules/es7.object.get-own-property-descriptors.js","core-js/modules/es6.object.get-own-property-names":"../node_modules/core-js/modules/es6.object.get-own-property-names.js","core-js/modules/es6.object.get-prototype-of":"../node_modules/core-js/modules/es6.object.get-prototype-of.js","core-js/modules/es7.object.lookup-getter":"../node_modules/core-js/modules/es7.object.lookup-getter.js","core-js/modules/es7.object.lookup-setter":"../node_modules/core-js/modules/es7.object.lookup-setter.js","core-js/modules/es6.object.prevent-extensions":"../node_modules/core-js/modules/es6.object.prevent-extensions.js","core-js/modules/es6.object.to-string":"../node_modules/core-js/modules/es6.object.to-string.js","core-js/modules/es6.object.is":"../node_modules/core-js/modules/es6.object.is.js","core-js/modules/es6.object.is-frozen":"../node_modules/core-js/modules/es6.object.is-frozen.js","core-js/modules/es6.object.is-sealed":"../node_modules/core-js/modules/es6.object.is-sealed.js","core-js/modules/es6.object.is-extensible":"../node_modules/core-js/modules/es6.object.is-extensible.js","core-js/modules/es6.object.keys":"../node_modules/core-js/modules/es6.object.keys.js","core-js/modules/es6.object.seal":"../node_modules/core-js/modules/es6.object.seal.js","core-js/modules/es6.object.set-prototype-of":"../node_modules/core-js/modules/es6.object.set-prototype-of.js","core-js/modules/es7.object.values":"../node_modules/core-js/modules/es7.object.values.js","core-js/modules/es6.promise":"../node_modules/core-js/modules/es6.promise.js","core-js/modules/es7.promise.finally":"../node_modules/core-js/modules/es7.promise.finally.js","core-js/modules/es6.reflect.apply":"../node_modules/core-js/modules/es6.reflect.apply.js","core-js/modules/es6.reflect.construct":"../node_modules/core-js/modules/es6.reflect.construct.js","core-js/modules/es6.reflect.define-property":"../node_modules/core-js/modules/es6.reflect.define-property.js","core-js/modules/es6.reflect.delete-property":"../node_modules/core-js/modules/es6.reflect.delete-property.js","core-js/modules/es6.reflect.get":"../node_modules/core-js/modules/es6.reflect.get.js","core-js/modules/es6.reflect.get-own-property-descriptor":"../node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js","core-js/modules/es6.reflect.get-prototype-of":"../node_modules/core-js/modules/es6.reflect.get-prototype-of.js","core-js/modules/es6.reflect.has":"../node_modules/core-js/modules/es6.reflect.has.js","core-js/modules/es6.reflect.is-extensible":"../node_modules/core-js/modules/es6.reflect.is-extensible.js","core-js/modules/es6.reflect.own-keys":"../node_modules/core-js/modules/es6.reflect.own-keys.js","core-js/modules/es6.reflect.prevent-extensions":"../node_modules/core-js/modules/es6.reflect.prevent-extensions.js","core-js/modules/es6.reflect.set":"../node_modules/core-js/modules/es6.reflect.set.js","core-js/modules/es6.reflect.set-prototype-of":"../node_modules/core-js/modules/es6.reflect.set-prototype-of.js","core-js/modules/es6.regexp.constructor":"../node_modules/core-js/modules/es6.regexp.constructor.js","core-js/modules/es6.regexp.flags":"../node_modules/core-js/modules/es6.regexp.flags.js","core-js/modules/es6.regexp.match":"../node_modules/core-js/modules/es6.regexp.match.js","core-js/modules/es6.regexp.replace":"../node_modules/core-js/modules/es6.regexp.replace.js","core-js/modules/es6.regexp.split":"../node_modules/core-js/modules/es6.regexp.split.js","core-js/modules/es6.regexp.search":"../node_modules/core-js/modules/es6.regexp.search.js","core-js/modules/es6.regexp.to-string":"../node_modules/core-js/modules/es6.regexp.to-string.js","core-js/modules/es6.set":"../node_modules/core-js/modules/es6.set.js","core-js/modules/es6.symbol":"../node_modules/core-js/modules/es6.symbol.js","core-js/modules/es7.symbol.async-iterator":"../node_modules/core-js/modules/es7.symbol.async-iterator.js","core-js/modules/es6.string.anchor":"../node_modules/core-js/modules/es6.string.anchor.js","core-js/modules/es6.string.big":"../node_modules/core-js/modules/es6.string.big.js","core-js/modules/es6.string.blink":"../node_modules/core-js/modules/es6.string.blink.js","core-js/modules/es6.string.bold":"../node_modules/core-js/modules/es6.string.bold.js","core-js/modules/es6.string.code-point-at":"../node_modules/core-js/modules/es6.string.code-point-at.js","core-js/modules/es6.string.ends-with":"../node_modules/core-js/modules/es6.string.ends-with.js","core-js/modules/es6.string.fixed":"../node_modules/core-js/modules/es6.string.fixed.js","core-js/modules/es6.string.fontcolor":"../node_modules/core-js/modules/es6.string.fontcolor.js","core-js/modules/es6.string.fontsize":"../node_modules/core-js/modules/es6.string.fontsize.js","core-js/modules/es6.string.from-code-point":"../node_modules/core-js/modules/es6.string.from-code-point.js","core-js/modules/es6.string.includes":"../node_modules/core-js/modules/es6.string.includes.js","core-js/modules/es6.string.italics":"../node_modules/core-js/modules/es6.string.italics.js","core-js/modules/es6.string.iterator":"../node_modules/core-js/modules/es6.string.iterator.js","core-js/modules/es6.string.link":"../node_modules/core-js/modules/es6.string.link.js","core-js/modules/es7.string.pad-start":"../node_modules/core-js/modules/es7.string.pad-start.js","core-js/modules/es7.string.pad-end":"../node_modules/core-js/modules/es7.string.pad-end.js","core-js/modules/es6.string.raw":"../node_modules/core-js/modules/es6.string.raw.js","core-js/modules/es6.string.repeat":"../node_modules/core-js/modules/es6.string.repeat.js","core-js/modules/es6.string.small":"../node_modules/core-js/modules/es6.string.small.js","core-js/modules/es6.string.starts-with":"../node_modules/core-js/modules/es6.string.starts-with.js","core-js/modules/es6.string.strike":"../node_modules/core-js/modules/es6.string.strike.js","core-js/modules/es6.string.sub":"../node_modules/core-js/modules/es6.string.sub.js","core-js/modules/es6.string.sup":"../node_modules/core-js/modules/es6.string.sup.js","core-js/modules/es7.string.trim-left":"../node_modules/core-js/modules/es7.string.trim-left.js","core-js/modules/es7.string.trim-right":"../node_modules/core-js/modules/es7.string.trim-right.js","core-js/modules/es6.typed.array-buffer":"../node_modules/core-js/modules/es6.typed.array-buffer.js","core-js/modules/es6.typed.data-view":"../node_modules/core-js/modules/es6.typed.data-view.js","core-js/modules/es6.typed.int8-array":"../node_modules/core-js/modules/es6.typed.int8-array.js","core-js/modules/es6.typed.uint8-array":"../node_modules/core-js/modules/es6.typed.uint8-array.js","core-js/modules/es6.typed.uint8-clamped-array":"../node_modules/core-js/modules/es6.typed.uint8-clamped-array.js","core-js/modules/es6.typed.int16-array":"../node_modules/core-js/modules/es6.typed.int16-array.js","core-js/modules/es6.typed.uint16-array":"../node_modules/core-js/modules/es6.typed.uint16-array.js","core-js/modules/es6.typed.int32-array":"../node_modules/core-js/modules/es6.typed.int32-array.js","core-js/modules/es6.typed.uint32-array":"../node_modules/core-js/modules/es6.typed.uint32-array.js","core-js/modules/es6.typed.float32-array":"../node_modules/core-js/modules/es6.typed.float32-array.js","core-js/modules/es6.typed.float64-array":"../node_modules/core-js/modules/es6.typed.float64-array.js","core-js/modules/es6.weak-map":"../node_modules/core-js/modules/es6.weak-map.js","core-js/modules/es6.weak-set":"../node_modules/core-js/modules/es6.weak-set.js","core-js/modules/web.timers":"../node_modules/core-js/modules/web.timers.js","core-js/modules/web.immediate":"../node_modules/core-js/modules/web.immediate.js","core-js/modules/web.dom.iterable":"../node_modules/core-js/modules/web.dom.iterable.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","./classes/UI":"scripts/classes/UI.js","./classes/Products":"scripts/classes/Products.js","./classes/Storage":"scripts/classes/Storage.js","./classes/Bag":"scripts/classes/Bag.js","./classes/Fav":"scripts/classes/Fav.js","./classes/Filter":"scripts/classes/Filter.js","./classes/Observer":"scripts/classes/Observer.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -8605,7 +8945,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51532" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62113" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -8781,5 +9121,4 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","scripts/about.js"], null)
-//# sourceMappingURL=/about.f80e322c.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","scripts/all_watches.js"], null)
