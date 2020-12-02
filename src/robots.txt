@@ -1,4 +1,7 @@
+User-agent: GoogleBot
+Allow: /
+
 User-agent: *
 Disallow: /
 
-Sitemap: https://whats-the-time.netlify/sitemap.xml
+Sitemap: https://whatsthetime.netlify.app/sitemap.xml
