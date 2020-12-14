@@ -16,8 +16,6 @@ const $filtermobile_women = document.querySelector('.filtermobile--women');
 const $filtermobile_men = document.querySelector('.filtermobile--men');
 const $filtermobile_all = document.querySelector('.filtermobile--all');
 
-
-
 const $filtermobileChb = document.querySelector('#filtermobile__chb');
 
 export default class Filter {
@@ -34,7 +32,7 @@ export default class Filter {
 	displayProducts(products) {
 		let productsRender = '';
 		let arrImgs = this.constructor.arrObjImgs;
-		
+
 		products.forEach(product => {
 			productsRender += `
 				<article class="card" data-gender=${product.gender} data-id=${product.id}>
@@ -88,8 +86,10 @@ export default class Filter {
 	}
 
 	changeTitle(title) {
-		if($title) {
+		if ($title) {
 			$title.innerText = title;
+			if (!$title.classList.contains('title--anim')) $title.classList.add('title--anim');
+			else $title.classList.remove('title--anim');
 		}
 		//todo dodati animaciju
 	}
@@ -97,7 +97,7 @@ export default class Filter {
 	priceSort() {
 		$priceSorting.forEach(selectEl => {
 			selectEl.addEventListener('change', (e) => {
-				if(e.srcElement.selectedIndex == 1) {
+				if (e.srcElement.selectedIndex == 1) {
 					//todo fkn priceToHigh
 					this.priceToHigh();
 					this.closeFiltermobileChb(false);
@@ -114,16 +114,16 @@ export default class Filter {
 	priceToHigh() {
 		// const $cardsParent = document.querySelector('.allwatches__cards');
 		let $arrCards = [...document.querySelectorAll('.card')];
-		
+
 		$arrCards.sort((a, b) => {
 			a = parseFloat(a.querySelector('.card__price').dataset.price);
 			b = parseFloat(b.querySelector('.card__price').dataset.price);
 
-			if(a > b) return -1
-			else if(a < b) return 1
+			if (a > b) return -1
+			else if (a < b) return 1
 			else return 0;
 		});
-		
+
 		this.appendingChild($arrCards)
 
 		// $arrCards.forEach(card => {
@@ -134,13 +134,13 @@ export default class Filter {
 	priceToLow() {
 		// const $cardsParent = document.querySelector('.allwatches__cards');
 		let $arrCards = [...document.querySelectorAll('.card')];
-		
+
 		$arrCards.sort((a, b) => {
 			a = parseFloat(a.querySelector('.card__price').dataset.price);
 			b = parseFloat(b.querySelector('.card__price').dataset.price);
 
-			if(a > b) return 1
-			else if(a < b) return -1
+			if (a > b) return 1
+			else if (a < b) return -1
 			else return 0;
 		});
 
@@ -149,7 +149,7 @@ export default class Filter {
 		// console.log($filtermobileChb);
 
 
-		
+
 		// $arrCards.forEach(card => {
 		// 	$cardsParent.appendChild(card);
 		// })

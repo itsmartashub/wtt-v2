@@ -4,12 +4,10 @@ import UI from './UI'
 import Filter from './Filter'
 import AlertNotification from './AlertNotification'
 
-
 const $navbarFavCounter = document.querySelector('.navbar__favs-counter');
 const $fav = document.querySelector('.fav');
 const $favFooter = document.querySelector('.fav__footer');
-const $noItemsText = document.querySelector('.fav--if-no-items');
-
+const $noItemsTitle = document.querySelector('.fav--if-no-items');
 const $clearFavBtn = document.querySelector('.fav .btn-clearfav');
 const $favItemsCounter = document.querySelector('.fav .total-price-items');
 const $favItems = document.querySelector('.fav .items');
@@ -128,16 +126,15 @@ export default class Favourites extends Bag {
 		`;
 
 		$favItems.appendChild(article);
-		UI.displayNoneTitleNoItems('.fav--if-no-items')
-		// this.setStyleCondition();
+		UI.displayNoneTitleNoItems('.fav--if-no-items');
+		UI.enableBtn('.btn-clearfav');
+		// UI.setBagFavStyleFilled($favFooter, $noItemsTitle);
 	}
 
 	deleteFromFavourites(itemID) {
 		this.arrFav = this.arrFav.filter(item => item.id != itemID);
 		this.setFavValues(this.arrFav);
 		Storage.saveFav(this.arrFav);
-		// this.setStyleCondition();
-
 		let favBtn = this.getSingleFavBtn(itemID);
 		this.removeLikedClass(favBtn);
 	}
@@ -158,34 +155,17 @@ export default class Favourites extends Bag {
 		}
 
 		// this.setStyle({favFooter: 'none', noItems: 'block'})
-		UI.displayBlockTitleNoItems('.fav--if-no-items')
 
 		_AlertNotification.addNotification({
 			text: `Your Favourites are empty!`,
 			alertClass: 'alert__item--remove'
 		});
 
-		UI.closeBagFav($fav, 'fav--open')
-	}
-	setStyleCondition() {
-		if (this.arrFav.length <= 0) {
-			this.setStyle({
-				favFooter: 'none',
-				noItems: 'block'
-			});
-		} else {
-			this.setStyle({
-				favFooter: 'block',
-				noItems: 'none'
-			});
-		}
-	}
-	setStyle({
-		favFooter,
-		noItems
-	}) {
-		$favFooter.style.display = favFooter;
-		$noItemsText.style.display = noItems;
+		UI.displayBlockTitleNoItems('.fav--if-no-items')
+		UI.disableBtn('.btn-clearbag');
+		// UI.setBagFavStyleEmpty($favFooter, $noItemsTitle);
+
+		UI.closeBagFav($fav, 'fav--open');
 	}
 
 	populateFav(_arrFav) {
@@ -236,8 +216,8 @@ export default class Favourites extends Bag {
 					this.arrFav = this.arrFav.filter(item => item.id != itemID);
 					Storage.saveFav(this.arrFav);
 
-					console.log(arr_bag);
-					console.log(super.arrBag);
+					console.table(arr_bag);
+					console.table(super.arrBag);
 
 
 					$addItemToBagBtn.parentElement.classList.add('item--deleted');

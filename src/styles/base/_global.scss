@@ -68,8 +68,8 @@ svg>* {
 
 
 .bp {
-	font-size: 2rem;
 	display: none;
+	font-size: 2rem;
 	@extend %text-center;
 	@extend %pos-fix;
 	bottom: 5%;

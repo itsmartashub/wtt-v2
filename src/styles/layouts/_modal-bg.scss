@@ -1,0 +1,21 @@
+.modal-bg {
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	background: rgba($card-title, .3);
+	backdrop-filter: blur(5px);
+	transform: scaleX(0);
+	opacity: 0;
+	transform-origin: left center;
+	pointer-events: none;
+	transition: all 1.2s $outSmooth;
+
+	&--open {
+		pointer-events: all;
+		transform: scaleX(1);
+		opacity: 1;
+		z-index: $z-modal-bg;
+	}
+}

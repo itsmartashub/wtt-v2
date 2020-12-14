@@ -19,19 +19,19 @@ export default class Observer {
 			entries.forEach(entry => {
 				// console.log(entry.target.className);
 
-				if(entry.isIntersecting && (entry.target.className == _selectorScrolltopShow)) {
+				if (entry.isIntersecting && (entry.target.className == _selectorScrolltopShow)) {
 					this.showScrollTop();
 					this.showScrollDown();
-					
-				} else if(entry.isIntersecting && (entry.target.className == _selectorScrolltopHide)) {
+
+				} else if (entry.isIntersecting && (entry.target.className == _selectorScrolltopHide)) {
 					this.hideScrollTop();
 				}
 
-				if(entry.isIntersecting && (entry.target.className == _selectorScrolldownHide)) {
+				if (entry.isIntersecting && (entry.target.className == _selectorScrolldownHide)) {
 					this.hideScrollDown();
-					if(window.location.pathname == '/allwatches.html') this.hideFiltermobile();
+					if (window.location.pathname == '/allwatches.html') this.hideFiltermobile();
 				} else {
-					if(window.location.pathname == '/allwatches.html') {
+					if (window.location.pathname == '/allwatches.html') {
 						this.showFiltermobile();
 						this.showScrollDown();
 					};
@@ -54,13 +54,13 @@ export default class Observer {
 		$scrollTop.classList.add('scrolltop--show');
 	}
 	hideScrollTop() {
-		if($scrollTop.classList.contains('scrolltop--show')) $scrollTop.classList.remove('scrolltop--show');
+		if ($scrollTop.classList.contains('scrolltop--show')) $scrollTop.classList.remove('scrolltop--show');
 	}
 	hideScrollDown() {
 		$scrollDown.classList.add('scrolldown--hidden');
 	}
 	showScrollDown() {
-		if($scrollDown.classList.contains('scrolldown--hidden')) $scrollDown.classList.remove('scrolldown--hidden');
+		if ($scrollDown.classList.contains('scrolldown--hidden')) $scrollDown.classList.remove('scrolldown--hidden');
 	}
 
 	hideFiltermobile() {
@@ -68,7 +68,7 @@ export default class Observer {
 		$filtermobile.style.animation = 'none';
 	}
 	showFiltermobile() {
-		if($filtermobile.classList.contains('filtermobile--hidden')) $filtermobile.classList.remove('filtermobile--hidden');
+		if ($filtermobile.classList.contains('filtermobile--hidden')) $filtermobile.classList.remove('filtermobile--hidden');
 	}
 
 	animation_observer() {
@@ -79,8 +79,9 @@ export default class Observer {
 		};
 		const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
 			entries.forEach(entry => {
-				if(!entry.isIntersecting) { return }
-				else {
+				if (!entry.isIntersecting) {
+					return
+				} else {
 					entry.target.classList.add('appear');
 					appearOnScroll.unobserve(entry.target); //! stop looking on something when you've done ur job
 				}
@@ -143,9 +144,5 @@ export default class Observer {
 
 	SETUP_OBSERVER(_selector) {
 		this.scroll_observer(_selector);
-
-		// this.animation_observe();
 	}
-
-	
 }

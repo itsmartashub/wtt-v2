@@ -14,7 +14,11 @@
 	@extend %border-r;
 	padding: 1.6rem 3.5rem;
 	box-shadow: $btn-shadow;
-	transition: all .4s ease-in-out;
+	transition: all .5s $outSmooth;
+
+	&:disabled {
+		opacity: .5;
+	}
 }
 
 .btn {
@@ -22,6 +26,7 @@
 		background: $card-title !important;
 		color: $btn-collection !important;
 	}
+
 	&-primary {
 		@extend %btn;
 		@extend %text-upper;
@@ -42,6 +47,7 @@
 		padding: .8rem 2rem;
 		font-size: 1.2rem;
 	}
+
 	&-icon {
 		@extend %btn;
 		@extend %flex-jsb;
@@ -49,7 +55,9 @@
 		padding: 1.5rem 2.5rem !important;
 		width: 100%;
 
-		svg { margin-right: 10%;}
+		svg {
+			margin-right: 10%;
+		}
 	}
 
 	&-checkout,
@@ -61,11 +69,19 @@
 
 		&:hover {
 			background: $primary;
+
 			.btn-icon-wrapper {
 				background: rgba(#fff, 0.05);
 			}
 		}
+
+		&:disabled:hover {
+			.btn-icon-wrapper {
+				background: rgba(#000, 0.05);
+			}
+		}
 	}
+
 	&-icon-wrapper {
 		background: rgba(#000, 0.05);
 		@extend %border-r;
@@ -77,11 +93,27 @@
 
 	&-checkout {
 		background: $card-gradient-main;
-		.btn-icon-wrapper { background: darken($card-gr-1, 13%); }
+
+		.btn-icon-wrapper {
+			background: darken($card-gr-1, 13%);
+		}
+
+		&:disabled:hover {
+			background: $card-gradient-main;
+		}
 	}
+
 	&-clearbag {
 		background: $btn-clear;
-		.btn-icon-wrapper { background: darken($btn-clear, 3%); }
+
+		.btn-icon-wrapper {
+			background: darken($btn-clear, 3%);
+		}
+
+		&:disabled:hover {
+			background: $btn-clear;
+		}
+
 	}
 
 	&-close {
@@ -92,12 +124,15 @@
 		top: 3%;
 		right: 6%;
 		transition-delay: 0s !important;
+
 		svg {
 			stroke-width: 1px;
 			stroke: currentColor;
 		}
 
-		&:hover { background: rgba(#fff, .05); }
+		&:hover {
+			background: rgba(#fff, .05);
+		}
 	}
 
 	&-addtobag {
@@ -105,15 +140,17 @@
 		@extend %flex-center;
 		background: $primary;
 		width: 5rem;
-		height: 5rem;		
+		height: 5rem;
 		padding: 0;
 		transition: all .5s $inOutBack;
+
 		svg {
 			fill: darken($primary, 28%);
 			height: 2.6rem;
 			width: auto;
 			transition: all .5s $outSmooth;
 		}
+
 		&::before {
 			content: 'ADD';
 			@extend %pos-abs;
@@ -129,15 +166,25 @@
 		&:hover {
 			background: $text;
 			transform: rotateZ(45deg);
+
 			&::before {
 				opacity: 1;
 				transform: translateY(0%) rotateZ(-45deg);
 			}
+
 			svg {
 				transform: scale(0);
 				opacity: 0;
 				pointer-events: none;
 			}
+		}
+	}
+
+	@include device(phone-land) {
+
+		&-checkout,
+		&-clearbag {
+			font-size: 1.9rem;
 		}
 	}
 }

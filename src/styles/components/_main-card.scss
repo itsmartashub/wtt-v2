@@ -7,21 +7,32 @@
 	box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
 	transition: all .5s ease-in-out;
 
-	@include device(tab) { transform: scale(.9); }
-	@include device(phone) { transform: scale(.8); }
+	@include device(tab) {
+		transform: scale(.9);
+	}
+
+	@include device(phone) {
+		transform: scale(.8);
+	}
 
 	&:hover {
 		background: $card-gr-1;
 		box-shadow: 0rem 1rem 8rem 2px rgba($card-title, .28);
 
-		.card__figure {  transform: translateY(-35%); }
+		.card__figure {
+			transform: translateY(-35%);
+		}
+
 		// box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
 	}
 
 	// &--hidden { animation: scale-fade-out .4s ease-in-out; }
-	
 
-	&__figure { transform: translateY(-40%); transition: all .5s ease-in-out; }
+
+	&__figure {
+		transform: translateY(-40%);
+		transition: all .5s ease-in-out;
+	}
 
 	&__informations {
 		transform: translateY(-80%);
@@ -37,10 +48,14 @@
 	&__title,
 	&__subtitle {
 		@extend %fw-700;
-		font-size: 1.4rem;
+		font-size: 1.5rem;
 		margin-top: .7rem;
 	}
-	&__subtitle { text-transform: uppercase; }
+
+	&__subtitle {
+		text-transform: uppercase;
+	}
+
 	&__price {
 		@extend %fw-700;
 		font-size: 2rem;
@@ -65,11 +80,15 @@
 		stroke-width: 2.5px;
 		width: 2.2rem;
 		height: auto;
-		&:hover { fill: $primary; }
+
+		&:hover {
+			fill: $primary;
+		}
 	}
 
 	&--added {
 		.btn-addtobag {
+
 			&,
 			&:hover {
 				@extend .btn-addtobag:hover;
@@ -88,7 +107,10 @@
 	}
 
 	// &--hidden { @extend .item--deleted; }
-	&--hidden { display: none!important; }
+	&--hidden {
+		display: none !important;
+	}
+
 	&--anim {
 		animation: fadeInScale 1.5s backwards $outSmooth !important;
 		@include delay-random(3, 5, .1);

@@ -25,9 +25,14 @@
 	&--if-no-items {
 		text-align: center;
 		font-size: 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
 
 		span {
 			@extend %fw-700;
+			margin: 0 7px;
 		}
 	}
 
@@ -63,8 +68,6 @@
 		width: 100%;
 		padding: 5rem 10rem 10rem 10rem;
 
-
-
 		.btn-checkout,
 		.btn-clearbag {
 			width: 30rem;
@@ -87,6 +90,7 @@
 			display: grid;
 			grid-auto-flow: column;
 			align-items: center;
+			margin-top: 2.5rem;
 		}
 
 		// &__buttons {
@@ -124,6 +128,7 @@
 
 		&__total {
 			padding: 0 3rem;
+			font-size: 2.3rem;
 		}
 	}
 

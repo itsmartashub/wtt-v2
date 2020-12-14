@@ -6,7 +6,7 @@ import AlertNotification from './AlertNotification'
 const $navbarBagCounter = document.querySelector('.navbar__bag-counter'); // koliko itemsa imamo u bagu
 const $bag = document.querySelector('.bag');
 const $bagFooter = document.querySelector('.bag__footer');
-const $noItemsText = document.querySelector('.bag--if-no-items');
+const $noItemsTitle = document.querySelector('.bag--if-no-items');
 const $clearBagBtn = document.querySelector('.bag .btn-clearbag');
 const $bagTotal = document.querySelector('.bag .total-price-items');
 const $bagItems = document.querySelector('.bag .items');
@@ -131,6 +131,9 @@ export default class Bag {
 
 		$bagItems.appendChild(article);
 		UI.displayNoneTitleNoItems('.bag--if-no-items')
+		UI.enableBtn('.btn-checkout');
+		UI.enableBtn('.btn-clearbag');
+		// UI.setBagFavStyleFilled($bagFooter, $noItemsTitle);
 		// this.setStyleCondition();
 	}
 
@@ -157,12 +160,14 @@ export default class Bag {
 					alertClass: 'alert__item--removed'
 				});
 
+
 				setTimeout(() => {
 					this.deleteFromBag(itemID); // uklonili smo iz arrBag, ali nismo i iz DOM-a
 					// $bagItems.removeChild(deleteItemBtn.parentElement) || $bagItems.removeChild(deleteItemBtn.parentNode); // za mozilu kao radi parentNode
 					$bagItems.removeChild($deleteItemBtn.parentElement);
 					$deleteItemBtn.parentElement.classList.remove('item--deleted');
 				}, 400);
+
 
 				//* add item amount
 			} else if (e.target.matches('.item__add')) {
@@ -172,7 +177,7 @@ export default class Bag {
 
 				//todo problem je sto je this.arrBag [], nema nista i onda je i currItem undefined i amount samim itm i sve ostalo
 
-				console.log(this.arrBag); //! []
+				console.table(this.arrBag); //! []
 
 				currItem.amount = currItem.amount + 1;
 				Storage.saveBag(this.arrBag);
@@ -207,54 +212,31 @@ export default class Bag {
 	}
 
 	clearBag() {
-		// console.log(this); // kad stavim aa addEventListener this.clearBag() on vrati da se this odnosi na UI{} dakle ono sto bi nam trebalo, a kad stavimo this.clearBAg bez zagrada, onda za referencu vraca button na koji smo kliknuli tj clearBagBtn, on kaze da je u ovim slucajevima bolje koristini () => { this.clearBtn()} nego bez () => {}
+		// console.log(this); //* kad stavim aa addEventListener this.clearBag() on vrati da se this odnosi na UI{} dakle ono sto bi nam trebalo, a kad stavimo this.clearBAg bez zagrada, onda za referencu vraca button na koji smo kliknuli tj clearBagBtn, on kaze da je u ovim slucajevima bolje koristini () => { this.clearBtn()} nego bez () => {}
 		let bagItemsIDs = this.arrBag.map(item => item.id);
 		bagItemsIDs.forEach(itemID => this.deleteFromBag(itemID));
-
-		// console.log($bagItems.children);
 
 		while ($bagItems.children.length > 0) {
 			$bagItems.removeChild($bagItems.children[0])
 		}
-
-		// this.setStyle({bagFooter: 'none', noItems: 'block'});
-		// this.displayBlockTitleNoItems()
-		UI.displayBlockTitleNoItems('.bag--if-no-items')
 
 		_AlertNotification.addNotification({
 			text: `Your Bag is empty!`,
 			alertClass: 'alert__item--remove'
 		});
 
-		UI.closeBagFav($bag, 'bag--open')
-	}
+		UI.displayBlockTitleNoItems('.bag--if-no-items')
+		UI.disableBtn('.btn-checkout');
+		UI.disableBtn('.btn-clearbag');
+		// UI.setBagFavStyleEmpty($bagFooter, $noItemsTitle);
 
-	setStyle({
-		bagFooter,
-		noItems
-	}) {
-		$bagFooter.style.display = bagFooter;
-		$noItemsText.style.display = noItems;
-	}
-	setStyleCondition() {
-		if (this.arrBag.length <= 0) {
-			this.setStyle({
-				bagFooter: 'none',
-				noItems: 'block'
-			});
-		} else {
-			this.setStyle({
-				bagFooter: 'block',
-				noItems: 'none'
-			});
-		}
+		UI.closeBagFav($bag, 'bag--open');
 	}
 
 	deleteFromBag(itemID) {
 		this.arrBag = this.arrBag.filter(item => item.id != itemID);
 		this.setBagValues(this.arrBag);
 		Storage.saveBag(this.arrBag);
-		// this.setStyleCondition();
 		let ATBbtn = this.getSingleATBbtn(itemID);
 		ATBbtn.disabled = false;
 
@@ -280,18 +262,10 @@ export default class Bag {
 		return arrAddToBagBtns.find(btn => btn.dataset.id == itemID)
 	}
 
-	// displayNoneTitleNoItems() {
-	// 	document.querySelector('.bag--if-no-items').style.display = 'none'
-	// }
-	// displayBlockTitleNoItems() {
-	// 	document.querySelector('.bag--if-no-items').style.display = 'block'
-	// }
-
 	SETUP_BAG() {
 		this.arrBag = Storage.getBag();
 		this.setBagValues(this.arrBag);
 		this.populateBag(this.arrBag);
-		// this.setStyleCondition();
 	}
 
 }

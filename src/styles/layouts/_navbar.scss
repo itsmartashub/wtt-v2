@@ -19,15 +19,33 @@
 
 		.navbar__logo {
 			padding: .5rem 0;
-			svg { height: 4rem; width: auto; }
+
+			svg {
+				height: 4rem;
+				width: auto;
+			}
 		}
+
 		.navbar__favs {
-			svg { height: 2.2rem; width: auto;  }
+			svg {
+				height: 2.2rem;
+				width: auto;
+			}
 		}
+
 		.navbar__bag {
-			svg { height: 2.5rem; width: auto; }
+			svg {
+				height: 2.5rem;
+				width: auto;
+			}
 		}
-		.navbar__nav { a { color: darken($text, 15%); @extend %fw-500; }}
+
+		.navbar__nav {
+			a {
+				color: darken($text, 15%);
+				@extend %fw-500;
+			}
+		}
 	}
 
 	&--transparent {
@@ -43,7 +61,10 @@
 			stroke: currentColor;
 			fill: $text;
 		}
-		&:hover { fill: $primary; }
+
+		&:hover {
+			fill: $primary;
+		}
 	}
 
 	&__nav {
@@ -52,11 +73,19 @@
 			grid-auto-flow: column;
 			justify-content: flex-start;
 			grid-gap: 2.5rem;
-			a, li { transition: all .5s $outSmooth; }
+			font-size: 1.8rem;
+			font-weight: 500;
+
+			a,
+			li {
+				transition: all .5s $outSmooth;
+			}
 		}
 	}
 
-	&__iconsContainer { @extend %flex-center; }
+	&__iconsContainer {
+		@extend %flex-center;
+	}
 
 	&__favs,
 	&__bag {
@@ -66,11 +95,16 @@
 			height: 2.7rem;
 			width: auto;
 			fill: transparent;
-			stroke:  currentColor;
+			stroke: currentColor;
 			stroke-width: 2.5px;
 			transition: all .3s ease-in-out;
 		}
-		&:hover { svg { fill:  currentColor; } }
+
+		&:hover {
+			svg {
+				fill: currentColor;
+			}
+		}
 	}
 
 	&__favs {
@@ -96,7 +130,10 @@
 	&__bag {
 		@extend %pos-rel;
 		@extend %cursor;
-		svg { height: 3rem; }
+
+		svg {
+			height: 3rem;
+		}
 
 		&-counter {
 			@extend .navbar__favs-counter;
@@ -105,17 +142,21 @@
 		}
 	}
 
-// * ----------------------- MEDIA ------------------------
+	// * ----------------------- MEDIA ------------------------
 	@include device(tab) {
 		&__logo {
 			grid-column: 2/3;
 			justify-self: center;
+
 			svg {
 				stroke: currentColor;
 				stroke-width: 1px;
 			}
 		}
-		&__iconsContainer { grid-column: 3/4; }
+
+		&__iconsContainer {
+			grid-column: 3/4;
+		}
 
 		&__burger {
 			grid-column: 1/2;
@@ -131,20 +172,46 @@
 			box-shadow: 0px 3px 10px 0px rgba($primary, .5);
 
 			.navbar__logo {
+
 				// padding: .5rem 0;
-				svg { height: 5rem; width: auto; }
+				svg {
+					height: 5rem;
+					width: auto;
+				}
 			}
+
 			.navbar__favs {
-				svg { height: 2.7rem; width: auto;  }
+				svg {
+					height: 2.7rem;
+					width: auto;
+				}
 			}
+
 			.navbar__bag {
-				svg { height: 3.1rem; width: auto; }
+				svg {
+					height: 3.1rem;
+					width: auto;
+				}
 			}
-			.navbar__nav { a { color: darken($text, 15%); }}
+
+			.navbar__nav {
+				a {
+					color: darken($text, 15%);
+				}
+			}
 		}
 	}
 
 
-	@include device(phone-land) { background: radial-gradient(rgba($card-gr-1, .9), rgba($card-gr-2, .8)); }
-	@include device(phone-ant) { &__logo { svg { height: 4rem; } } }
+	@include device(phone-land) {
+		background: radial-gradient(rgba($card-gr-1, .9), rgba($card-gr-2, .8));
+	}
+
+	@include device(phone-ant) {
+		&__logo {
+			svg {
+				height: 4rem;
+			}
+		}
+	}
 }
