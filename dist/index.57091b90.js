@@ -469,7 +469,6 @@ var _favDefault = parcelHelpers.interopDefault(_fav);
 var _observer = require("./classes/Observer");
 var _observerDefault = parcelHelpers.interopDefault(_observer);
 document.addEventListener("DOMContentLoaded", ()=>{
-    document.querySelector(".preloader").classList.add("preloader--hidden");
     const _ui1 = new _uiDefault.default();
     const _products1 = new _productsDefault.default();
     const _bag1 = new _bagDefault.default();
@@ -480,6 +479,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     _fav1.SETUP_FAV();
     if (!!window.IntersectionObserver) _observe.scroll_observer("collections", "intro", "footer");
     _products1.fetchProducts().then((all_products)=>{
+        document.querySelector(".preloader").classList.add("preloader--hidden");
         _storageDefault.default.saveProducts(all_products);
     }).then(()=>{
         _bag1.getAddToBagBtns();
@@ -964,6 +964,7 @@ class Filter {
             filterBtn.addEventListener("click", ()=>{
                 this.appendingChild(_arrForDisplay);
                 this.changeTitle(_title);
+                this.scrollToTop();
             });
         });
     }
@@ -972,6 +973,7 @@ class Filter {
             this.appendingChild(_arrForDisplay);
             this.changeTitle(_title);
             this.closeFiltermobileChb(false);
+            this.scrollToTop();
         });
     }
     changeTitle(title) {
@@ -980,7 +982,6 @@ class Filter {
             if (!$title.classList.contains("title--anim")) $title.classList.add("title--anim");
             else $title.classList.remove("title--anim");
         }
-    //todo dodati animaciju
     }
     priceSort() {
         $priceSorting.forEach((selectEl)=>{
@@ -989,16 +990,17 @@ class Filter {
                     //todo fkn priceToHigh
                     this.priceToHigh();
                     this.closeFiltermobileChb(false);
+                    this.scrollToTop();
                 } else if (e.srcElement.selectedIndex == 2) {
                     //todo fkn priceToLow\
                     this.priceToLow();
                     this.closeFiltermobileChb(false);
+                    this.scrollToTop();
                 }
             });
         });
     }
     priceToHigh() {
-        // const $cardsParent = document.querySelector('.allwatches__cards');
         let $arrCards = [
             ...document.querySelectorAll(".card")
         ];
@@ -1010,12 +1012,8 @@ class Filter {
             else return 0;
         });
         this.appendingChild($arrCards);
-    // $arrCards.forEach(card => {
-    // 	$cardsParent.appendChild(card);
-    // })
     }
     priceToLow() {
-        // const $cardsParent = document.querySelector('.allwatches__cards');
         let $arrCards = [
             ...document.querySelectorAll(".card")
         ];
@@ -1027,10 +1025,6 @@ class Filter {
             else return 0;
         });
         this.appendingChild($arrCards);
-    // console.log($filtermobileChb);
-    // $arrCards.forEach(card => {
-    // 	$cardsParent.appendChild(card);
-    // })
     }
     appendingChild(_arrForEach, _gender) {
         const $cardsParent = document.querySelector(".allwatches__cards");
@@ -1038,11 +1032,13 @@ class Filter {
         ;
         _arrForEach.forEach((card)=>{
             $cardsParent.insertAdjacentElement("afterbegin", card);
-        // $cardsParent.appendChild(card);
         });
     }
     closeFiltermobileChb(_isChecked) {
         $filtermobileChb.checked = _isChecked;
+    }
+    scrollToTop() {
+        return window.scrollTo(0, 0);
     }
     setup_filter() {
         this.filtering($arrFilterWomenBtns, this.$arrWomen, "for her");

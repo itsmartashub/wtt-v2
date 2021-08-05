@@ -8,8 +8,6 @@ import Filter from "./classes/Filter"
 import Observer from "./classes/Observer"
 
 document.addEventListener("DOMContentLoaded", () => {
-	document.querySelector(".preloader").classList.add("preloader--hidden")
-
 	const _ui = new UI()
 	const _products = new Products()
 	const _bag = new Bag()
@@ -29,6 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	_products
 		.fetchProducts()
 		.then((all_products) => {
+			document
+				.querySelector(".preloader")
+				.classList.add("preloader--hidden")
+
 			_filter.displayProducts(all_products)
 			Storage.saveProducts(all_products)
 		})

@@ -83,6 +83,7 @@ export default class Filter {
 			filterBtn.addEventListener("click", () => {
 				this.appendingChild(_arrForDisplay)
 				this.changeTitle(_title)
+				this.scrollToTop()
 			})
 		})
 	}
@@ -92,6 +93,7 @@ export default class Filter {
 			this.appendingChild(_arrForDisplay)
 			this.changeTitle(_title)
 			this.closeFiltermobileChb(false)
+			this.scrollToTop()
 		})
 	}
 
@@ -102,7 +104,6 @@ export default class Filter {
 				$title.classList.add("title--anim")
 			else $title.classList.remove("title--anim")
 		}
-		//todo dodati animaciju
 	}
 
 	priceSort() {
@@ -112,17 +113,18 @@ export default class Filter {
 					//todo fkn priceToHigh
 					this.priceToHigh()
 					this.closeFiltermobileChb(false)
+					this.scrollToTop()
 				} else if (e.srcElement.selectedIndex == 2) {
 					//todo fkn priceToLow\
 					this.priceToLow()
 					this.closeFiltermobileChb(false)
+					this.scrollToTop()
 				}
 			})
 		})
 	}
 
 	priceToHigh() {
-		// const $cardsParent = document.querySelector('.allwatches__cards');
 		let $arrCards = [...document.querySelectorAll(".card")]
 
 		$arrCards.sort((a, b) => {
@@ -135,14 +137,9 @@ export default class Filter {
 		})
 
 		this.appendingChild($arrCards)
-
-		// $arrCards.forEach(card => {
-		// 	$cardsParent.appendChild(card);
-		// })
 	}
 
 	priceToLow() {
-		// const $cardsParent = document.querySelector('.allwatches__cards');
 		let $arrCards = [...document.querySelectorAll(".card")]
 
 		$arrCards.sort((a, b) => {
@@ -155,12 +152,6 @@ export default class Filter {
 		})
 
 		this.appendingChild($arrCards)
-
-		// console.log($filtermobileChb);
-
-		// $arrCards.forEach(card => {
-		// 	$cardsParent.appendChild(card);
-		// })
 	}
 
 	appendingChild(_arrForEach, _gender) {
@@ -169,12 +160,15 @@ export default class Filter {
 
 		_arrForEach.forEach((card) => {
 			$cardsParent.insertAdjacentElement("afterbegin", card)
-			// $cardsParent.appendChild(card);
 		})
 	}
 
 	closeFiltermobileChb(_isChecked) {
 		$filtermobileChb.checked = _isChecked
+	}
+
+	scrollToTop() {
+		return window.scrollTo(0, 0)
 	}
 
 	setup_filter() {
@@ -195,7 +189,6 @@ export default class Filter {
 		)
 
 		this.priceSort()
-
 		this.closeFiltermobileChb()
 	}
 }

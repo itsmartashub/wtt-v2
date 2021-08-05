@@ -60,7 +60,6 @@
 }
 
 @mixin delay($number, $value) {
-	//* @include delay(animation, 8, 0.25s);
 	@for $i from 1 to ($number + 1) {
 		&:nth-of-type(#{$i}) {
 			animation-delay: $i * $value;
@@ -68,26 +67,7 @@
 	}
 }
 
-@mixin delay-nofirst($number, $value, $firstDelay) {
-	//* @include delay(animation, 8, 0.25s);
-	@for $i from 2 to ($number + 1) {
-		&:nth-of-type(#{$i}) {
-			animation-delay: $i * ($firstDelay + $value);
-		}
-	}
-}
-
-@mixin delay2($number) {
-	//* @include delay(8, 0.25s);
-	@for $i from 1 to ($number + 1) {
-		&:nth-of-type(#{$i}) {
-			animation-delay: ($i * #{(800 / $number)}) ms;
-		}
-	}
-}
-
 @mixin delay-random($number, $totalSec, $mainDelaySec) {
-	//* @include delay(8, 300);
 	@for $i from 1 to ($number + 1) {
 		&:nth-of-type(#{$i}) {
 			animation-delay: #{(math.div(math.random($totalSec), 10)) +
@@ -102,7 +82,6 @@
 	$mainDelaySec,
 	$animName
 ) {
-	//* @include delay(8, 300);
 	@for $i from 1 to ($items + 1) {
 		&:nth-child(#{$i}) {
 			animation: #{$animName} #{$timeSec}s backwards;

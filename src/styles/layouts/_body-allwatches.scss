@@ -1,35 +1,56 @@
 .body-allwatches {
-	.navbar { animation: fadeInY 1s ease backwards 1200ms; }
+	.navbar {
+		animation: fadeInY 1s ease backwards 1200ms;
+	}
 
-	.title { animation: fadeInLetterSpacing 2s backwards ease 500ms; }
+	.title {
+		animation: fadeInLetterSpacing 2s backwards ease 500ms;
+	}
 
 	.card {
 		animation: fadeInScale 1.5s backwards $outSmooth;
-		@include delay-random(3, 5, .1);
+		@include delay-random(3, 5, 0.1);
 	}
 
 	.btn-addtobag {
 		animation: fadeInY 1.5s backwards $outSmooth;
-		@include delay-random(3, 5, .5);
+		@include delay-random(3, 5, 0.5);
 	}
 
 	.filters {
-		animation: scaleX 1s backwards $inOutQuart;
-		&--anim { @include delay-random-child(4, 1.5, 3, .5, "fadeInScale"); }
+		animation: scaleX 1s backwards $inOutQuart 800ms;
+		&--anim {
+			@include delay-random-child(4, 1.5, 3, 1.2, "fadeInScale");
+		}
 	}
 
-
 	@include device(tab) {
-		.filters { &, &--anim { animation: none; }}
+		.filters {
+			&,
+			&--anim {
+				animation: none;
+			}
+		}
 
-		.navbar { animation-delay: 1200ms; background: none; }
+		.navbar {
+			animation-delay: 1200ms;
+			background: none;
+		}
 
-		.title { animation-delay: 500ms; }
+		.title {
+			animation-delay: 500ms;
+		}
 
-		.card { @include delay-random(3, 5, .1); }
+		.card {
+			@include delay-random(3, 5, 0.1);
+		}
 
-		.btn-addtobag { @include delay-random(3, 5, .5); }
+		.btn-addtobag {
+			@include delay-random(3, 5, 0.5);
+		}
 
-		.filtermobile { animation: fadeIn 1.5s backwards $outSmooth 1s; }
+		.filtermobile {
+			animation: fadeIn 1.5s backwards $outSmooth 1s;
+		}
 	}
 }
