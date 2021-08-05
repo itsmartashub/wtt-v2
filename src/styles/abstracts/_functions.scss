@@ -2,17 +2,3 @@
 	$emSize: $size / 16;
 	@return #{$emSize}em;
 }
-
-// $small: em-calc(320);
-// $medium: em-calc(768);
-// $large: em-calc(1280);
-// $x-large: em-calc(1440);
-
-// $asset-base-path: '../assets/' !default;
-// @function asset($type, $file) { // $type - Asset type, matching folder name, $file - Asset file name, including extension
-//   @return url($asset-base-path + $type + '/' + $file); // A `url()` function leading to the asset
-// }
-
-// @function image-url($file) { // $file - Asset file name, including extension
-//   @return asset('images', $file); // A `url()` function leading to the image
-// }

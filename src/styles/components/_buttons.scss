@@ -1,11 +1,3 @@
-// primary 
-// // add to cart FEATURED (ko i primary samo ima UPPERCASE, tj )
-// in stock FEATURED
-// icon + add to cart COLLECTIONS 
-// float add (icon ili znak plus) DEFAULT 
-// checkout
-// clear
-
 %btn {
 	font-family: $default-fml;
 	font-size: $default-fsz;
@@ -14,10 +6,10 @@
 	@extend %border-r;
 	padding: 1.6rem 3.5rem;
 	box-shadow: $btn-shadow;
-	transition: all .5s $outSmooth;
+	transition: all 0.5s $outSmooth;
 
 	&:disabled {
-		opacity: .5;
+		opacity: 0.5;
 	}
 }
 
@@ -42,9 +34,9 @@
 
 	&-stock {
 		@extend %btn;
-		background: rgba($btn-stock, .34);
+		background: rgba($btn-stock, 0.34);
 		color: $primary;
-		padding: .8rem 2rem;
+		padding: 0.8rem 2rem;
 		font-size: 1.2rem;
 	}
 
@@ -65,7 +57,7 @@
 		@extend .btn-icon;
 		margin: 1.8rem auto 0 auto;
 		width: 60%;
-		color: rgba($text, .8);
+		color: rgba($text, 0.8);
 
 		&:hover {
 			background: $primary;
@@ -113,7 +105,6 @@
 		&:disabled:hover {
 			background: $btn-clear;
 		}
-
 	}
 
 	&-close {
@@ -131,7 +122,7 @@
 		}
 
 		&:hover {
-			background: rgba(#fff, .05);
+			background: rgba(#fff, 0.05);
 		}
 	}
 
@@ -142,17 +133,17 @@
 		width: 5rem;
 		height: 5rem;
 		padding: 0;
-		transition: all .5s $inOutBack;
+		transition: all 0.5s $inOutBack;
 
 		svg {
 			fill: darken($primary, 28%);
 			height: 2.6rem;
-			width: auto;
-			transition: all .5s $outSmooth;
+			@extend %w-auto;
+			transition: all 0.5s $outSmooth;
 		}
 
 		&::before {
-			content: 'ADD';
+			content: "ADD";
 			@extend %pos-abs;
 			@extend %fw-700;
 			pointer-events: none;
@@ -160,7 +151,7 @@
 			z-index: 0;
 			color: $primary;
 			transform: translateY(100%) rotateZ(80deg);
-			transition: all .3s $inOutBack;
+			transition: all 0.3s $inOutBack;
 		}
 
 		&:hover {
@@ -181,7 +172,6 @@
 	}
 
 	@include device(phone-land) {
-
 		&-checkout,
 		&-clearbag {
 			font-size: 1.9rem;

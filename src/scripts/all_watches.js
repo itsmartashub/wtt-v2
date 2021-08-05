@@ -8,6 +8,8 @@ import Filter from "./classes/Filter"
 import Observer from "./classes/Observer"
 
 document.addEventListener("DOMContentLoaded", () => {
+	document.querySelector(".preloader").classList.add("preloader--hidden")
+
 	const _ui = new UI()
 	const _products = new Products()
 	const _bag = new Bag()

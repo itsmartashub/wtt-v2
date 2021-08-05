@@ -2,7 +2,7 @@
 .fav {
 	display: flex;
 	flex-direction: column;
-	position: fixed;
+	@extend %pos-fix;
 	top: 0;
 	right: 0;
 	height: 100vh;
@@ -11,24 +11,19 @@
 	padding: 5rem 3rem 8rem 3rem;
 	z-index: $z-bag-open;
 	transform: translateX(100%);
-	transition: transform .8s $inOutExpo;
+	transition: transform 0.8s $inOutExpo;
 
-	>* {
+	> * {
 		transform: scale(0);
 		opacity: 0;
 		transition: all 1s $outSmooth;
 	}
 
-	// &__header { flex: 1; }
-
-
 	&--if-no-items {
-		text-align: center;
-		font-size: 2rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		@extend %flex-center;
 		flex: 1;
+		@extend %text-center;
+		font-size: 2rem;
 
 		span {
 			@extend %fw-700;
@@ -57,10 +52,10 @@
 	&--open {
 		transform: translateX(0%) !important;
 
-		>* {
+		> * {
 			transform: scale(1) !important;
 			opacity: 1 !important;
-			transition-delay: .5s;
+			transition-delay: 0.5s;
 		}
 	}
 
@@ -131,7 +126,6 @@
 			font-size: 2.3rem;
 		}
 	}
-
 
 	@include device(phone-ant) {
 		&__total {

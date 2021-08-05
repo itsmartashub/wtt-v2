@@ -11,25 +11,31 @@
 		stroke: currentColor;
 		stroke-width: 1px;
 		width: 20rem;
-		height: auto;
+		@extend %h-auto;
 	}
 
 	&__item {
-		ul { line-height: 1.7; }
-		li { opacity: .7; }
+		ul {
+			line-height: 1.7;
+		}
+		li {
+			opacity: 0.7;
+		}
 	}
 
 	&__payments {
 		margin: 1.2rem 0;
 		svg {
 			width: 3rem;
-			height: auto;
+			@extend %h-auto;
 		}
 	}
-	&__copyright { @extend %fw-600; }
+	&__copyright {
+		@extend %fw-600;
+	}
 	&__build {
 		margin-top: 1rem;
-		color: rgba($text, .8);
+		color: rgba($text, 0.8);
 		a {
 			text-decoration: underline;
 			color: $text;
@@ -41,7 +47,9 @@
 		margin-bottom: 1rem;
 	}
 
-	&__contacts { opacity: .8; }
+	&__contacts {
+		opacity: 0.8;
+	}
 	&__email {
 		@extend %fw-700;
 		margin: 1.2rem 0;
@@ -50,15 +58,16 @@
 	&__social {
 		a {
 			display: inline-block;
-			&:not(:last-child) { margin-right: 1rem; }
+			&:not(:last-child) {
+				margin-right: 1rem;
+			}
 		}
 
 		svg {
 			height: 2rem;
-			width: auto;
+			@extend %w-auto;
 		}
 	}
-
 
 	@include device(tab-land) {
 		grid-gap: 10rem 8rem;

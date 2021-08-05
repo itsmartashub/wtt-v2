@@ -20,22 +20,17 @@
 
 .item {
 	width: 100%;
-	// background: darken($primary, 1%);
-	// background: rgba($primary, .75);
-	// background: rgba($btn-clear, .75);
-	// background: darken($btn-clear, 2%);
-	// background: $btn-clear;
-	background: rgba(#fff, .05);
+	background: rgba(#fff, 0.05);
 
 	@extend %grid-jsb;
 	grid-auto-flow: column;
 	grid-template-columns: max-content 1fr repeat(2, max-content); // todo mozda umesto max-content da stavim auto
 	grid-gap: 3rem;
 	padding: 1.8rem 2rem;
-	transition: background .2s ease-in-out;
+	transition: background 0.2s ease-in-out;
 
 	&--deleted {
-		animation: scale-fade-out .4s ease-in-out;
+		animation: scale-fade-out 0.4s ease-in-out;
 	}
 
 	&:not(:last-child) {
@@ -43,17 +38,17 @@
 	}
 
 	&:hover {
-		background: rgba($primary, .75);
+		background: rgba($primary, 0.75);
 	}
 
 	&__figure {
-		padding: .8rem 1rem;
+		padding: 0.8rem 1rem;
 		background: $card-gradient-main;
 		@extend %border-r;
 	}
 
 	&__img {
-		width: auto;
+		@extend %w-auto;
 		height: 4rem;
 	}
 
@@ -63,13 +58,13 @@
 	}
 
 	&__title {
-		color: rgba($text, .8);
+		color: rgba($text, 0.8);
 	}
 
 	&__subtitle,
 	&__amount {
 		color: $card-title;
-		text-transform: uppercase;
+		@extend %text-upper;
 	}
 
 	&__price {
@@ -82,7 +77,7 @@
 		@extend %fw-700;
 		font-size: 2.2rem;
 
-		&>div {
+		& > div {
 			&:not(:last-child) {
 				margin-right: 1rem;
 			}
@@ -95,7 +90,7 @@
 		@extend %border-r;
 		color: $text;
 		transform-origin: center center;
-		transition: all .4s $outSmooth;
+		transition: all 0.4s $outSmooth;
 		padding: 0 8px;
 
 		&:hover {
@@ -106,7 +101,7 @@
 	&__icon {
 		@extend %cursor;
 		fill: $text;
-		transition: all .5s $outSmooth;
+		transition: all 0.5s $outSmooth;
 
 		&--delete {
 			fill: lighten($text, 20%);
@@ -116,13 +111,6 @@
 				transform: translateY(-10%);
 			}
 		}
-
-		// &--add-to-bag {
-
-		// 	&:hover {
-		// 		// fill: $text;
-		// 	}
-		// }
 
 		&--remove-from-fav {
 			fill: lighten($text, 20%);
@@ -134,7 +122,6 @@
 	}
 
 	@include device(phone-land) {
-
 		&__title,
 		&__subtitle {
 			font-size: 1.5rem;

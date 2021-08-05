@@ -14,8 +14,6 @@
 
 	&__form {
 		margin: 5rem auto 2rem auto;
-		// @extend %grid-center;
-		// grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 
 		input {
 			padding: 1.55rem 4rem;
@@ -37,18 +35,31 @@
 		}
 	}
 
-	h5 { color: $primary; }
+	h5 {
+		color: $primary;
+	}
 
-
-	@include device(tab) { input { width: 60%; } }
+	@include device(tab) {
+		input {
+			width: 60%;
+		}
+	}
 
 	@include device(phone-land) {
-		input { width: 90%; margin: 0; }
+		input {
+			width: 90%;
+			margin: 0;
+		}
 
-		.btn-primary { width: 40%; margin-top: 3rem; }
+		.btn-primary {
+			width: 40%;
+			margin-top: 3rem;
+		}
 	}
 	@include device(phone) {
-		input { width: 100%; }
+		input {
+			width: 100%;
+		}
 
 		.btn-primary {
 			margin-top: 2.5rem;
@@ -56,6 +67,8 @@
 		}
 	}
 	@include device(phone-ant) {
-		.btn-primary { width: 100%; }
+		.btn-primary {
+			width: 100%;
+		}
 	}
 }

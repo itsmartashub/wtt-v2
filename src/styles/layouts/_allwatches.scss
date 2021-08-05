@@ -17,7 +17,7 @@
 		@include device(phone) {
 			grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 			grid-gap: 15rem 12rem;
-			transform: scale(.9);
+			transform: scale(0.9);
 		}
 	}
 
@@ -29,11 +29,9 @@
 		}
 	}
 
-
 	@include device(tab) {
 		display: block;
 
-		// .title { margin: 10rem auto 15rem auto; }
 		.title {
 			margin-bottom: 15rem;
 		}

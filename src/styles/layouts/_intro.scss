@@ -18,19 +18,16 @@
 
 		@extend %grid-center;
 		grid-gap: 3rem;
-		// border: 1px solid red;
 	}
 
 	&__logo {
-		height: auto;
+		@extend %h-auto;
 		width: 38vw;
-		// animation: fadeInY 2s ease backwards 1000ms;
 	}
 	&__title {
 		font-size: 3rem;
 		color: $card-title;
 		@extend %text-center;
-		// animation: fadeInLetterSpacing 2s ease backwards 1000ms;
 	}
 
 	figure {
@@ -39,7 +36,6 @@
 
 	&__img {
 		object-fit: cover;
-		// animation: fadeIn .6s ease backwards 1500ms;
 	}
 	&__img-block {
 		@extend %after;
@@ -50,16 +46,13 @@
 		// opacity: 0;
 		z-index: -2;
 		transform-origin: right center;
-		// animation: scaleX 1.5s $inOutQuart backwards 300ms;
 	}
 	&__img,
 	&__img-block {
-		// width: 30vw;
-		// height: 40vw;
 		width: 30vw;
 		height: 72vh;
 	}
-	
+
 	.btn-primary {
 		padding: 1.8rem 4rem;
 		font-size: 1.8rem;
@@ -73,13 +66,10 @@
 
 	&__shipping {
 		letter-spacing: 2px;
-		 @extend %pos-abs;
+		@extend %pos-abs;
 		top: 35%;
 		right: 5vw;
 		writing-mode: vertical-rl;
-		// animation: fadeInY 1.5s ease backwards 2100ms;
-		// background: rgba(#fff, .1);
-		// backdrop-filter: blur(5px);
 	}
 
 	&__brown-block {
@@ -95,7 +85,6 @@
 	}
 
 	// .btn-primary { animation: fadeInLetterSpacingBtn 1s ease backwards 1500ms; }
-
 
 	@include device(tab-land) {
 		&__left {
@@ -113,10 +102,12 @@
 	}
 
 	@include device(tab) {
-	     &__logo { width: 50vw; }
+		&__logo {
+			width: 50vw;
+		}
 
 		&__left {
-			top: 20%;			
+			top: 20%;
 			padding: 7rem 3vw 3vw 3vw;
 		}
 		&__right {
@@ -135,7 +126,9 @@
 		justify-content: center;
 		align-items: center;
 
-		&__brown-block { display: none;}
+		&__brown-block {
+			display: none;
+		}
 		&__left {
 			position: initial;
 			margin: 0;
@@ -175,17 +168,15 @@
 			top: 30%;
 			right: 3%;
 			backdrop-filter: blur(5px);
-			
-			background: rgba($primary, .7);
+
+			background: rgba($primary, 0.7);
 			color: $card-gr-2;
 			// color: $text-lighter;
 
 			// color: $card-title;
 			// background: $card-gradient-main;
 		}
-		
 	}
-
 
 	@include device(phone-ant) {
 		&__shipping {
@@ -193,5 +184,4 @@
 			right: 5%;
 		}
 	}
-
 }

@@ -7,8 +7,8 @@
 	padding: 1rem;
 	@extend %flex-center;
 	animation: fadeInY 1.5s ease backwards 2600ms;
-	transition: all .5s $outSmooth;
-	
+	transition: all 0.5s $outSmooth;
+
 	&--bg {
 		background: $primary;
 		border-top-left-radius: 4px;
@@ -17,15 +17,16 @@
 
 	&--hidden {
 		opacity: 0;
-		transform: translate3d(0,50%,0);
+		transform: translate3d(0, 50%, 0);
 		// transition: all .5s $outSmooth;
 	}
 }
 
-.scrolldown, .scrolltop {
+.scrolldown,
+.scrolltop {
 	svg {
 		width: 2rem;
-		height: auto;
+		@extend %h-auto;
 		fill: $text;
 	}
 }
@@ -41,14 +42,14 @@
 	width: 5.4rem;
 	height: 6rem;
 	padding: 1rem;
-	transform: translate3d(0,200%,0);
+	transform: translate3d(0, 200%, 0);
 	opacity: 0;
 	pointer-events: none;
 	transition: all 1s $inOutBack;
 
 	svg {
 		transform: rotate(180deg);
-		transition: transform .5s $inOutBack;
+		transition: transform 0.5s $inOutBack;
 	}
 	&:hover {
 		background: $card-subtitle;
@@ -58,10 +59,12 @@
 	}
 
 	&--show {
-		transform: translate3d(0,0,0);
+		transform: translate3d(0, 0, 0);
 		opacity: 1;
 		pointer-events: all;
 	}
 
-	@include device(tab) { bottom: 4%; }
+	@include device(tab) {
+		bottom: 4%;
+	}
 }

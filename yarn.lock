@@ -974,7 +974,7 @@
     chrome-trace-event "^1.0.2"
     nullthrows "^1.1.1"
 
-"@swc/helpers@^0.2.11":
+"@swc/helpers@^0.2.11", "@swc/helpers@^0.2.12":
   version "0.2.12"
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.2.12.tgz#cd54624dd685f7832b50dd7ce119ddc4eb2585ad"
   integrity sha512-hsPGC/U/0xe/WghMeSgyFsq9nNPfA5oY1Il2AaeAJcu/vTm4Bv8o9ev4eAgxcA61i5WWp72amN20XVyxWwM5aQ==
@@ -4834,7 +4834,7 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-regenerator-runtime@^0.13.7:
+regenerator-runtime@^0.13.7, regenerator-runtime@^0.13.9:
   version "0.13.9"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
   integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==

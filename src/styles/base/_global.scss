@@ -9,7 +9,6 @@ body {
 body {
 	box-sizing: border-box;
 	background: $bg-gradient;
-	// background: $bg;
 	color: $text;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -30,7 +29,7 @@ body {
 
 ::selection {
 	background-color: $primary;
-	color: rgba(#fff, .7);
+	color: rgba(#fff, 0.7);
 }
 
 a {
@@ -49,7 +48,7 @@ a {
 	}
 }
 
-svg>* {
+svg > * {
 	pointer-events: none;
 }
 
@@ -66,7 +65,6 @@ svg>* {
 	border: 1px solid darken($primary, 6%);
 }
 
-
 .bp {
 	display: none;
 	font-size: 2rem;
@@ -76,7 +74,7 @@ svg>* {
 	left: 50%;
 
 	&::before {
-		content: 'desktop '
+		content: "desktop ";
 	}
 
 	@include device(tab-land) {
@@ -84,7 +82,7 @@ svg>* {
 		background: purple;
 
 		&::before {
-			content: 'tab-land';
+			content: "tab-land";
 		}
 	}
 
@@ -93,7 +91,7 @@ svg>* {
 		background: teal;
 
 		&::before {
-			content: 'tab';
+			content: "tab";
 		}
 	}
 
@@ -102,7 +100,7 @@ svg>* {
 		background: lightgreen;
 
 		&::before {
-			content: 'phone-land';
+			content: "phone-land";
 		}
 	}
 
@@ -111,7 +109,7 @@ svg>* {
 		background: orangered;
 
 		&::before {
-			content: 'phone';
+			content: "phone";
 		}
 	}
 
@@ -120,7 +118,7 @@ svg>* {
 		background: coral;
 
 		&::before {
-			content: 'phone-ant';
+			content: "phone-ant";
 		}
 	}
 
@@ -129,7 +127,7 @@ svg>* {
 		background: red;
 
 		&::before {
-			content: 'big';
+			content: "big";
 		}
 	}
 }

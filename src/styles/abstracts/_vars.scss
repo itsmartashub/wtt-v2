@@ -1,31 +1,34 @@
-$primary: #A6724A; // za buttons, i header onaj braon deo, 85% mozda bolje za bg
-$text:#291108;
-$text-lighter: #3D2721; // clear cart i add to cart u favourites
-$heading-secondary: #3D2721; // FEATURE, COLLECTIONS< ALL WATCHES....
-$card-title:#6E4D43; // i hover link u mobile menu
-$card-subtitle: #B5A091;
-$card-collections: #EBE5E0; // ili mozda samo box-shadow da ostavim, #EBE5E0, 
-$card-gr-1: #E5DBCC;
-$card-gr-2: #D4C19F;
-$card-gradient-main: linear-gradient(200deg, rgba($card-gr-1, .72), rgba($card-gr-2, .85)); // top to bottom #E5DBCC (gore, 72% alpha), #D4C19F (dole 85%)
-// $bg-gr-1: #E5DBCC;
-// $bg-gr-2: #D4C19F;
+$primary: #a6724a; // za buttons, i header onaj braon deo, 85% mozda bolje za bg
+$text: #291108;
+$text-lighter: #3d2721; // clear cart i add to cart u favourites
+$heading-secondary: #3d2721; // FEATURE, COLLECTIONS< ALL WATCHES....
+$card-title: #6e4d43; // i hover link u mobile menu
+$card-subtitle: #b5a091;
+$card-collections: #ebe5e0; // ili mozda samo box-shadow da ostavim, #EBE5E0,
+$card-gr-1: #e5dbcc;
+$card-gr-2: #d4c19f;
+$card-gradient-main: linear-gradient(
+	200deg,
+	rgba($card-gr-1, 0.72),
+	rgba($card-gr-2, 0.85)
+);
 $bag-gr-1: #b88e6e;
 $bag-gr-2: $primary;
 $bag-gradient: linear-gradient(to bottom, $bag-gr-2, $bag-gr-1);
 
-$btn-clear: #B9926C;
-$btn-stock: #A89080; // 34%
-$btn-collection: #CBBBA8;
+$btn-clear: #b9926c;
+$btn-stock: #a89080; // 34%
+$btn-collection: #cbbba8;
 
-$bg-gradient: radial-gradient(rgba($card-gr-1, .75), rgba($card-gr-2, .85)); // radial, #E5DBCC - u centru 75%, #D4C19F 85%
-// $bg-gradient: linear-gradient(200deg, rgba($card-gr-1, .72), rgba($card-gr-2, .85)); // radial, #E5DBCC - u centru 75%, #D4C19F 85%
-$bg: rgba($card-gr-2, .65);
-
+$bg-gradient: radial-gradient(
+	rgba($card-gr-1, 0.75),
+	rgba($card-gr-2, 0.85)
+); // radial, #E5DBCC - u centru 75%, #D4C19F 85%
+$bg: rgba($card-gr-2, 0.65);
 
 // $btn-radius: 2px;
-$btn-shadow: 1px 4px 10px 0px rgba(#000, .08);
-$card-shadow: 1px 8px 20px 0px rgba(#000, .04);
+$btn-shadow: 1px 4px 10px 0px rgba(#000, 0.08);
+$card-shadow: 1px 8px 20px 0px rgba(#000, 0.04);
 
 // z-index
 // $z-navbar-menu: 90;
@@ -47,9 +50,9 @@ $z-filtermobile-bg: 70;
 
 $z-alert: 240;
 
-// EASING DEFINITIONS
-$outSmooth: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-$inOutExpo: cubic-bezier(1.000, 0.000, 0.000, 1.000);
+//? EASING DEFINITIONS
+$outSmooth: cubic-bezier(0.215, 0.61, 0.355, 1);
+$inOutExpo: cubic-bezier(1, 0, 0, 1);
 $inBack: cubic-bezier(0.6, -0.28, 0.735, 0.045);
 $outBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 $inOutBack: cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -57,26 +60,3 @@ $inCirc: cubic-bezier(0.6, 0.04, 0.98, 0.335);
 $outCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
 $inOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 $inOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
-
-
-// // TRANSITIONS
-// $inQuad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-// $inCubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-// $inQuart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
-// $inQuint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-// $inExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
-// $inCirc: cubic-bezier(0.6, 0.04, 0.98, 0.335);
-
-// $outQuad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-// $outCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
-// $outQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
-// $outQuint: cubic-bezier(0.23, 1, 0.32, 1);
-// $outExpo: cubic-bezier(0.19, 1, 0.22, 1);
-// $outCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
-
-// $inOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-// $inOutCubic: cubic-bezier(0.645, 0.045, 0.355, 1);
-// $inOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
-// $inOutQuint: cubic-bezier(0.86, 0, 0.07, 1);
-// $inOutExpo: cubic-bezier(1, 0, 0, 1);
-// $inOutCirc: cubic-bezier(0.785, 0.135, 0.15, 0.86);

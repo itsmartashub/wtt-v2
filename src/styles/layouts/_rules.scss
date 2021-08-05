@@ -12,14 +12,14 @@
 	&__svg-wrapper {
 		width: 9rem;
 		height: 9rem;
-		background: rgba($primary, .8);
+		background: rgba($primary, 0.8);
 		@extend %border-r;
 		@extend %flex-center;
 	}
 
 	svg {
 		height: 5rem;
-		width: auto;
+		@extend %w-auto;
 		fill: $text;
 	}
 
@@ -30,7 +30,6 @@
 		// opacity: .9;
 		color: $card-title;
 	}
-
 
 	@include device(tab) {
 		&__item {
@@ -50,10 +49,12 @@
 		&__svg-wrapper {
 			width: 6rem;
 			height: 6rem;
-			background: rgba($primary, .8);
+			background: rgba($primary, 0.8);
 		}
 
-		svg { height: 3rem; }
+		svg {
+			height: 3rem;
+		}
 
 		&__title {
 			font-size: 1.2rem;

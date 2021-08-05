@@ -1,5 +1,5 @@
 .navbar {
-	position: fixed;
+	@extend %pos-fix;
 	width: 100%;
 	top: 0;
 	padding: 2rem 10vw;
@@ -10,33 +10,33 @@
 	grid-template-columns: max-content 1fr max-content;
 	grid-gap: 5vw;
 	z-index: $z-navbar;
-	transition: all .5s $inOutQuad;
+	transition: all 0.5s $inOutQuad;
 
 	&--scrolled {
 		background: $primary !important;
-		box-shadow: 0px 3px 10px 0px rgba($primary, .5);
-		padding: .8rem 10vw;
+		box-shadow: 0px 3px 10px 0px rgba($primary, 0.5);
+		padding: 0.8rem 10vw;
 
 		.navbar__logo {
-			padding: .5rem 0;
+			padding: 0.5rem 0;
 
 			svg {
 				height: 4rem;
-				width: auto;
+				@extend %w-auto;
 			}
 		}
 
 		.navbar__favs {
 			svg {
 				height: 2.2rem;
-				width: auto;
+				@extend %w-auto;
 			}
 		}
 
 		.navbar__bag {
 			svg {
 				height: 2.5rem;
-				width: auto;
+				@extend %w-auto;
 			}
 		}
 
@@ -55,9 +55,9 @@
 
 	&__logo {
 		svg {
-			width: auto;
+			@extend %w-auto;
 			height: 5rem;
-			stroke-width: .5px;
+			stroke-width: 0.5px;
 			stroke: currentColor;
 			fill: $text;
 		}
@@ -74,11 +74,11 @@
 			justify-content: flex-start;
 			grid-gap: 2.5rem;
 			font-size: 1.8rem;
-			font-weight: 500;
+			@extend %fw-500;
 
 			a,
 			li {
-				transition: all .5s $outSmooth;
+				transition: all 0.5s $outSmooth;
 			}
 		}
 	}
@@ -93,11 +93,11 @@
 
 		svg {
 			height: 2.7rem;
-			width: auto;
+			@extend %w-auto;
 			fill: transparent;
 			stroke: currentColor;
 			stroke-width: 2.5px;
-			transition: all .3s ease-in-out;
+			transition: all 0.3s ease-in-out;
 		}
 
 		&:hover {
@@ -138,7 +138,7 @@
 		&-counter {
 			@extend .navbar__favs-counter;
 			right: -50%;
-			// top: 50%;\	
+			// top: 50%;\
 		}
 	}
 
@@ -169,28 +169,27 @@
 
 		&--scrolled {
 			background: $primary !important;
-			box-shadow: 0px 3px 10px 0px rgba($primary, .5);
+			box-shadow: 0px 3px 10px 0px rgba($primary, 0.5);
 
 			.navbar__logo {
-
 				// padding: .5rem 0;
 				svg {
 					height: 5rem;
-					width: auto;
+					@extend %w-auto;
 				}
 			}
 
 			.navbar__favs {
 				svg {
 					height: 2.7rem;
-					width: auto;
+					@extend %w-auto;
 				}
 			}
 
 			.navbar__bag {
 				svg {
 					height: 3.1rem;
-					width: auto;
+					@extend %w-auto;
 				}
 			}
 
@@ -202,9 +201,11 @@
 		}
 	}
 
-
 	@include device(phone-land) {
-		background: radial-gradient(rgba($card-gr-1, .9), rgba($card-gr-2, .8));
+		background: radial-gradient(
+			rgba($card-gr-1, 0.9),
+			rgba($card-gr-2, 0.8)
+		);
 	}
 
 	@include device(phone-ant) {

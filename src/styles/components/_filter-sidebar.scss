@@ -21,13 +21,17 @@
 		@extend %pos-rel;
 		@extend %border-r;
 		@extend %cursor;
-		transition: all .6s $inOutBack;
+		transition: all 0.6s $inOutBack;
 
-		&:not(:last-child) { margin-bottom: 3rem; }
+		&:not(:last-child) {
+			margin-bottom: 3rem;
+		}
 
 		&:hover {
-			background: rgba($card-subtitle, .5);
-			svg { transform: scale(0); }
+			background: rgba($card-subtitle, 0.5);
+			svg {
+				transform: scale(0);
+			}
 			p {
 				opacity: 1;
 				transform: translate(-50%, -50%);
@@ -37,13 +41,13 @@
 		svg {
 			fill: $primary;
 			height: 2.5rem;
-			width: auto;
+			@extend %w-auto;
 			pointer-events: none;
-			transition: all .7s $outSmooth;
+			transition: all 0.7s $outSmooth;
 
 			&:nth-last-of-type(3) {
 				stroke: $primary;
-				stroke-width: .5px;
+				stroke-width: 0.5px;
 			}
 		}
 
@@ -55,11 +59,11 @@
 			transform: translate(-50%, 50%);
 			opacity: 0;
 			pointer-events: none;
-			transition: all .6s $inOutBack;
+			transition: all 0.6s $inOutBack;
 		}
 	}
 
-	&__price{
+	&__price {
 		@extend %fw-700;
 		font-size: 1.2rem;
 		font-family: inherit;
@@ -86,7 +90,6 @@
 		}
 		// -webkit-appearance: button;
 	}
-
 
 	@include device(tab) {
 		display: none;

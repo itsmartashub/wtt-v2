@@ -6,14 +6,18 @@
 		grid-template-columns: repeat(2, minmax(auto, 50rem));
 		grid-gap: 10vw;
 
-		&:not(:last-child) { margin-bottom: 25vw; }
+		&:not(:last-child) {
+			margin-bottom: 25vw;
+		}
 
 		&:nth-child(odd) {
 			.feature__figure {
 				grid-column: 2/3;
 				grid-row: 1/2;
 			}
-			.feature__infos { grid-column: 1/2; }
+			.feature__infos {
+				grid-column: 1/2;
+			}
 		}
 	}
 
@@ -25,7 +29,7 @@
 		&::after,
 		&::before {
 			@extend %after;
-			box-shadow: 0px 10px 10px 1px rgba($card-subtitle, .7);
+			box-shadow: 0px 10px 10px 1px rgba($card-subtitle, 0.7);
 			border-radius: 50%;
 			transform-origin: center center;
 			z-index: -1;
@@ -33,32 +37,36 @@
 		&::after {
 			width: 120%;
 			height: 120%;
-			opacity: .15;
+			opacity: 0.15;
 			transform: translateY(10%);
 		}
 		&::before {
 			width: 70%;
 			height: 70%;
-			opacity: .2;
+			opacity: 0.2;
 			transform: translateY(20%);
 		}
 	}
 
 	&__img {
-		width: auto;
+		@extend %w-auto;
 		height: 28vw;
 	}
 
 	&__infos {
 		@extend %grid-center;
-		justify-items: flex-start;	
+		justify-items: flex-start;
 		grid-gap: 2rem;
 	}
 
-	&__about { @extend %fw-200; }
+	&__about {
+		@extend %fw-200;
+	}
 
 	&__properties {
-		p {	@extend %fw-700; }
+		p {
+			@extend %fw-700;
+		}
 		span {
 			@extend %fw-400;
 			color: lighten($text, 10%);
@@ -85,14 +93,22 @@
 			padding: 0 2vw;
 			grid-template-columns: 2fr 3fr;
 
-			&:not(:last-child) { margin-bottom: 20vw; }
+			&:not(:last-child) {
+				margin-bottom: 20vw;
+			}
 
 			&:nth-child(odd) {
-				.feature__figure { grid-column: 1/2; }
-				.feature__infos { grid-column: 2/3; }
+				.feature__figure {
+					grid-column: 1/2;
+				}
+				.feature__infos {
+					grid-column: 2/3;
+				}
 			}
 		}
-		&__figure { align-self: center; }
+		&__figure {
+			align-self: center;
+		}
 		&__price {
 			font-size: 3.2rem;
 			margin: 0;
@@ -118,17 +134,17 @@
 			&::after,
 			&::before {
 				transform: translateY(5%);
-				box-shadow: 0px 10px 10px 1px rgba($card-subtitle, .5);
+				box-shadow: 0px 10px 10px 1px rgba($card-subtitle, 0.5);
 			}
 			&::after {
 				width: 32rem;
 				height: 32rem;
-				opacity: .1;
+				opacity: 0.1;
 			}
 			&::before {
 				width: 20rem;
 				height: 20rem;
-				opacity: .15;
+				opacity: 0.15;
 			}
 		}
 		&__img {
@@ -138,14 +154,20 @@
 	}
 
 	@include device(phone) {
-		&__item { padding: 35% 10vw 0 10vw; }
+		&__item {
+			padding: 35% 10vw 0 10vw;
+		}
 		&__figure::after {
 			width: 30rem;
 			height: 30rem;
 		}
-		&__img { width: 40vw; }
+		&__img {
+			width: 40vw;
+		}
 
-		.btn-primary { padding: 1.6rem 2rem;}
+		.btn-primary {
+			padding: 1.6rem 2rem;
+		}
 	}
 
 	@include device(phone-ant) {
@@ -158,6 +180,4 @@
 			}
 		}
 	}
-
 }
-

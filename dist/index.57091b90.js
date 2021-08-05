@@ -469,6 +469,7 @@ var _favDefault = parcelHelpers.interopDefault(_fav);
 var _observer = require("./classes/Observer");
 var _observerDefault = parcelHelpers.interopDefault(_observer);
 document.addEventListener("DOMContentLoaded", ()=>{
+    document.querySelector(".preloader").classList.add("preloader--hidden");
     const _ui1 = new _uiDefault.default();
     const _products1 = new _productsDefault.default();
     const _bag1 = new _bagDefault.default();
@@ -497,30 +498,30 @@ document.addEventListener("DOMContentLoaded", ()=>{
 },{"./classes/UI":"dr0MR","./classes/Storage":"7DdqB","./classes/Products":"iU7KM","./classes/Bag":"b2tAB","./classes/Fav":"gqhCm","./classes/Observer":"5PshA","@parcel/transformer-js/src/esmodule-helpers.js":"4N8i7"}],"dr0MR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-const $navbar = document.querySelector('.navbar');
-const $navmob = document.querySelector('.navmob');
-const $navbarBag = document.querySelector('.navbar__bag');
-const $bag = document.querySelector('.bag');
-const $closeBagBtn = document.querySelector('.bag .btn-close');
-const $navbarFav = document.querySelector('.navbar__favs');
-const $fav = document.querySelector('.fav');
-const $closeFavBtn = document.querySelector('.fav .btn-close');
-const $burger = document.querySelector('.navbar__burger');
-const $modal_bg = document.querySelector('.modal-bg');
+const $navbar = document.querySelector(".navbar");
+const $navmob = document.querySelector(".navmob");
+const $navbarBag = document.querySelector(".navbar__bag");
+const $bag = document.querySelector(".bag");
+const $closeBagBtn = document.querySelector(".bag .btn-close");
+const $navbarFav = document.querySelector(".navbar__favs");
+const $fav = document.querySelector(".fav");
+const $closeFavBtn = document.querySelector(".fav .btn-close");
+const $burger = document.querySelector(".navbar__burger");
+const $modal_bg = document.querySelector(".modal-bg");
 class UI {
     static openBagFav(_el, _class) {
         if (!_el.classList.contains(_class)) _el.classList.add(_class);
-        if (!$modal_bg.classList.contains('modal-bg--open')) $modal_bg.classList.add('modal-bg--open');
+        if (!$modal_bg.classList.contains("modal-bg--open")) $modal_bg.classList.add("modal-bg--open");
     }
     static closeBagFav(_el, _class) {
         if (_el.classList.contains(_class)) _el.classList.remove(_class);
-        if ($modal_bg.classList.contains('modal-bg--open')) $modal_bg.classList.remove('modal-bg--open');
+        if ($modal_bg.classList.contains("modal-bg--open")) $modal_bg.classList.remove("modal-bg--open");
     }
     static displayNoneTitleNoItems(_selector) {
-        document.querySelector(_selector).style.display = 'none';
+        document.querySelector(_selector).style.display = "none";
     }
     static displayBlockTitleNoItems(_selector) {
-        document.querySelector(_selector).style.display = 'flex';
+        document.querySelector(_selector).style.display = "flex";
     }
     static disableBtn(_selector) {
         document.querySelector(_selector).disabled = true;
@@ -528,76 +529,73 @@ class UI {
     static enableBtn(_selector) {
         document.querySelector(_selector).disabled = false;
     }
-    static setStyle({ _footerEl , _noItemsTitleEl , _displayFooter , _displayNoItemsTitle  }) {
+    static setStyle({ _footerEl , _noItemsTitleEl , _displayFooter , _displayNoItemsTitle ,  }) {
         _footerEl.style.display = _displayFooter;
         _noItemsTitleEl.style.display = _displayNoItemsTitle;
     }
     static setBagFavStyleEmpty(_footerEl, _noItemsTitleEl) {
-        // if (this.arrBag.length <= 0) {
         this.setStyle({
             _footerEl,
             _noItemsTitleEl,
-            _displayFooter: 'none',
-            _displayNoItemsTitle: 'block'
+            _displayFooter: "none",
+            _displayNoItemsTitle: "block"
         });
-    // }
     }
     static setBagFavStyleFilled(_footerEl, _noItemsTitleEl) {
         this.setStyle({
             _footerEl,
             _noItemsTitleEl,
-            _displayFooter: 'grid',
-            _displayNoItemsTitle: 'none'
+            _displayFooter: "grid",
+            _displayNoItemsTitle: "none"
         });
     }
     addClickListenersToNavbarIcons(_clickElOpen, _clickElClose, _el, _class) {
-        _clickElOpen.addEventListener('click', ()=>{
+        _clickElOpen.addEventListener("click", ()=>{
             UI.openBagFav(_el, _class);
         });
-        _clickElClose.addEventListener('click', ()=>{
+        _clickElClose.addEventListener("click", ()=>{
             UI.closeBagFav(_el, _class);
         });
     }
     addListenerToBurger() {
-        $burger.addEventListener('click', ()=>{
-            // const $navmob = document.querySelector('.navmob');
-            if (!$burger.classList.contains('burger--opened')) {
-                $burger.classList.add('burger--opened');
-                $navmob.classList.add('navmob--opened');
-                $navbar.classList.add('navbar--transparent');
+        $burger.addEventListener("click", ()=>{
+            if (!$burger.classList.contains("burger--opened")) {
+                $burger.classList.add("burger--opened");
+                $navmob.classList.add("navmob--opened");
+                $navbar.classList.add("navbar--transparent");
             } else {
-                $burger.classList.remove('burger--opened');
-                $navmob.classList.remove('navmob--opened');
-                $navbar.classList.remove('navbar--transparent');
+                $burger.classList.remove("burger--opened");
+                $navmob.classList.remove("navmob--opened");
+                $navbar.classList.remove("navbar--transparent");
             }
         });
     }
     addListenersToModalBg() {
-        $modal_bg.addEventListener('click', ()=>{
-            UI.closeBagFav($bag, 'bag--open');
-            UI.closeBagFav($fav, 'fav--open');
+        $modal_bg.addEventListener("click", ()=>{
+            UI.closeBagFav($bag, "bag--open");
+            UI.closeBagFav($fav, "fav--open");
         });
         window.addEventListener("keyup", (e)=>{
             e.preventDefault();
-            if (e.key === 'Escape' || e.key === 27 || $modal_bg.classList.contains('modal-bg--open')) {
-                UI.closeBagFav($bag, 'bag--open');
-                UI.closeBagFav($fav, 'fav--open');
+            if (e.key === "Escape" || e.key === 27 || $modal_bg.classList.contains("modal-bg--open")) {
+                UI.closeBagFav($bag, "bag--open");
+                UI.closeBagFav($fav, "fav--open");
             }
         });
     }
     resizeNavbarOnScroll() {
-        window.addEventListener('scroll', ()=>{
-            if (window.pageYOffset > 30 && !$navmob.classList.contains('navmob--opened')) {
-                $navbar.classList.add('navbar--scrolled');
+        window.addEventListener("scroll", ()=>{
+            if (window.pageYOffset > 30 && !$navmob.classList.contains("navmob--opened")) {
+                $navbar.classList.add("navbar--scrolled");
                 return;
             }
-            $navbar.classList.remove('navbar--scrolled');
+            $navbar.classList.remove("navbar--scrolled");
         });
     }
     SETUP_UI() {
         this.resizeNavbarOnScroll();
-        this.addClickListenersToNavbarIcons($navbarBag, $closeBagBtn, $bag, 'bag--open');
-        this.addClickListenersToNavbarIcons($navbarFav, $closeFavBtn, $fav, 'fav--open');
+        this.addClickListenersToNavbarIcons($navbarBag, $closeBagBtn, $bag, "bag--open");
+        this.addClickListenersToNavbarIcons($navbarFav, $closeFavBtn, $fav, "fav--open");
         this.addListenerToBurger();
         this.addListenersToModalBg();
     }
@@ -641,28 +639,30 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 class Storage1 {
     static saveProducts(all_products) {
-        localStorage.setItem('all_products', JSON.stringify(all_products));
+        localStorage.setItem("all_products", JSON.stringify(all_products));
     }
     static getProduct(id) {
-        let arrProducts = JSON.parse(localStorage.getItem('all_products'));
+        //? static jer zelimo da koristimo i u drugim klasama?
+        let arrProducts = JSON.parse(localStorage.getItem("all_products"));
         return arrProducts.find((product)=>product.id == id
         );
     }
     static getAllProducts() {
-        let arrProducts = JSON.parse(localStorage.getItem('all_products'));
+        //? static jer zelimo da koristimo i u drugim klasama?
+        let arrProducts = JSON.parse(localStorage.getItem("all_products"));
         return arrProducts || [];
     }
     static saveBag(arrBag) {
-        localStorage.setItem('arrBag', JSON.stringify(arrBag));
+        localStorage.setItem("arrBag", JSON.stringify(arrBag));
     }
     static saveFav(arrFav) {
-        localStorage.setItem('arrFav', JSON.stringify(arrFav));
+        localStorage.setItem("arrFav", JSON.stringify(arrFav));
     }
     static getBag() {
-        return localStorage.getItem('arrBag') ? JSON.parse(localStorage.getItem('arrBag')) : [];
+        return localStorage.getItem("arrBag") ? JSON.parse(localStorage.getItem("arrBag")) : [];
     }
     static getFav() {
-        return localStorage.getItem('arrFav') ? JSON.parse(localStorage.getItem('arrFav')) : [];
+        return localStorage.getItem("arrFav") ? JSON.parse(localStorage.getItem("arrFav")) : [];
     }
 }
 exports.default = Storage1;
@@ -673,9 +673,6 @@ parcelHelpers.defineInteropFlag(exports);
 class Products {
     async fetchProducts() {
         try {
-            // let url = `http://localhost:1234/json/hello.json`
-            // let url = `../json/all_watches.json`
-            // let apiKey = `$2b$10$RIb7MpsCSbkaShHFKwvqB.I5kDrmuFGxSV12IG0NNdrt0MvWgEI5G`
             let apiKey = "$2b$10$sFQFGLJgCbv4X/XwgaiL2eBw5qcN4q3CvBp8f57mdLyzZnQpSBkaW";
             let configObject = {
                 method: "GET",
@@ -709,13 +706,12 @@ var _filter = require("./Filter");
 var _filterDefault = parcelHelpers.interopDefault(_filter);
 var _alertNotification = require("./AlertNotification");
 var _alertNotificationDefault = parcelHelpers.interopDefault(_alertNotification);
-const $navbarBagCounter = document.querySelector('.navbar__bag-counter'); // koliko itemsa imamo u bagu
-const $bag = document.querySelector('.bag');
-const $bagFooter = document.querySelector('.bag__footer');
-const $noItemsTitle = document.querySelector('.bag--if-no-items');
-const $clearBagBtn = document.querySelector('.bag .btn-clearbag');
-const $bagTotal = document.querySelector('.bag .total-price-items');
-const $bagItems = document.querySelector('.bag .items');
+const $navbarBagCounter = document.querySelector(".navbar__bag-counter") // koliko itemsa imamo u bagu
+;
+const $bag = document.querySelector(".bag");
+const $clearBagBtn = document.querySelector(".bag .btn-clearbag");
+const $bagTotal = document.querySelector(".bag .total-price-items");
+const $bagItems = document.querySelector(".bag .items");
 const _AlertNotification = new _alertNotificationDefault.default();
 let arrAddToBagBtns = [];
 class Bag {
@@ -730,30 +726,30 @@ class Bag {
     }
     getAddToBagBtns() {
         let $addToBagBtns;
-        if (window.location.pathname == '/index.html' || window.location.pathname == '/') $addToBagBtns = [
-            ...document.querySelectorAll('.add-to-bag')
+        if (window.location.pathname == "/index.html" || window.location.pathname == "/") $addToBagBtns = [
+            ...document.querySelectorAll(".add-to-bag")
         ];
-        else if (window.location.pathname == '/allwatches.html') $addToBagBtns = [
-            ...document.querySelectorAll('.btn-addtobag')
+        else if (window.location.pathname == "/allwatches.html") $addToBagBtns = [
+            ...document.querySelectorAll(".btn-addtobag")
         ];
         arrAddToBagBtns = $addToBagBtns;
         $addToBagBtns.forEach((btn)=>{
             let id = btn.dataset.id;
             let itemInBag = this.arrBag.find((item)=>item.id == id
             );
-            if (itemInBag && (window.location.pathname == '/' || window.location.pathname == '/index.html')) {
-                btn.classList.add('btn--added');
-                btn.innerHTML = 'ADDED &nbsp;&#10003;';
+            if (itemInBag && (window.location.pathname == "/" || window.location.pathname == "/index.html")) {
+                btn.classList.add("btn--added");
+                btn.innerHTML = "ADDED &nbsp;&#10003;";
                 btn.disabled = true;
-            } else if (itemInBag && window.location.pathname == '/allwatches.html') {
-                btn.closest('.card').classList.add('card--added');
+            } else if (itemInBag && window.location.pathname == "/allwatches.html") {
+                btn.closest(".card").classList.add("card--added");
                 btn.disabled = true;
             }
-            btn.addEventListener('click', (e)=>{
-                if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
-                    e.target.classList.add('btn--added');
-                    e.target.innerHTML = 'ADDED &nbsp;&#10003;';
-                } else if (window.location.pathname == '/allwatches.html') e.target.closest('.card').classList.add('card--added');
+            btn.addEventListener("click", (e)=>{
+                if (window.location.pathname == "/" || window.location.pathname == "/index.html") {
+                    e.target.classList.add("btn--added");
+                    e.target.innerHTML = "ADDED &nbsp;&#10003;";
+                } else if (window.location.pathname == "/allwatches.html") e.target.closest(".card").classList.add("card--added");
                 e.target.disabled = true;
                 //? 1. get product from products
                 let bagItem = {
@@ -776,7 +772,7 @@ class Bag {
                     text: `${bagItem.title} has been added to Bag!`
                 });
                 //? 6. show the bag
-                _uiDefault.default.openBagFav($bag, 'bag--open');
+                _uiDefault.default.openBagFav($bag, "bag--open");
             });
         });
     }
@@ -793,13 +789,13 @@ class Bag {
     }
     addToBag(bagItem) {
         let arr_obj_imgs = _filterDefault.default.arrObjImgs;
-        const article = document.createElement('article');
-        article.classList.add('item');
+        const article = document.createElement("article");
+        article.classList.add("item");
         article.innerHTML = `\n			<figure class="item__figure">\n				<img class="item__img" src=${arr_obj_imgs[bagItem.id - 1]} alt="watch-brown-white-${bagItem.title}" />\n			</figure>\n\n			<div class="item__informations">\n				<h3 class="item__title">${bagItem.title}</h3>\n				<h4 class="item__subtitle">${bagItem.brand}</h4>\n				<p class="item__price">$ ${bagItem.price}</p>\n			</div>\n\n			<div class="item__controller">\n				<div class="item__add" data-id=${bagItem.id}>+</div>\n				<div class="item__amount">${bagItem.amount}</div>\n				<div class="item__remove" data-id=${bagItem.id}>-</div>\n			</div>\n\n			<svg xmlns="http://www.w3.org/2000/svg" class="item__icon item__icon--delete" data-id=${bagItem.id} width="17.499" height="20.783" viewBox="0 0 17.499 20.783">\n				<path d="M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z" transform="translate(6397 2299)"/>\n			</svg>\n		`;
         $bagItems.appendChild(article);
-        _uiDefault.default.displayNoneTitleNoItems('.bag--if-no-items');
-        _uiDefault.default.enableBtn('.btn-checkout');
-        _uiDefault.default.enableBtn('.btn-clearbag');
+        _uiDefault.default.displayNoneTitleNoItems(".bag--if-no-items");
+        _uiDefault.default.enableBtn(".btn-checkout");
+        _uiDefault.default.enableBtn(".btn-clearbag");
     // UI.setBagFavStyleFilled($bagFooter, $noItemsTitle);
     // this.setStyleCondition();
     }
@@ -808,41 +804,44 @@ class Bag {
         );
     }
     bagLogic() {
-        $clearBagBtn.addEventListener('click', ()=>{
+        $clearBagBtn.addEventListener("click", ()=>{
             this.clearBag();
         });
         //? bag functionallity
-        $bagItems.addEventListener('click', (e)=>{
+        $bagItems.addEventListener("click", (e)=>{
             //* delete item
-            if (e.target.closest('.item__icon--delete')) {
+            if (e.target.closest(".item__icon--delete")) {
+                // ! da nisam stavila pointer-events: none; u css-u za sve childove svg elementa, morala bih closest() da koristim, a ne match()
                 let $deleteItemBtn = e.target;
                 let itemID = $deleteItemBtn.dataset.id;
                 let currItem = this.arrBag.find((item)=>item.id == itemID
                 );
-                $deleteItemBtn.parentElement.classList.add('item--deleted');
+                $deleteItemBtn.parentElement.classList.add("item--deleted");
                 _AlertNotification.addNotification({
                     text: `${currItem.title} has been removed from Bag!`,
-                    alertClass: 'alert__item--removed'
+                    alertClass: "alert__item--removed"
                 });
                 setTimeout(()=>{
-                    this.deleteFromBag(itemID); // uklonili smo iz arrBag, ali nismo i iz DOM-a
+                    this.deleteFromBag(itemID) // uklonili smo iz arrBag, ali nismo i iz DOM-a
+                    ;
                     // $bagItems.removeChild(deleteItemBtn.parentElement) || $bagItems.removeChild(deleteItemBtn.parentNode); // za mozilu kao radi parentNode
                     $bagItems.removeChild($deleteItemBtn.parentElement);
-                    $deleteItemBtn.parentElement.classList.remove('item--deleted');
+                    $deleteItemBtn.parentElement.classList.remove("item--deleted");
                 }, 400);
             //* add item amount
-            } else if (e.target.matches('.item__add')) {
+            } else if (e.target.matches(".item__add")) {
                 let $increaseAmountBtn = e.target;
                 let itemID = $increaseAmountBtn.dataset.id;
                 let currItem = this.arrBag.find((item)=>item.id == itemID
                 );
                 //todo problem je sto je this.arrBag [], nema nista i onda je i currItem undefined i amount samim itm i sve ostalo
-                console.table(this.arrBag); //! []
+                console.table(this.arrBag) //! []
+                ;
                 currItem.amount = currItem.amount + 1;
                 _storageDefault.default.saveBag(this.arrBag);
                 this.setBagValues(this.arrBag);
                 $increaseAmountBtn.nextElementSibling.innerText = currItem.amount;
-            } else if (e.target.matches('.item__remove')) {
+            } else if (e.target.matches(".item__remove")) {
                 let $decreaseAmountBtn = e.target;
                 let itemID = $decreaseAmountBtn.dataset.id;
                 let currItem = this.arrBag.find((item)=>item.id == itemID
@@ -853,16 +852,16 @@ class Bag {
                     this.setBagValues(this.arrBag);
                     $decreaseAmountBtn.previousElementSibling.innerText = currItem.amount;
                 } else {
-                    $decreaseAmountBtn.parentElement.parentElement.classList.add('item--deleted');
+                    $decreaseAmountBtn.parentElement.parentElement.classList.add("item--deleted");
                     _AlertNotification.addNotification({
                         // text: `${currItem.title} has been removed from Bag!`,
                         text: `Watch has been removed from the Bag!`,
-                        alertClass: 'alert__item--removed'
+                        alertClass: "alert__item--removed"
                     });
                     setTimeout(()=>{
                         $bagItems.removeChild($decreaseAmountBtn.parentElement.parentElement);
                         this.deleteFromBag(itemID);
-                        $decreaseAmountBtn.parentElement.parentElement.classList.remove('item--deleted');
+                        $decreaseAmountBtn.parentElement.parentElement.classList.remove("item--deleted");
                     }, 400);
                 }
             }
@@ -877,13 +876,13 @@ class Bag {
         while($bagItems.children.length > 0)$bagItems.removeChild($bagItems.children[0]);
         _AlertNotification.addNotification({
             text: `Your Bag is empty!`,
-            alertClass: 'alert__item--remove'
+            alertClass: "alert__item--remove"
         });
-        _uiDefault.default.displayBlockTitleNoItems('.bag--if-no-items');
-        _uiDefault.default.disableBtn('.btn-checkout');
-        _uiDefault.default.disableBtn('.btn-clearbag');
+        _uiDefault.default.displayBlockTitleNoItems(".bag--if-no-items");
+        _uiDefault.default.disableBtn(".btn-checkout");
+        _uiDefault.default.disableBtn(".btn-clearbag");
         // UI.setBagFavStyleEmpty($bagFooter, $noItemsTitle);
-        _uiDefault.default.closeBagFav($bag, 'bag--open');
+        _uiDefault.default.closeBagFav($bag, "bag--open");
     }
     deleteFromBag(itemID) {
         this.arrBag = this.arrBag.filter((item)=>item.id != itemID
@@ -892,11 +891,11 @@ class Bag {
         _storageDefault.default.saveBag(this.arrBag);
         let ATBbtn = this.getSingleATBbtn(itemID);
         ATBbtn.disabled = false;
-        if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
-            ATBbtn.classList.remove('btn--added');
-            if (ATBbtn.parentElement.className == 'feature__footer') ATBbtn.innerText = 'add to bag';
+        if (window.location.pathname == "/" || window.location.pathname == "/index.html") {
+            ATBbtn.classList.remove("btn--added");
+            if (ATBbtn.parentElement.className == "feature__footer") ATBbtn.innerText = "add to bag";
             else ATBbtn.innerHTML = `\n					<svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="21.786" viewBox="0 0 16.5 21.786">\n						<path d="M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z" transform="translate(6397 2299.001)"/>\n					</svg>\n					add to bag\n				`;
-        } else if (window.location.pathname == '/allwatches.html') ATBbtn.closest('.card').classList.remove('card--added');
+        } else if (window.location.pathname == "/allwatches.html") ATBbtn.closest(".card").classList.remove("card--added");
     }
     getSingleATBbtn(itemID) {
         return arrAddToBagBtns.find((btn)=>btn.dataset.id == itemID
@@ -1235,13 +1234,13 @@ var _filter = require("./Filter");
 var _filterDefault = parcelHelpers.interopDefault(_filter);
 var _alertNotification = require("./AlertNotification");
 var _alertNotificationDefault = parcelHelpers.interopDefault(_alertNotification);
-const $navbarFavCounter = document.querySelector('.navbar__favs-counter');
-const $fav = document.querySelector('.fav');
-const $favFooter = document.querySelector('.fav__footer');
-const $noItemsTitle = document.querySelector('.fav--if-no-items');
-const $clearFavBtn = document.querySelector('.fav .btn-clearfav');
-const $favItemsCounter = document.querySelector('.fav .total-price-items');
-const $favItems = document.querySelector('.fav .items');
+const $navbarFavCounter = document.querySelector(".navbar__favs-counter");
+const $fav = document.querySelector(".fav");
+const $favFooter = document.querySelector(".fav__footer");
+const $noItemsTitle = document.querySelector(".fav--if-no-items");
+const $clearFavBtn = document.querySelector(".fav .btn-clearfav");
+const $favItemsCounter = document.querySelector(".fav .total-price-items");
+const $favItems = document.querySelector(".fav .items");
 const _AlertNotification = new _alertNotificationDefault.default();
 let arrFavBtns = [];
 class Favourites extends _bagDefault.default {
@@ -1261,24 +1260,19 @@ class Favourites extends _bagDefault.default {
     set arrFav(value) {
         this._arrFav = value;
     }
-    // constructor() {
-    // 	super();
-    // }
-    // arrFav = [];
-    // arrFavBtns = [];
     getFavBtns() {
         const $favBtns = [
-            ...document.querySelectorAll('.card-fav-btn')
+            ...document.querySelectorAll(".card-fav-btn")
         ];
         arrFavBtns = $favBtns;
         arrFavBtns.forEach((fav)=>{
             let itemID = fav.dataset.id;
             let itemInFav = this.arrFav.find((item)=>item.id == itemID
             );
-            if (itemInFav) fav.classList.add('card-fav-btn--liked');
-            fav.addEventListener('click', ()=>{
-                if (!fav.classList.contains('card-fav-btn--liked')) {
-                    fav.classList.add('card-fav-btn--liked');
+            if (itemInFav) fav.classList.add("card-fav-btn--liked");
+            fav.addEventListener("click", ()=>{
+                if (!fav.classList.contains("card-fav-btn--liked")) {
+                    fav.classList.add("card-fav-btn--liked");
                     let favItem = {
                         ..._storageDefault.default.getProduct(itemID),
                         amount: 1
@@ -1293,19 +1287,19 @@ class Favourites extends _bagDefault.default {
                     //todo dodati alert notify kada dodamo item
                     _AlertNotification.addNotification({
                         text: `${favItem.title} has been added to Favourites!`,
-                        alertClass: 'alert__item--added'
+                        alertClass: "alert__item--added"
                     });
                 } else {
-                    fav.classList.remove('card-fav-btn--liked');
+                    fav.classList.remove("card-fav-btn--liked");
                     this.deleteFromFavourites(itemID);
-                    document.querySelectorAll('.fav .item').forEach((item)=>{
+                    document.querySelectorAll(".fav .item").forEach((item)=>{
                         if (item.dataset.id == itemID) $favItems.removeChild(item);
                     });
                     this.setFavValues(this.arrFav);
                     //todo dodati alert notify kada obrisemo item
                     _AlertNotification.addNotification({
                         text: `Watch has been removed from Favourites!`,
-                        alertClass: 'alert__item--removed'
+                        alertClass: "alert__item--removed"
                     });
                 }
             });
@@ -1323,13 +1317,13 @@ class Favourites extends _bagDefault.default {
     }
     addToFavourites(favItem) {
         let arr_obj_imgs = _filterDefault.default.arrObjImgs;
-        const article = document.createElement('article');
-        article.classList.add('item');
-        article.setAttribute('data-id', `${favItem.id}`);
+        const article = document.createElement("article");
+        article.classList.add("item");
+        article.setAttribute("data-id", `${favItem.id}`);
         article.innerHTML = `\n			<figure class="item__figure">\n				<img class="item__img" src=${arr_obj_imgs[favItem.id - 1]} alt="watch-brown-white-${favItem.title}" />\n			</figure>\n\n			<div class="item__informations">\n				<h3 class="item__title">${favItem.title}</h3>\n				<h4 class="item__subtitle">${favItem.brand}</h4>\n				<p class="item__price">$ ${favItem.price}</p>\n			</div>\n\n			<svg xmlns="http://www.w3.org/2000/svg" data-id=${favItem.id} class="item__icon item__icon--add-to-bag" width="16.5" height="21.786" viewBox="0 0 16.5 21.786">\n				<path d="M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z" transform="translate(6397 2299.001)"/>\n			</svg>\n\n			<svg xmlns="http://www.w3.org/2000/svg" data-id=${favItem.id} class="item__icon item__icon--remove-from-fav" width="17.499" height="20.783" viewBox="0 0 17.499 20.783">\n				<path d="M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z" transform="translate(6397 2299)"/>\n			</svg>\n		`;
         $favItems.appendChild(article);
-        _uiDefault.default.displayNoneTitleNoItems('.fav--if-no-items');
-        _uiDefault.default.enableBtn('.btn-clearfav');
+        _uiDefault.default.displayNoneTitleNoItems(".fav--if-no-items");
+        _uiDefault.default.enableBtn(".btn-clearfav");
     // UI.setBagFavStyleFilled($favFooter, $noItemsTitle);
     }
     deleteFromFavourites(itemID) {
@@ -1341,10 +1335,10 @@ class Favourites extends _bagDefault.default {
         this.removeLikedClass(favBtn);
     }
     removeLikedClass(favBtn) {
-        favBtn.classList.remove('card-fav-btn--liked');
+        favBtn.classList.remove("card-fav-btn--liked");
     }
     addLikedClass(favBtn) {
-        favBtn.classList.add('card-fav-btn--liked');
+        favBtn.classList.add("card-fav-btn--liked");
     }
     clearFav() {
         let favItemsIDs = this.arrFav.map((item)=>item.id
@@ -1355,36 +1349,36 @@ class Favourites extends _bagDefault.default {
         // this.setStyle({favFooter: 'none', noItems: 'block'})
         _AlertNotification.addNotification({
             text: `Your Favourites are empty!`,
-            alertClass: 'alert__item--remove'
+            alertClass: "alert__item--remove"
         });
-        _uiDefault.default.displayBlockTitleNoItems('.fav--if-no-items');
-        _uiDefault.default.disableBtn('.btn-clearbag');
+        _uiDefault.default.displayBlockTitleNoItems(".fav--if-no-items");
+        _uiDefault.default.disableBtn(".btn-clearbag");
         // UI.setBagFavStyleEmpty($favFooter, $noItemsTitle);
-        _uiDefault.default.closeBagFav($fav, 'fav--open');
+        _uiDefault.default.closeBagFav($fav, "fav--open");
     }
     populateFav(_arrFav) {
         _arrFav.forEach((item)=>this.addToFavourites(item)
         );
     }
     favLogic() {
-        $clearFavBtn.addEventListener('click', ()=>{
+        $clearFavBtn.addEventListener("click", ()=>{
             this.clearFav();
         });
-        $favItems.addEventListener('click', (e)=>{
-            if (e.target.closest('.item__icon--remove-from-fav')) {
+        $favItems.addEventListener("click", (e)=>{
+            if (e.target.closest(".item__icon--remove-from-fav")) {
                 let $deleteItemFromFavBtn = e.target;
                 let itemID = $deleteItemFromFavBtn.dataset.id;
-                $deleteItemFromFavBtn.parentElement.classList.add('item--deleted');
+                $deleteItemFromFavBtn.parentElement.classList.add("item--deleted");
                 _AlertNotification.addNotification({
                     text: `Watch has been removed from Favourites!`,
-                    alertClass: 'alert__item--removed'
+                    alertClass: "alert__item--removed"
                 });
                 setTimeout(()=>{
                     this.deleteFromFavourites(itemID);
                     $favItems.removeChild($deleteItemFromFavBtn.parentElement);
-                    $deleteItemFromFavBtn.parentElement.classList.remove('item--deleted');
+                    $deleteItemFromFavBtn.parentElement.classList.remove("item--deleted");
                 }, 400);
-            } else if (e.target.closest('.item__icon--add-to-bag')) {
+            } else if (e.target.closest(".item__icon--add-to-bag")) {
                 let $addItemToBagBtn = e.target;
                 let itemID = $addItemToBagBtn.dataset.id;
                 let forBagItem = {
@@ -1411,21 +1405,22 @@ class Favourites extends _bagDefault.default {
                     _storageDefault.default.saveFav(this.arrFav);
                     console.table(arr_bag);
                     console.table(super.arrBag);
-                    $addItemToBagBtn.parentElement.classList.add('item--deleted');
-                    this.deleteFromFavourites(itemID); // delete iz LS
+                    $addItemToBagBtn.parentElement.classList.add("item--deleted");
+                    this.deleteFromFavourites(itemID) // delete iz LS
+                    ;
                     setTimeout(()=>{
                         $favItems.removeChild($addItemToBagBtn.parentElement);
-                        $addItemToBagBtn.parentElement.classList.remove('item--deleted');
+                        $addItemToBagBtn.parentElement.classList.remove("item--deleted");
                     }, 400);
                     _AlertNotification.addNotification({
                         text: `${forBagItem.title} has been added to the Bag!`,
-                        alertClass: 'alert__item--added'
+                        alertClass: "alert__item--added"
                     });
                     //! how to match btn on card and item which is added to bag from fav
-                    if (window.location.pathname == '/allwatches.html') {
-                        let cardAddToBagBtn = document.querySelector('.card .btn-addtobag');
+                    if (window.location.pathname == "/allwatches.html") {
+                        let cardAddToBagBtn = document.querySelector(".card .btn-addtobag");
                         if (cardAddToBagBtn.dataset.id == itemID) {
-                            cardAddToBagBtn.closest('.card').classList.add('card--added');
+                            cardAddToBagBtn.closest(".card").classList.add("card--added");
                             cardAddToBagBtn.disabled = true;
                         }
                     }
@@ -1457,13 +1452,12 @@ var _filter = require("./Filter");
 var _filterDefault = parcelHelpers.interopDefault(_filter);
 var _alertNotification = require("./AlertNotification");
 var _alertNotificationDefault = parcelHelpers.interopDefault(_alertNotification);
-const $navbarBagCounter = document.querySelector('.navbar__bag-counter'); // koliko itemsa imamo u bagu
-const $bag = document.querySelector('.bag');
-const $bagFooter = document.querySelector('.bag__footer');
-const $noItemsTitle = document.querySelector('.bag--if-no-items');
-const $clearBagBtn = document.querySelector('.bag .btn-clearbag');
-const $bagTotal = document.querySelector('.bag .total-price-items');
-const $bagItems = document.querySelector('.bag .items');
+const $navbarBagCounter = document.querySelector(".navbar__bag-counter") // koliko itemsa imamo u bagu
+;
+const $bag = document.querySelector(".bag");
+const $clearBagBtn = document.querySelector(".bag .btn-clearbag");
+const $bagTotal = document.querySelector(".bag .total-price-items");
+const $bagItems = document.querySelector(".bag .items");
 const _AlertNotification = new _alertNotificationDefault.default();
 let arrAddToBagBtns = [];
 class Bag {
@@ -1478,30 +1472,30 @@ class Bag {
     }
     getAddToBagBtns() {
         let $addToBagBtns;
-        if (window.location.pathname == '/index.html' || window.location.pathname == '/') $addToBagBtns = [
-            ...document.querySelectorAll('.add-to-bag')
+        if (window.location.pathname == "/index.html" || window.location.pathname == "/") $addToBagBtns = [
+            ...document.querySelectorAll(".add-to-bag")
         ];
-        else if (window.location.pathname == '/allwatches.html') $addToBagBtns = [
-            ...document.querySelectorAll('.btn-addtobag')
+        else if (window.location.pathname == "/allwatches.html") $addToBagBtns = [
+            ...document.querySelectorAll(".btn-addtobag")
         ];
         arrAddToBagBtns = $addToBagBtns;
         $addToBagBtns.forEach((btn)=>{
             let id = btn.dataset.id;
             let itemInBag = this.arrBag.find((item)=>item.id == id
             );
-            if (itemInBag && (window.location.pathname == '/' || window.location.pathname == '/index.html')) {
-                btn.classList.add('btn--added');
-                btn.innerHTML = 'ADDED &nbsp;&#10003;';
+            if (itemInBag && (window.location.pathname == "/" || window.location.pathname == "/index.html")) {
+                btn.classList.add("btn--added");
+                btn.innerHTML = "ADDED &nbsp;&#10003;";
                 btn.disabled = true;
-            } else if (itemInBag && window.location.pathname == '/allwatches.html') {
-                btn.closest('.card').classList.add('card--added');
+            } else if (itemInBag && window.location.pathname == "/allwatches.html") {
+                btn.closest(".card").classList.add("card--added");
                 btn.disabled = true;
             }
-            btn.addEventListener('click', (e)=>{
-                if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
-                    e.target.classList.add('btn--added');
-                    e.target.innerHTML = 'ADDED &nbsp;&#10003;';
-                } else if (window.location.pathname == '/allwatches.html') e.target.closest('.card').classList.add('card--added');
+            btn.addEventListener("click", (e)=>{
+                if (window.location.pathname == "/" || window.location.pathname == "/index.html") {
+                    e.target.classList.add("btn--added");
+                    e.target.innerHTML = "ADDED &nbsp;&#10003;";
+                } else if (window.location.pathname == "/allwatches.html") e.target.closest(".card").classList.add("card--added");
                 e.target.disabled = true;
                 //? 1. get product from products
                 let bagItem = {
@@ -1524,7 +1518,7 @@ class Bag {
                     text: `${bagItem.title} has been added to Bag!`
                 });
                 //? 6. show the bag
-                _uiDefault.default.openBagFav($bag, 'bag--open');
+                _uiDefault.default.openBagFav($bag, "bag--open");
             });
         });
     }
@@ -1541,13 +1535,13 @@ class Bag {
     }
     addToBag(bagItem) {
         let arr_obj_imgs = _filterDefault.default.arrObjImgs;
-        const article = document.createElement('article');
-        article.classList.add('item');
+        const article = document.createElement("article");
+        article.classList.add("item");
         article.innerHTML = `\n			<figure class="item__figure">\n				<img class="item__img" src=${arr_obj_imgs[bagItem.id - 1]} alt="watch-brown-white-${bagItem.title}" />\n			</figure>\n\n			<div class="item__informations">\n				<h3 class="item__title">${bagItem.title}</h3>\n				<h4 class="item__subtitle">${bagItem.brand}</h4>\n				<p class="item__price">$ ${bagItem.price}</p>\n			</div>\n\n			<div class="item__controller">\n				<div class="item__add" data-id=${bagItem.id}>+</div>\n				<div class="item__amount">${bagItem.amount}</div>\n				<div class="item__remove" data-id=${bagItem.id}>-</div>\n			</div>\n\n			<svg xmlns="http://www.w3.org/2000/svg" class="item__icon item__icon--delete" data-id=${bagItem.id} width="17.499" height="20.783" viewBox="0 0 17.499 20.783">\n				<path d="M-6386.754-2279.46a4.252,4.252,0,0,1,0-6.011,4.254,4.254,0,0,1,6.009,0,4.257,4.257,0,0,1,0,6.012,4.234,4.234,0,0,1-3,1.242A4.238,4.238,0,0,1-6386.754-2279.46Zm3.991-1.466a.315.315,0,0,0,.446,0,.318.318,0,0,0,0-.448l-1.092-1.092,1.09-1.09a.318.318,0,0,0,0-.448.32.32,0,0,0-.448,0l-1.09,1.09-1.09-1.09a.318.318,0,0,0-.448,0,.317.317,0,0,0,0,.448l1.09,1.092-1.09,1.088a.318.318,0,0,0,0,.448.317.317,0,0,0,.448,0l1.09-1.09Zm-4.863,1.21h-6.16a2.145,2.145,0,0,1-2.142-2.142v-12.858h12.856v7.549a4.776,4.776,0,0,0-.679-.048,4.755,4.755,0,0,0-4.749,4.75,4.723,4.723,0,0,0,.875,2.747v0Zm-9.374-16.07v-2.143h3.75l1.071-1.071h5.357l1.072,1.071H-6382v2.143Z" transform="translate(6397 2299)"/>\n			</svg>\n		`;
         $bagItems.appendChild(article);
-        _uiDefault.default.displayNoneTitleNoItems('.bag--if-no-items');
-        _uiDefault.default.enableBtn('.btn-checkout');
-        _uiDefault.default.enableBtn('.btn-clearbag');
+        _uiDefault.default.displayNoneTitleNoItems(".bag--if-no-items");
+        _uiDefault.default.enableBtn(".btn-checkout");
+        _uiDefault.default.enableBtn(".btn-clearbag");
     // UI.setBagFavStyleFilled($bagFooter, $noItemsTitle);
     // this.setStyleCondition();
     }
@@ -1556,41 +1550,44 @@ class Bag {
         );
     }
     bagLogic() {
-        $clearBagBtn.addEventListener('click', ()=>{
+        $clearBagBtn.addEventListener("click", ()=>{
             this.clearBag();
         });
         //? bag functionallity
-        $bagItems.addEventListener('click', (e)=>{
+        $bagItems.addEventListener("click", (e)=>{
             //* delete item
-            if (e.target.closest('.item__icon--delete')) {
+            if (e.target.closest(".item__icon--delete")) {
+                // ! da nisam stavila pointer-events: none; u css-u za sve childove svg elementa, morala bih closest() da koristim, a ne match()
                 let $deleteItemBtn = e.target;
                 let itemID = $deleteItemBtn.dataset.id;
                 let currItem = this.arrBag.find((item)=>item.id == itemID
                 );
-                $deleteItemBtn.parentElement.classList.add('item--deleted');
+                $deleteItemBtn.parentElement.classList.add("item--deleted");
                 _AlertNotification.addNotification({
                     text: `${currItem.title} has been removed from Bag!`,
-                    alertClass: 'alert__item--removed'
+                    alertClass: "alert__item--removed"
                 });
                 setTimeout(()=>{
-                    this.deleteFromBag(itemID); // uklonili smo iz arrBag, ali nismo i iz DOM-a
+                    this.deleteFromBag(itemID) // uklonili smo iz arrBag, ali nismo i iz DOM-a
+                    ;
                     // $bagItems.removeChild(deleteItemBtn.parentElement) || $bagItems.removeChild(deleteItemBtn.parentNode); // za mozilu kao radi parentNode
                     $bagItems.removeChild($deleteItemBtn.parentElement);
-                    $deleteItemBtn.parentElement.classList.remove('item--deleted');
+                    $deleteItemBtn.parentElement.classList.remove("item--deleted");
                 }, 400);
             //* add item amount
-            } else if (e.target.matches('.item__add')) {
+            } else if (e.target.matches(".item__add")) {
                 let $increaseAmountBtn = e.target;
                 let itemID = $increaseAmountBtn.dataset.id;
                 let currItem = this.arrBag.find((item)=>item.id == itemID
                 );
                 //todo problem je sto je this.arrBag [], nema nista i onda je i currItem undefined i amount samim itm i sve ostalo
-                console.table(this.arrBag); //! []
+                console.table(this.arrBag) //! []
+                ;
                 currItem.amount = currItem.amount + 1;
                 _storageDefault.default.saveBag(this.arrBag);
                 this.setBagValues(this.arrBag);
                 $increaseAmountBtn.nextElementSibling.innerText = currItem.amount;
-            } else if (e.target.matches('.item__remove')) {
+            } else if (e.target.matches(".item__remove")) {
                 let $decreaseAmountBtn = e.target;
                 let itemID = $decreaseAmountBtn.dataset.id;
                 let currItem = this.arrBag.find((item)=>item.id == itemID
@@ -1601,16 +1598,16 @@ class Bag {
                     this.setBagValues(this.arrBag);
                     $decreaseAmountBtn.previousElementSibling.innerText = currItem.amount;
                 } else {
-                    $decreaseAmountBtn.parentElement.parentElement.classList.add('item--deleted');
+                    $decreaseAmountBtn.parentElement.parentElement.classList.add("item--deleted");
                     _AlertNotification.addNotification({
                         // text: `${currItem.title} has been removed from Bag!`,
                         text: `Watch has been removed from the Bag!`,
-                        alertClass: 'alert__item--removed'
+                        alertClass: "alert__item--removed"
                     });
                     setTimeout(()=>{
                         $bagItems.removeChild($decreaseAmountBtn.parentElement.parentElement);
                         this.deleteFromBag(itemID);
-                        $decreaseAmountBtn.parentElement.parentElement.classList.remove('item--deleted');
+                        $decreaseAmountBtn.parentElement.parentElement.classList.remove("item--deleted");
                     }, 400);
                 }
             }
@@ -1625,13 +1622,13 @@ class Bag {
         while($bagItems.children.length > 0)$bagItems.removeChild($bagItems.children[0]);
         _AlertNotification.addNotification({
             text: `Your Bag is empty!`,
-            alertClass: 'alert__item--remove'
+            alertClass: "alert__item--remove"
         });
-        _uiDefault.default.displayBlockTitleNoItems('.bag--if-no-items');
-        _uiDefault.default.disableBtn('.btn-checkout');
-        _uiDefault.default.disableBtn('.btn-clearbag');
+        _uiDefault.default.displayBlockTitleNoItems(".bag--if-no-items");
+        _uiDefault.default.disableBtn(".btn-checkout");
+        _uiDefault.default.disableBtn(".btn-clearbag");
         // UI.setBagFavStyleEmpty($bagFooter, $noItemsTitle);
-        _uiDefault.default.closeBagFav($bag, 'bag--open');
+        _uiDefault.default.closeBagFav($bag, "bag--open");
     }
     deleteFromBag(itemID) {
         this.arrBag = this.arrBag.filter((item)=>item.id != itemID
@@ -1640,11 +1637,11 @@ class Bag {
         _storageDefault.default.saveBag(this.arrBag);
         let ATBbtn = this.getSingleATBbtn(itemID);
         ATBbtn.disabled = false;
-        if (window.location.pathname == '/' || window.location.pathname == '/index.html') {
-            ATBbtn.classList.remove('btn--added');
-            if (ATBbtn.parentElement.className == 'feature__footer') ATBbtn.innerText = 'add to bag';
+        if (window.location.pathname == "/" || window.location.pathname == "/index.html") {
+            ATBbtn.classList.remove("btn--added");
+            if (ATBbtn.parentElement.className == "feature__footer") ATBbtn.innerText = "add to bag";
             else ATBbtn.innerHTML = `\n					<svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="21.786" viewBox="0 0 16.5 21.786">\n						<path d="M-6389-2281.464a4.254,4.254,0,0,1,4.25-4.25,4.255,4.255,0,0,1,4.251,4.25,4.256,4.256,0,0,1-4.251,4.25A4.256,4.256,0,0,1-6389-2281.464Zm2,.075a.318.318,0,0,0,.318.316h1.541v1.541a.318.318,0,0,0,.316.316.317.317,0,0,0,.316-.316v-1.541h1.544a.317.317,0,0,0,.314-.316.317.317,0,0,0-.314-.318h-1.544v-1.541a.316.316,0,0,0-.316-.316.317.317,0,0,0-.316.316v1.541h-1.541A.318.318,0,0,0-6387-2281.389Zm-1.726,2.848h0Zm-5.839,0a2.382,2.382,0,0,1-1.8-.833,2.633,2.633,0,0,1-.628-1.957l1.036-11.973a.617.617,0,0,1,.607-.581h1.825v-1.278a3.753,3.753,0,0,1,3.651-3.837,3.588,3.588,0,0,1,2.584,1.122,3.914,3.914,0,0,1,1.066,2.715v1.278h1.827a.616.616,0,0,1,.605.581l.631,7.273a5.007,5.007,0,0,0-1.342-.183,5.006,5.006,0,0,0-5,5,5,5,0,0,0,.774,2.675Zm2.26-16.623v1.278h4.87v-1.278a2.609,2.609,0,0,0-.711-1.811,2.39,2.39,0,0,0-1.724-.747A2.5,2.5,0,0,0-6392.305-2295.164Z" transform="translate(6397 2299.001)"/>\n					</svg>\n					add to bag\n				`;
-        } else if (window.location.pathname == '/allwatches.html') ATBbtn.closest('.card').classList.remove('card--added');
+        } else if (window.location.pathname == "/allwatches.html") ATBbtn.closest(".card").classList.remove("card--added");
     }
     getSingleATBbtn(itemID) {
         return arrAddToBagBtns.find((btn)=>btn.dataset.id == itemID
@@ -1661,19 +1658,19 @@ exports.default = Bag;
 },{"./Storage":"7DdqB","./UI":"dr0MR","./Filter":"4Rqu6","./AlertNotification":"X258i","@parcel/transformer-js/src/esmodule-helpers.js":"4N8i7"}],"5PshA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-const $scrollTop = document.querySelector('.scrolltop');
-const $scrollDown = document.querySelector('.scrolldown');
-const $filtermobile = document.querySelector('.filtermobile');
+const $scrollTop = document.querySelector(".scrolltop");
+const $scrollDown = document.querySelector(".scrolldown");
+const $filtermobile = document.querySelector(".filtermobile");
 //? ANIM
-const $from_bottom = document.querySelectorAll('.anim-from-bottom');
-const $from_bottom_cards = document.querySelectorAll('.anim-card-from-bottom');
-const $feature_figure = document.querySelectorAll('.feature__figure');
-const $feature_infos = document.querySelectorAll('.feature__infos');
+const $from_bottom = document.querySelectorAll(".anim-from-bottom");
+const $from_bottom_cards = document.querySelectorAll(".anim-card-from-bottom");
+const $feature_figure = document.querySelectorAll(".feature__figure");
+const $feature_infos = document.querySelectorAll(".feature__infos");
 const $sliders = [
     ...$feature_figure,
     ...$feature_infos
 ];
-const $anim_text = document.querySelectorAll('.anim-text');
+const $anim_text = document.querySelectorAll(".anim-text");
 class Observer {
     scroll_observer(_selectorScrolltopShow, _selectorScrolltopHide, _selectorScrolldownHide) {
         const observer = new IntersectionObserver((entries, observer1)=>{
@@ -1685,8 +1682,8 @@ class Observer {
                 } else if (entry.isIntersecting && entry.target.className == _selectorScrolltopHide) this.hideScrollTop();
                 if (entry.isIntersecting && entry.target.className == _selectorScrolldownHide) {
                     this.hideScrollDown();
-                    if (window.location.pathname == '/allwatches.html') this.hideFiltermobile();
-                } else if (window.location.pathname == '/allwatches.html') {
+                    if (window.location.pathname == "/allwatches.html") this.hideFiltermobile();
+                } else if (window.location.pathname == "/allwatches.html") {
                     this.showFiltermobile();
                     this.showScrollDown();
                 }
@@ -1698,7 +1695,7 @@ class Observer {
         let arrObservingElements = [
             ...showScrolltopTriggerEl,
             ...hideScrolltopTriggerEl,
-            ...hideScrolldownTriggerEl
+            ...hideScrolldownTriggerEl, 
         ];
         // console.log(arrObservingElements);
         arrObservingElements.forEach((el)=>{
@@ -1706,43 +1703,40 @@ class Observer {
         });
     }
     showScrollTop() {
-        $scrollTop.classList.add('scrolltop--show');
+        $scrollTop.classList.add("scrolltop--show");
     }
     hideScrollTop() {
-        if ($scrollTop.classList.contains('scrolltop--show')) $scrollTop.classList.remove('scrolltop--show');
+        if ($scrollTop.classList.contains("scrolltop--show")) $scrollTop.classList.remove("scrolltop--show");
     }
     hideScrollDown() {
-        $scrollDown.classList.add('scrolldown--hidden');
+        $scrollDown.classList.add("scrolldown--hidden");
     }
     showScrollDown() {
-        if ($scrollDown.classList.contains('scrolldown--hidden')) $scrollDown.classList.remove('scrolldown--hidden');
+        if ($scrollDown.classList.contains("scrolldown--hidden")) $scrollDown.classList.remove("scrolldown--hidden");
     }
     hideFiltermobile() {
-        $filtermobile.classList.add('filtermobile--hidden');
-        $filtermobile.style.animation = 'none';
+        $filtermobile.classList.add("filtermobile--hidden");
+        $filtermobile.style.animation = "none";
     }
     showFiltermobile() {
-        if ($filtermobile.classList.contains('filtermobile--hidden')) $filtermobile.classList.remove('filtermobile--hidden');
+        if ($filtermobile.classList.contains("filtermobile--hidden")) $filtermobile.classList.remove("filtermobile--hidden");
     }
     animation_observer() {
         const appearOptions = {
             // threshold: 1, //! zelim da se uverim da je cela recimo slika u view-u pre nego sto se pojavi uopste tj fadeinuje
             threshold: 0.5,
-            rootMargin: '0px 0px 0px 0px'
+            rootMargin: "0px 0px 0px 0px"
         };
         const appearOnScroll = new IntersectionObserver((entries, appearOnScroll1)=>{
             entries.forEach((entry)=>{
                 if (!entry.isIntersecting) return;
                 else {
-                    entry.target.classList.add('appear');
-                    appearOnScroll1.unobserve(entry.target); //! stop looking on something when you've done ur job
+                    entry.target.classList.add("appear");
+                    appearOnScroll1.unobserve(entry.target) //! stop looking on something when you've done ur job
+                    ;
                 }
             });
         }, appearOptions);
-        // this.addObserveToEls($from_bottom, appearOnScroll);
-        // this.addObserveToEls($from_bottom_cards, appearOnScroll);
-        // this.addObserveToEls($sliders, appearOnScroll);
-        // this.addObserveToEls($anim_text, appearOnScroll);
         $from_bottom.forEach((bottom)=>{
             appearOnScroll.observe(bottom);
         });

@@ -4,7 +4,7 @@
 	grid-gap: 2rem;
 	bottom: 5%;
 	left: 8%;
-	text-align: center;
+	@extend %text-center;
 
 	z-index: $z-alert;
 
@@ -15,18 +15,20 @@
 		@extend %fw-600;
 		padding: 2rem 5rem;
 		box-shadow: $btn-shadow;
-		animation: fadeInScale .5s backwards $outSmooth;
-		transition: all .5s $outSmooth;
+		animation: fadeInScale 0.5s backwards $outSmooth;
+		transition: all 0.5s $outSmooth;
 
 		&:hover {
 			color: inherit;
 			background: darken($card-subtitle, 10%);
-			opacity: .9;
+			opacity: 0.9;
 		}
 
-		&--hidden { display: none; }
+		&--hidden {
+			display: none;
+		}
 
-		&--added { 
+		&--added {
 			// @extend .btn--added;
 			color: darken($card-title, 10%) !important;
 			background: $card-subtitle !important;
@@ -46,7 +48,7 @@
 			color: $primary !important;
 
 			.alert__icon {
-				background: rgba(white, .1);
+				background: rgba(white, 0.1);
 				color: $primary;
 			}
 		}
@@ -69,7 +71,7 @@
 			padding: 1px 4px;
 			font-size: 2rem;
 			transform-origin: center center;
-			transition: all .5s $outSmooth;
+			transition: all 0.5s $outSmooth;
 			// transform: translate(100%, -40%);
 			&:hover {
 				@extend %cursor;
@@ -78,11 +80,9 @@
 		}
 	}
 
-
 	@include device(tab-land) {
 		left: 0;
 		right: 0;
 		transform: translate(0, -50%);
-
 	}
 }

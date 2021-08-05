@@ -41,7 +41,7 @@
 
 	&__img {
 		width: 18rem;
-		height: auto;
+		@extend %h-auto;
 	}
 
 	&__title,
@@ -52,7 +52,7 @@
 	}
 
 	&__subtitle {
-		text-transform: uppercase;
+		@extend %text-upper;
 	}
 
 	&__price {
@@ -78,7 +78,7 @@
 		stroke: $primary;
 		stroke-width: 2.5px;
 		width: 2.2rem;
-		height: auto;
+		@extend %h-auto;
 
 		&:hover {
 			fill: $primary;
