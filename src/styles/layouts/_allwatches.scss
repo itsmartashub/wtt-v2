@@ -1,0 +1,41 @@
+.allwatches {
+	@extend %grid-jsb;
+	@extend .content-wrapper;
+	grid-template-columns: min-content 1fr;
+	align-content: flex-start;
+	grid-gap: 8vw;
+	padding: 10rem 10vw;
+	margin-top: 15rem;
+	min-height: 100vh;
+	@extend %pos-rel;
+
+	&__cards {
+		@extend %grid-center;
+		grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+		grid-gap: 20rem 12rem;
+
+		@include device(phone) {
+			grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+			grid-gap: 15rem 12rem;
+			transform: scale(.9);
+		}
+	}
+
+	.title {
+		margin-bottom: 20rem;
+
+		&--anim {
+			animation: fadeInScale 1.5s backwards $outSmooth !important;
+		}
+	}
+
+
+	@include device(tab) {
+		display: block;
+
+		// .title { margin: 10rem auto 15rem auto; }
+		.title {
+			margin-bottom: 15rem;
+		}
+	}
+}

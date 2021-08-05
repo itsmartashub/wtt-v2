@@ -1,0 +1,94 @@
+.filters {
+	@extend %border-r;
+	@extend %grid-center;
+	align-content: space-between;
+	align-self: flex-start;
+	padding: 5rem 1rem;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0%;
+	height: 60vh;
+	width: 6.5rem;
+	z-index: 1;
+	background: $primary;
+	transform-origin: left center;
+
+	&__box {
+		width: 4.5rem;
+		height: 4.5rem;
+		background: $text;
+		@extend %flex-center;
+		@extend %pos-rel;
+		@extend %border-r;
+		@extend %cursor;
+		transition: all .6s $inOutBack;
+
+		&:not(:last-child) { margin-bottom: 3rem; }
+
+		&:hover {
+			background: rgba($card-subtitle, .5);
+			svg { transform: scale(0); }
+			p {
+				opacity: 1;
+				transform: translate(-50%, -50%);
+			}
+		}
+
+		svg {
+			fill: $primary;
+			height: 2.5rem;
+			width: auto;
+			pointer-events: none;
+			transition: all .7s $outSmooth;
+
+			&:nth-last-of-type(3) {
+				stroke: $primary;
+				stroke-width: .5px;
+			}
+		}
+
+		p {
+			font-size: 1.2rem;
+			@extend %fw-700;
+			@extend %text-center;
+			@extend %abs-center;
+			transform: translate(-50%, 50%);
+			opacity: 0;
+			pointer-events: none;
+			transition: all .6s $inOutBack;
+		}
+	}
+
+	&__price{
+		@extend %fw-700;
+		font-size: 1.2rem;
+		font-family: inherit;
+		@extend %text-center;
+		background: $text;
+		color: $primary;
+		padding: 1rem;
+		@extend %border-r;
+		width: 200%;
+		@extend %cursor;
+		@extend %flex-center;
+
+		border: none;
+		// text-indent: 0.01px;
+		// text-overflow: '';
+		// -webkit-appearance: none;
+		-moz-appearance: none;
+		// appearance: none;
+		// @include delay-random-child(4, 3, .5, "fadeInY-toup");
+		// animation: fadeInY-toup 1s $outBack backwards 1000ms;
+
+		&:focus {
+			outline: none;
+		}
+		// -webkit-appearance: button;
+	}
+
+
+	@include device(tab) {
+		display: none;
+	}
+}

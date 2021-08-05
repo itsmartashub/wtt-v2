@@ -1,0 +1,116 @@
+.card {
+	background: $card-gradient-main;
+	@extend %pos-rel;
+	@extend %border-r;
+	@extend %text-center;
+	padding: 0rem 2.3rem;
+	box-shadow: 2px 10px 40px 1px rgba($card-title, 0.2);
+	transition: all 0.5s ease-in-out;
+
+	@include device(tab) {
+		transform: scale(0.9);
+	}
+
+	@include device(phone) {
+		transform: scale(0.8);
+	}
+
+	&:hover {
+		background: $card-gr-1;
+		box-shadow: 0rem 1rem 8rem 2px rgba($card-title, 0.28);
+
+		.card__figure {
+			transform: translateY(-35%);
+		}
+
+		// box-shadow: 2px 10px 40px 1px rgba($card-title, .2);
+	}
+
+	// &--hidden { animation: scale-fade-out .4s ease-in-out; }
+
+	&__figure {
+		transform: translateY(-40%);
+		transition: all 0.5s ease-in-out;
+	}
+
+	&__informations {
+		transform: translateY(-80%);
+		@extend %fw-700;
+		letter-spacing: 0.5px;
+	}
+
+	&__img {
+		width: 18rem;
+		height: auto;
+	}
+
+	&__title,
+	&__subtitle {
+		@extend %fw-700;
+		font-size: 1.5rem;
+		margin-top: 0.7rem;
+	}
+
+	&__subtitle {
+		text-transform: uppercase;
+	}
+
+	&__price {
+		@extend %fw-700;
+		font-size: 2rem;
+		margin-top: 1.4rem;
+	}
+
+	.btn-addtobag {
+		@extend %pos-abs;
+		bottom: 13%;
+		right: -10%;
+		// animation: fadeInY 1.5s backwards $outSmooth;
+		// @include delay-random(3, 5, .5);
+	}
+
+	&__fav {
+		@extend %cursor;
+		@extend %pos-abs;
+		left: 8%;
+		top: 8%;
+		fill: transparent;
+		stroke: $primary;
+		stroke-width: 2.5px;
+		width: 2.2rem;
+		height: auto;
+
+		&:hover {
+			fill: $primary;
+		}
+	}
+
+	&--added {
+		.btn-addtobag {
+			&,
+			&:hover {
+				@extend .btn-addtobag, :hover;
+				transform: rotateZ(0deg);
+				width: 8rem;
+				height: 5rem;
+				right: -15%;
+				font-size: 1.4rem;
+
+				&::before {
+					content: "added \2713";
+					transform: translateY(0%) rotateZ(0deg);
+				}
+			}
+		}
+	}
+
+	// &--hidden { @extend .item--deleted; }
+	&--hidden {
+		display: none !important;
+	}
+
+	&--anim {
+		animation: fadeInScale 1.5s backwards $outSmooth !important;
+		@include delay-random(3, 5, 0.1);
+	}
+}

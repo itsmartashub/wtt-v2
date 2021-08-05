@@ -1,0 +1,25 @@
+{
+  "name": "wtt-v3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/*.html --port 55321 --no-source-maps --no-cache",
+    "build:parcel": "parcel build src/index.html --no-source-maps --no-cache --no-content-hash",
+    "clean": "rm -rf dist/*",
+    "build": "npm run clean && npm run build:parcel"
+  },
+  "license": "MIT",
+  "author": "Marta Bires",
+  "devDependencies": {
+    "@parcel/packager-raw-url": "2.0.0-rc.0",
+    "@parcel/resolver-glob": "^2.0.0-nightly.2338",
+    "@parcel/transformer-image": "2.0.0-rc.0",
+    "@parcel/transformer-sass": "2.0.0-rc.0",
+    "@parcel/transformer-webmanifest": "2.0.0-rc.0",
+    "parcel": "^2.0.0-rc.0",
+    "postcss-preset-env": "^5"
+  },
+  "staticFiles": {
+    "staticPath": "static"
+  }
+}

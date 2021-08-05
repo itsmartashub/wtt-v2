@@ -1,0 +1,190 @@
+// primary 
+// // add to cart FEATURED (ko i primary samo ima UPPERCASE, tj )
+// in stock FEATURED
+// icon + add to cart COLLECTIONS 
+// float add (icon ili znak plus) DEFAULT 
+// checkout
+// clear
+
+%btn {
+	font-family: $default-fml;
+	font-size: $default-fsz;
+	@extend %fw-600;
+	@extend %cursor;
+	@extend %border-r;
+	padding: 1.6rem 3.5rem;
+	box-shadow: $btn-shadow;
+	transition: all .5s $outSmooth;
+
+	&:disabled {
+		opacity: .5;
+	}
+}
+
+.btn {
+	&--added {
+		background: $card-title !important;
+		color: $btn-collection !important;
+	}
+
+	&-primary {
+		@extend %btn;
+		@extend %text-upper;
+		background: $primary;
+
+		&:hover {
+			color: darken($card-title, 10%);
+			background: $card-subtitle;
+		}
+
+		// &--added { @extend .btn-primary:hover; }
+	}
+
+	&-stock {
+		@extend %btn;
+		background: rgba($btn-stock, .34);
+		color: $primary;
+		padding: .8rem 2rem;
+		font-size: 1.2rem;
+	}
+
+	&-icon {
+		@extend %btn;
+		@extend %flex-jsb;
+		@extend %text-upper;
+		padding: 1.5rem 2.5rem !important;
+		width: 100%;
+
+		svg {
+			margin-right: 10%;
+		}
+	}
+
+	&-checkout,
+	&-clearbag {
+		@extend .btn-icon;
+		margin: 1.8rem auto 0 auto;
+		width: 60%;
+		color: rgba($text, .8);
+
+		&:hover {
+			background: $primary;
+
+			.btn-icon-wrapper {
+				background: rgba(#fff, 0.05);
+			}
+		}
+
+		&:disabled:hover {
+			.btn-icon-wrapper {
+				background: rgba(#000, 0.05);
+			}
+		}
+	}
+
+	&-icon-wrapper {
+		background: rgba(#000, 0.05);
+		@extend %border-r;
+		@extend %flex-center;
+		width: 4.5rem;
+		height: 4.5rem;
+		padding: 1.5rem;
+	}
+
+	&-checkout {
+		background: $card-gradient-main;
+
+		.btn-icon-wrapper {
+			background: darken($card-gr-1, 13%);
+		}
+
+		&:disabled:hover {
+			background: $card-gradient-main;
+		}
+	}
+
+	&-clearbag {
+		background: $btn-clear;
+
+		.btn-icon-wrapper {
+			background: darken($btn-clear, 3%);
+		}
+
+		&:disabled:hover {
+			background: $btn-clear;
+		}
+
+	}
+
+	&-close {
+		@extend .btn-icon-wrapper;
+		@extend %cursor;
+		@extend %pos-abs;
+		background: transparent;
+		top: 3%;
+		right: 6%;
+		transition-delay: 0s !important;
+
+		svg {
+			stroke-width: 1px;
+			stroke: currentColor;
+		}
+
+		&:hover {
+			background: rgba(#fff, .05);
+		}
+	}
+
+	&-addtobag {
+		@extend %btn;
+		@extend %flex-center;
+		background: $primary;
+		width: 5rem;
+		height: 5rem;
+		padding: 0;
+		transition: all .5s $inOutBack;
+
+		svg {
+			fill: darken($primary, 28%);
+			height: 2.6rem;
+			width: auto;
+			transition: all .5s $outSmooth;
+		}
+
+		&::before {
+			content: 'ADD';
+			@extend %pos-abs;
+			@extend %fw-700;
+			pointer-events: none;
+			opacity: 0;
+			z-index: 0;
+			color: $primary;
+			transform: translateY(100%) rotateZ(80deg);
+			transition: all .3s $inOutBack;
+		}
+
+		&:hover {
+			background: $text;
+			transform: rotateZ(45deg);
+
+			&::before {
+				opacity: 1;
+				transform: translateY(0%) rotateZ(-45deg);
+			}
+
+			svg {
+				transform: scale(0);
+				opacity: 0;
+				pointer-events: none;
+			}
+		}
+	}
+
+	@include device(phone-land) {
+
+		&-checkout,
+		&-clearbag {
+			font-size: 1.9rem;
+		}
+	}
+}

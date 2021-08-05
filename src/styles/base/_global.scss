@@ -1,0 +1,135 @@
+html,
+body {
+	scroll-behavior: smooth;
+	width: 100%;
+	min-height: 100vh;
+	overflow-x: hidden;
+}
+
+body {
+	box-sizing: border-box;
+	background: $bg-gradient;
+	// background: $bg;
+	color: $text;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+.content-wrapper {
+	padding: 0 10vw;
+
+	@include device(tab) {
+		padding: 0 3vw;
+	}
+
+	@include device(big) {
+		padding: 0 15vw;
+	}
+}
+
+::selection {
+	background-color: $primary;
+	color: rgba(#fff, .7);
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	@extend %cursor;
+
+	&:hover,
+	&:focus {
+		color: $card-title;
+		text-decoration: none;
+	}
+
+	&:focus {
+		outline: none;
+	}
+}
+
+svg>* {
+	pointer-events: none;
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+	background: $bg;
+	width: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+	width: 1rem;
+	background: $primary;
+	@extend %border-r;
+	border: 1px solid darken($primary, 6%);
+}
+
+
+.bp {
+	display: none;
+	font-size: 2rem;
+	@extend %text-center;
+	@extend %pos-fix;
+	bottom: 5%;
+	left: 50%;
+
+	&::before {
+		content: 'desktop '
+	}
+
+	@include device(tab-land) {
+		// width < 1200 ?
+		background: purple;
+
+		&::before {
+			content: 'tab-land';
+		}
+	}
+
+	@include device(tab) {
+		// width < 900 ?
+		background: teal;
+
+		&::before {
+			content: 'tab';
+		}
+	}
+
+	@include device(phone-land) {
+		// width < 600 ?
+		background: lightgreen;
+
+		&::before {
+			content: 'phone-land';
+		}
+	}
+
+	@include device(phone) {
+		// width < 500 ?
+		background: orangered;
+
+		&::before {
+			content: 'phone';
+		}
+	}
+
+	@include device(phone-ant) {
+		// width < 320 ?
+		background: coral;
+
+		&::before {
+			content: 'phone-ant';
+		}
+	}
+
+	@include device(big) {
+		// width > 1920 ?
+		background: red;
+
+		&::before {
+			content: 'big';
+		}
+	}
+}

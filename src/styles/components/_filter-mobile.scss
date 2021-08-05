@@ -1,0 +1,177 @@
+.filtermobile {
+	display: none;
+
+	&__checkbox { display: none; }
+
+	&__label {
+		@extend %pos-fix;
+		@extend %flex-center;
+		@extend %cursor;
+		bottom: 10%;
+		left: 50%;
+		transform: translate(-50%, 0);
+		z-index: $z-filtermobile-label;
+		background: $primary;
+		border-radius: 50%;
+		width: 6rem;
+		height: 6rem;
+		box-shadow: 0px 0px 2px 8px rgba($primary, .4);
+		transition: all .5s $outSmooth;
+
+		svg {
+			width: 3rem;
+			height: auto;
+			fill: $text;
+			transition: all .5s $outSmooth;
+		}
+
+		&:hover {
+			background: $text;
+			box-shadow: 0px 0px 3px 9px rgba($primary, .8);
+
+			svg { fill: $primary; }
+		}
+
+		&::after,
+		&::before {
+			@extend %after;
+			border-radius: 50%;
+			box-shadow: 0px 0px 0px 1px rgba(#fff, .2);
+			transform: scale(0);
+			opacity: 0;
+			pointer-events: none;
+			transition: all .5s $inOutBack;
+		}
+		&::before {
+			width: 350%;
+			height: 350%;
+			opacity: .7;
+		}
+		&::after {
+			width: 750%;
+			height: 750%;
+			opacity: .5;
+		}
+	}
+
+	&__svg--close {
+		display: none;
+		width: 2rem !important;
+		height: auto;
+	}
+
+	&__background {
+		@extend %pos-fix;
+		bottom: 12%;
+		left: 48%;
+		width: 3rem;
+		height: 3rem;
+		background: $bag-gradient;
+		z-index: $z-filtermobile-bg;
+		transform: scale(0);
+		transform: center center;
+		transition: all .9s $outSmooth;
+		border-radius: 50%;
+	}
+
+	&__nav {
+		@extend %grid-center;
+		grid-gap: 8rem;
+		@extend %pos-fix;
+		left: 50%;
+		top: 30%;
+		z-index: $z-filtermobile-nav;
+		transform: center center;
+		transform: translate(-50%, -30%) scale(0);
+		opacity: 0;
+		visibility: hidden;
+		transition: all .5s $outSmooth;
+		@extend %text-center;
+		width: 100%;
+
+		.subtitle {
+			margin-bottom: 3rem;
+			@extend %fw-700;
+			span { @extend %fw-300;}
+		}
+
+		li {
+			font-size: 2.5rem;
+			@extend %flex-center;
+			@extend %fw-500;
+			@extend %cursor;
+			transition: all .3s $outSmooth;
+
+			&:not(:last-child) {
+				margin-bottom: 4rem;
+			}
+
+			&:hover {
+				color: rgba(#fff, .4);
+				letter-spacing: 2px;
+				span {
+					color: $text;
+					opacity: 1;
+					transform: scale(1);
+					transition: transform, opacity .8s $outSmooth;
+				}
+			}
+
+			span { 
+				font-size: .9rem; 
+				margin: 0 1.2rem; 
+				transform: scale(0);
+				opacity: 0;
+				transform-origin: center center;
+				pointer-events: none;
+			}
+		}
+	}
+
+	&__select {
+		@extend .btn-clearbag;
+		// z-index: 200;
+		appearance: none;
+		width: 80%;
+		@extend %text-center;
+		@extend %flex-center;
+		transition: all .5s $outSmooth;
+
+		&:hover {
+			background: $card-gradient-main;
+		}
+	}
+
+
+	// ! CHECKED
+	&__checkbox:checked ~ &__background {
+		transform: scale(90);
+		z-index: $z-filtermobile-bg--checked;
+	}
+	&__checkbox:checked ~ &__nav{
+		transform: translate(-50%, -30%) scale(1);
+		opacity: 1;
+		visibility: visible;
+		transition: all .5s $inOutBack;
+		z-index: $z-filtermobile-nav--checked;
+	}
+
+	&__checkbox:checked ~ label { 
+		box-shadow: 0px 0px 1px 8px rgba(#fff, .2);
+		z-index: $z-filtermobile-label--checked;
+		
+		&::after,
+		&::before {
+			transform: scale(1);
+			opacity: 1;
+		}
+
+		.filtermobile__svg--options { display: none; }
+		.filtermobile__svg--close { display: block; }
+	}
+
+	@include device(tab) {
+		display: block;
+		&--hidden { display: none; }
+	}
+}

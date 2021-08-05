@@ -1,0 +1,73 @@
+$value: 10rem;
+
+.anim-card-from-bottom {
+	opacity: 0;
+	transform: translateY(20%);
+
+	&.appear {
+		opacity: 1 !important;
+		transform: inherit !important;
+
+		&:hover { transform: translateY(-3%) !important; }
+
+		&:nth-child(odd) {
+			transform: translateY(5%) !important;
+			&:hover {	transform: translateY(0%) !important; }
+		}
+	}
+
+	@include device(tab-land) {
+		&.appear {
+			&:nth-child(odd) {
+				transform: translateY(0%) !important;
+				&:hover { transform: translateY(-3%) !important; }
+			}
+		}
+	}
+}
+
+.anim-card-from-bottom,
+.anim-from-bottom,
+.anim-from-left,
+.anim-from-right {
+	will-change: opacity, transform;
+	transition: opacity 1.2s $outSmooth, transform 1.5s $outSmooth;
+}
+
+.anim-from-bottom {
+	opacity: 0;
+	transform: translate3d(0,$value,0);
+	&.appear {
+		opacity: 1 !important;
+		transform: translate3d(0,0,0) !important;
+	}
+}
+
+.anim-from-left {
+	opacity: 0;
+	transform: translate3d($value,0,0);
+	&.appear {
+		opacity: 1 !important;
+		transform: translate3d(0,0,0)!important;
+	}
+}
+
+.anim-from-right {
+	opacity: 0;
+	transform: translate3d(-$value,0,0);
+	&.appear {
+		opacity: 1 !important;
+		transform: translate3d(0,0,0)!important;
+	}
+}
+
+.anim-text {
+	will-change: opacity, letter-spacing;
+	opacity: 0;
+	letter-spacing: .8rem;
+	transition: opacity .5s, letter-spacing 2s ease !important;
+	&.appear {
+		opacity: 1 !important;
+		letter-spacing: inherit !important;
+	}
+}

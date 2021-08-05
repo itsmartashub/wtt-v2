@@ -1,0 +1,95 @@
+.navmob {
+	// @extend %grid-center;
+	// grid-gap: 5vh;
+	// grid-template-rows:	2fr 1fr;
+	@extend %flex-center;
+	@extend %pos-fix;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-height: 100vh;
+	background: linear-gradient(to top left, $bag-gr-2, $bag-gr-1);
+	z-index: $z-navmob;
+	visibility: hidden;
+	transform: translateX(-100%);
+	transition: all 1s $outSmooth;
+	overflow-y: auto;
+
+	ul, &__footer {
+		transform: scale(0);
+		opacity: 0;
+		transition: all .9s $outSmooth;
+	}
+
+	ul {
+		// flex: 1;
+		@extend %grid-center;
+		grid-gap: 3rem;
+		margin-top: 25vh;
+		font-size: 3rem;
+		font-weight: 500;
+
+		a { @extend %flex-center; }
+		span {
+			font-size: 1rem;
+			margin: 0 1.5rem;
+			opacity: 0;
+			transform: scale(0);
+			transition: all .5s $outSmooth;
+		}
+		li:hover {
+			@extend %flex-center;
+			@extend %cursor;
+			color: $card-title;
+			span { opacity: 1; transform: scale(1); color: $text !important; }
+		}
+	}
+
+	&__footer {
+		@extend %grid-center;
+		grid-gap: 1.5rem;
+		padding: 4rem 0;
+		&::before {
+			// content: '- contacts -';
+			content: '\2022 \0020 \2022 \0020 \2022';
+			color: currentColor;
+			opacity: .8;
+			font-size: 1rem;
+		}
+	}
+
+	&__email {
+		font-size: 1.8rem;
+		font-weight: 700;
+		text-decoration: underline;
+	}
+	&__social {
+		a {
+			&:not(:last-child) { margin-right: 2rem; }
+			&:hover { svg { fill: $card-title;} }
+		}
+		svg {
+			height: 2.8rem;
+			width: auto;
+			fill: currentColor;
+		}
+	}
+	&__copyright, &__build { font-weight: 500;}
+	&__build {font-size: 1.4rem; a { font-weight: 700; text-decoration: underline;} }
+
+	&--opened {
+		transform: translateX(0%);
+		visibility: visible;
+		ul, .navmob__footer {
+			transform: scale(1);
+			opacity: 1;
+			transition: all .9s $outSmooth .3s;
+		}
+		.navmob__footer { transition-delay: .5s;}
+	}
+
+
+	@include device(tab) {
+		display: grid;
+	}
+}

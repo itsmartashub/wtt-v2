@@ -1,0 +1,42 @@
+.body-home {
+	.navbar { animation: fadeInY 1s ease backwards 1500ms; }
+
+	.intro {
+		&__brown-block { animation: scaleX 2s $inOutQuart backwards; }
+
+		&__img-block { animation: scaleX 1.5s $inOutQuart backwards 300ms; }
+
+		&__img { animation: fadeIn .6s ease backwards 1500ms; }
+
+		&__logo { animation: fadeInY 2s ease backwards 1000ms; }
+
+		&__title { animation: fadeInLetterSpacing 2s ease backwards 1000ms; }
+
+		.btn-primary { animation: fadeInLetterSpacingBtn 1s ease backwards 1500ms; }
+
+		&__shipping { animation: fadeInY 1.5s ease backwards 2100ms; }
+
+	}
+
+	@include device(phone-land) {
+		.navbar { animation-delay: 2500ms; }
+
+		.intro {
+			&__brown-block { animation: none; }
+			&__img-block { animation: scaleX-to-0 1s $inOutQuart backwards 0ms; z-index: 100; transform: scaleX(0); }
+			// &__img-block { animation: none; display: none; }
+			// &__img { animation: fadeIn .8s ease backwards 1200ms; }
+			&__img { animation: none; }
+			&__left { animation: scaleX 1.5s $inOutQuart backwards 900ms; transform-origin: right center; }
+
+			&__logo { animation-delay: 2000ms; }
+
+			&__title { animation-delay: 2100ms; }
+
+			.btn-primary { animation-delay: 2200ms; }
+
+			&__shipping { animation-delay: 2100ms; }
+		}
+	}
+
+}

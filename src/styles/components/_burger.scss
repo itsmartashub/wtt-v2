@@ -1,0 +1,76 @@
+.navbar__burger {
+	display: none;
+	@extend %cursor;
+	@extend %pos-rel;
+
+	width: 2.7rem;
+	height: 2.5rem;
+
+	&::after,
+	&::before {
+		@extend %after;
+		border-radius: 50%;
+		box-shadow: 0px 0px 1px 2px rgba(#fff, .1);
+		transform: translate(-48%, -58%) scale(0);
+		opacity: 0;
+		pointer-events: none;
+		transition: all .8s $inOutBack;
+	}
+	&::before {
+		width: 30rem;
+		height: 30rem;
+	}
+	&::after {
+		width: 60rem;
+		height: 60rem;
+	}
+
+	.burger-line {
+		background: $text;
+		width: 100%;
+		height: 2px;
+		@extend %border-r;
+		@extend %pos-rel;
+		@extend %flex-center;
+		
+		&::after,
+		&::before {
+			@extend %after;
+			@extend %border-r;
+			background: currentColor;
+			transition: transform .9s $outSmooth, width .5s $outSmooth;
+		}
+
+		&::after {
+			top: .8rem;
+			width: 80%;
+		}
+		&::before {
+			top: 1.6rem;
+			width: 60%;
+		}
+	}
+
+	&:hover {
+		.burger-line {
+			&::after, &::before { width: 100%; }
+		}
+	}
+}
+
+.burger--opened {
+	&::after, &::before { transform: translate(-48%, -58%) scale(1); }
+	&::before { opacity: .7; }
+	&::after { opacity: .5; }
+
+	.burger-line {
+		background: transparent;
+		&::after,
+		&::before {
+			width: 100%;
+			top: .8rem;
+		}
+		&::after { transform: rotate(45deg); }
+		&::before { transform: rotate(-45deg); }
+	}
+}

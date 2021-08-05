@@ -1,0 +1,151 @@
+.items {
+	// max-height: 60%;
+	@extend %overflow-hidden;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar,
+	&::-webkit-scrollbar-track {
+		background: $bg;
+		width: 1rem;
+		@extend %border-r;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		width: 1rem;
+		background: $primary;
+		@extend %border-r;
+		border: 1px solid darken($primary, 6%);
+	}
+}
+
+.item {
+	width: 100%;
+	// background: darken($primary, 1%);
+	// background: rgba($primary, .75);
+	// background: rgba($btn-clear, .75);
+	// background: darken($btn-clear, 2%);
+	// background: $btn-clear;
+	background: rgba(#fff, .05);
+
+	@extend %grid-jsb;
+	grid-auto-flow: column;
+	grid-template-columns: max-content 1fr repeat(2, max-content); // todo mozda umesto max-content da stavim auto
+	grid-gap: 3rem;
+	padding: 1.8rem 2rem;
+	transition: background .2s ease-in-out;
+
+	&--deleted {
+		animation: scale-fade-out .4s ease-in-out;
+	}
+
+	&:not(:last-child) {
+		margin-bottom: 1.5rem;
+	}
+
+	&:hover {
+		background: rgba($primary, .75);
+	}
+
+	&__figure {
+		padding: .8rem 1rem;
+		background: $card-gradient-main;
+		@extend %border-r;
+	}
+
+	&__img {
+		width: auto;
+		height: 4rem;
+	}
+
+	&__title,
+	&__subtitle {
+		font-size: 1.4rem;
+	}
+
+	&__title {
+		color: rgba($text, .8);
+	}
+
+	&__subtitle,
+	&__amount {
+		color: $card-title;
+		text-transform: uppercase;
+	}
+
+	&__price {
+		@extend %fw-700;
+		margin-top: 0.5rem;
+	}
+
+	&__controller {
+		@extend %flex-jsb;
+		@extend %fw-700;
+		font-size: 2.2rem;
+
+		&>div {
+			&:not(:last-child) {
+				margin-right: 1rem;
+			}
+		}
+	}
+
+	&__add,
+	&__remove {
+		@extend %cursor;
+		@extend %border-r;
+		color: $text;
+		transform-origin: center center;
+		transition: all .4s $outSmooth;
+		padding: 0 8px;
+
+		&:hover {
+			background: rgba(#000, 0.05);
+		}
+	}
+
+	&__icon {
+		@extend %cursor;
+		fill: $text;
+		transition: all .5s $outSmooth;
+
+		&--delete {
+			fill: lighten($text, 20%);
+
+			&:hover {
+				fill: $text;
+				transform: translateY(-10%);
+			}
+		}
+
+		// &--add-to-bag {
+
+		// 	&:hover {
+		// 		// fill: $text;
+		// 	}
+		// }
+
+		&--remove-from-fav {
+			fill: lighten($text, 20%);
+
+			&:hover {
+				fill: $text;
+			}
+		}
+	}
+
+	@include device(phone-land) {
+
+		&__title,
+		&__subtitle {
+			font-size: 1.5rem;
+		}
+
+		&__price {
+			font-size: 1.7rem;
+		}
+
+		&__controller {
+			font-size: 2.4rem;
+		}
+	}
+}

@@ -1,0 +1,61 @@
+.gifts {
+	@extend %section-props;
+	@extend %text-center;
+
+	.title {
+		margin-bottom: 2.5rem;
+	}
+
+	&__text {
+		span {
+			@extend %fw-700;
+		}
+	}
+
+	&__form {
+		margin: 5rem auto 2rem auto;
+		// @extend %grid-center;
+		// grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+
+		input {
+			padding: 1.55rem 4rem;
+			margin-right: 2.5rem;
+			width: 50%;
+			@extend %border-r;
+			font-family: inherit;
+			box-shadow: $btn-shadow;
+			background: lighten($card-gr-1, 9%);
+			color: $card-title;
+			font-size: 1.6rem;
+
+			&[placeholder] {
+				color: $text;
+			}
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+
+	h5 { color: $primary; }
+
+
+	@include device(tab) { input { width: 60%; } }
+
+	@include device(phone-land) {
+		input { width: 90%; margin: 0; }
+
+		.btn-primary { width: 40%; margin-top: 3rem; }
+	}
+	@include device(phone) {
+		input { width: 100%; }
+
+		.btn-primary {
+			margin-top: 2.5rem;
+			width: 60%;
+		}
+	}
+	@include device(phone-ant) {
+		.btn-primary { width: 100%; }
+	}
+}

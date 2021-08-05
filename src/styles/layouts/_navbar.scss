@@ -1,0 +1,217 @@
+.navbar {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	padding: 2rem 10vw;
+
+	display: grid;
+	align-items: center;
+	grid-auto-flow: column;
+	grid-template-columns: max-content 1fr max-content;
+	grid-gap: 5vw;
+	z-index: $z-navbar;
+	transition: all .5s $inOutQuad;
+
+	&--scrolled {
+		background: $primary !important;
+		box-shadow: 0px 3px 10px 0px rgba($primary, .5);
+		padding: .8rem 10vw;
+
+		.navbar__logo {
+			padding: .5rem 0;
+
+			svg {
+				height: 4rem;
+				width: auto;
+			}
+		}
+
+		.navbar__favs {
+			svg {
+				height: 2.2rem;
+				width: auto;
+			}
+		}
+
+		.navbar__bag {
+			svg {
+				height: 2.5rem;
+				width: auto;
+			}
+		}
+
+		.navbar__nav {
+			a {
+				color: darken($text, 15%);
+				@extend %fw-500;
+			}
+		}
+	}
+
+	&--transparent {
+		background: transparent !important;
+		// transition: background 1s $outSmooth;
+	}
+
+	&__logo {
+		svg {
+			width: auto;
+			height: 5rem;
+			stroke-width: .5px;
+			stroke: currentColor;
+			fill: $text;
+		}
+
+		&:hover {
+			fill: $primary;
+		}
+	}
+
+	&__nav {
+		ul {
+			display: grid;
+			grid-auto-flow: column;
+			justify-content: flex-start;
+			grid-gap: 2.5rem;
+			font-size: 1.8rem;
+			font-weight: 500;
+
+			a,
+			li {
+				transition: all .5s $outSmooth;
+			}
+		}
+	}
+
+	&__iconsContainer {
+		@extend %flex-center;
+	}
+
+	&__favs,
+	&__bag {
+		@extend %pos-rel;
+
+		svg {
+			height: 2.7rem;
+			width: auto;
+			fill: transparent;
+			stroke: currentColor;
+			stroke-width: 2.5px;
+			transition: all .3s ease-in-out;
+		}
+
+		&:hover {
+			svg {
+				fill: currentColor;
+			}
+		}
+	}
+
+	&__favs {
+		margin-right: 2.2rem;
+		@extend %cursor;
+
+		&-counter {
+			@extend %pos-abs;
+			border-radius: 50%;
+			background: lighten($primary, 10%);
+			font-size: 1rem;
+			@extend %fw-700;
+			@extend %text-center;
+			// padding: 1.5px 2.5px;
+			min-width: 1.8rem;
+			min-height: 1.6rem;
+			line-height: 1.8rem;
+			bottom: 0;
+			right: -20%;
+		}
+	}
+
+	&__bag {
+		@extend %pos-rel;
+		@extend %cursor;
+
+		svg {
+			height: 3rem;
+		}
+
+		&-counter {
+			@extend .navbar__favs-counter;
+			right: -50%;
+			// top: 50%;\	
+		}
+	}
+
+	// * ----------------------- MEDIA ------------------------
+	@include device(tab) {
+		&__logo {
+			grid-column: 2/3;
+			justify-self: center;
+
+			svg {
+				stroke: currentColor;
+				stroke-width: 1px;
+			}
+		}
+
+		&__iconsContainer {
+			grid-column: 3/4;
+		}
+
+		&__burger {
+			grid-column: 1/2;
+			display: block;
+		}
+
+		&__nav {
+			display: none;
+		}
+
+		&--scrolled {
+			background: $primary !important;
+			box-shadow: 0px 3px 10px 0px rgba($primary, .5);
+
+			.navbar__logo {
+
+				// padding: .5rem 0;
+				svg {
+					height: 5rem;
+					width: auto;
+				}
+			}
+
+			.navbar__favs {
+				svg {
+					height: 2.7rem;
+					width: auto;
+				}
+			}
+
+			.navbar__bag {
+				svg {
+					height: 3.1rem;
+					width: auto;
+				}
+			}
+
+			.navbar__nav {
+				a {
+					color: darken($text, 15%);
+				}
+			}
+		}
+	}
+
+
+	@include device(phone-land) {
+		background: radial-gradient(rgba($card-gr-1, .9), rgba($card-gr-2, .8));
+	}
+
+	@include device(phone-ant) {
+		&__logo {
+			svg {
+				height: 4rem;
+			}
+		}
+	}
+}

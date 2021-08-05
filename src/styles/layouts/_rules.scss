@@ -1,0 +1,62 @@
+.rules {
+	@extend %grid-jsb;
+	grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+	grid-gap: 5rem;
+
+	&__item {
+		@extend %grid-center;
+		grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+		grid-gap: 2rem;
+	}
+
+	&__svg-wrapper {
+		width: 9rem;
+		height: 9rem;
+		background: rgba($primary, .8);
+		@extend %border-r;
+		@extend %flex-center;
+	}
+
+	svg {
+		height: 5rem;
+		width: auto;
+		fill: $text;
+	}
+
+	&__title {
+		@extend %text-upper;
+		@extend %fw-700;
+		word-wrap: break-word;
+		// opacity: .9;
+		color: $card-title;
+	}
+
+
+	@include device(tab) {
+		&__item {
+			grid-template-columns: repeat(auto-fit, minmax(auto, max-content));
+			grid-gap: 2rem;
+		}
+	}
+
+	@include device(phone-ant) {
+		justify-content: center;
+		grid-gap: 3rem;
+
+		&__item {
+			grid-template-columns: auto;
+			grid-gap: 1rem;
+		}
+		&__svg-wrapper {
+			width: 6rem;
+			height: 6rem;
+			background: rgba($primary, .8);
+		}
+
+		svg { height: 3rem; }
+
+		&__title {
+			font-size: 1.2rem;
+		}
+	}
+}

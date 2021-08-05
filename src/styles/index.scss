@@ -1,0 +1,35 @@
+@import './abstracts/vars';
+@import './abstracts/functions';
+@import './abstracts/mixins';
+@import './abstracts/extends';
+
+@import './base/animations';
+@import './base/reset';
+@import './base/global';
+@import './base/typo';
+
+@import './components/buttons';
+@import './components/burger';
+@import './layouts/navbar';
+@import './layouts/navmob';
+@import './components/items-min';
+@import './components/bag-fav-same';
+@import './components/scrolls';
+@import './components/alert-notification';
+// @import './components/filter-sidebar';
+// @import './components/filter-mobile';
+// @import './components/main-card';
+
+@import './layouts/header';
+@import './layouts/intro';
+@import './layouts/feature';
+@import './layouts/collections';
+@import './layouts/rules';
+@import './layouts/gifts';
+@import './layouts/footer';
+@import './layouts/body-home';
+@import './layouts/modal-bg';
+// @import './layouts/allwatches';
+
+@import './base/shared';
+@import './base/anim-classes';
