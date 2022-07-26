@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 @mixin device($breakpoint) {
 	@if $breakpoint == phone-ant {
@@ -33,11 +33,7 @@
 	}
 }
 
-@mixin scrollbars(
-	$size,
-	$foreground-color,
-	$background-color: mix($foreground-color, white, 50%)
-) {
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
 	//? For Google Chrome
 	&::-webkit-scrollbar {
 		width: $size;
@@ -70,23 +66,15 @@
 @mixin delay-random($number, $totalSec, $mainDelaySec) {
 	@for $i from 1 to ($number + 1) {
 		&:nth-of-type(#{$i}) {
-			animation-delay: #{(math.div(math.random($totalSec), 10)) +
-				$mainDelaySec}s;
+			animation-delay: #{(math.div(math.random($totalSec), 10)) + $mainDelaySec}s;
 		}
 	}
 }
-@mixin delay-random-child(
-	$items,
-	$timeSec,
-	$totalSec,
-	$mainDelaySec,
-	$animName
-) {
+@mixin delay-random-child($items, $timeSec, $totalSec, $mainDelaySec, $animName) {
 	@for $i from 1 to ($items + 1) {
 		&:nth-child(#{$i}) {
 			animation: #{$animName} #{$timeSec}s backwards;
-			animation-delay: #{(math.div(math.random($totalSec), 10)) +
-				$mainDelaySec}s;
+			animation-delay: #{(math.div(math.random($totalSec), 10)) + $mainDelaySec}s;
 		}
 	}
 }

@@ -1,4 +1,6 @@
 .body-home {
+	--delay: 100ms;
+
 	.navbar {
 		animation: fadeInY 1s ease backwards 1500ms;
 	}
@@ -35,7 +37,7 @@
 
 	@include device(phone-land) {
 		.navbar {
-			animation-delay: 2500ms;
+			// animation-delay: 2500ms;
 		}
 
 		.intro {
@@ -48,29 +50,31 @@
 				transform: scaleX(0);
 			}
 			// &__img-block { animation: none; display: none; }
-			// &__img { animation: fadeIn .8s ease backwards 1200ms; }
 			&__img {
-				animation: none;
+				animation: fadeIn 1s ease backwards 300ms;
 			}
+			// &__img {
+			// 	animation: none;
+			// }
 			&__left {
-				animation: scaleX 1.5s $inOutQuart backwards 900ms;
-				transform-origin: right center;
+				animation: scaleX 1.5s $inOutQuart backwards 0ms;
+				transform-origin: left center;
 			}
 
 			&__logo {
-				animation-delay: 2000ms;
+				// animation-delay: 1000ms;
 			}
 
 			&__title {
-				animation-delay: 2100ms;
+				animation-delay: 1200ms;
 			}
 
 			.btn-primary {
-				animation-delay: 2200ms;
+				animation-delay: 1800ms;
 			}
 
 			&__shipping {
-				animation-delay: 2100ms;
+				// animation-delay: 1500ms;
 			}
 		}
 	}

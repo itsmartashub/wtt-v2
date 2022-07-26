@@ -27,6 +27,7 @@
 	grid-template-columns: max-content 1fr repeat(2, max-content); // todo mozda umesto max-content da stavim auto
 	grid-gap: 3rem;
 	padding: 1.8rem 2rem;
+	border-radius: 8px;
 	transition: background 0.2s ease-in-out;
 
 	&--deleted {

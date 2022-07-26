@@ -1,35 +1,35 @@
-@import "./abstracts/vars";
-@import "./abstracts/mixins";
-@import "./abstracts/extends";
+@import './abstracts/vars';
+@import './abstracts/mixins';
+@import './abstracts/extends';
 
-@import "./layouts/preloader";
+// @import "./layouts/preloader";
 
-@import "./base/animations";
-@import "./base/reset";
-@import "./base/global";
-@import "./base/typo";
+@import './base/animations';
+@import './base/reset';
+@import './base/global';
+@import './base/typo';
 
-@import "./components/buttons";
-@import "./components/burger";
-@import "./layouts/navbar";
-@import "./layouts/navmob";
-@import "./components/items-min";
-@import "./components/bag-fav-same";
-@import "./components/scrolls";
-@import "./components/filter-sidebar";
-@import "./components/filter-mobile";
-@import "./components/main-card";
-@import "./components/alert-notification";
+@import './components/buttons';
+@import './components/burger';
+@import './layouts/navbar';
+@import './layouts/navmob';
+@import './components/items-min';
+@import './components/bag-fav-same';
+@import './components/scrolls';
+@import './components/filter-sidebar';
+@import './components/filter-mobile';
+@import './components/main-card';
+@import './components/alert-notification';
 
-@import "./layouts/header";
+@import './layouts/header';
 // @import './layouts/intro';
 // @import './layouts/feature';
 // @import './layouts/collections';
 // @import './layouts/rules';
 // @import './layouts/gifts';
-@import "./layouts/footer";
-@import "./layouts/allwatches";
-@import "./layouts/body-allwatches";
-@import "./layouts/modal-bg";
+@import './layouts/footer';
+@import './layouts/allwatches';
+@import './layouts/body-allwatches';
+@import './layouts/modal-bg';
 
-@import "./base/shared";
+@import './base/shared';

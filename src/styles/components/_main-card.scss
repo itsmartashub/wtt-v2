@@ -1,7 +1,7 @@
 .card {
 	background: $card-gradient-main;
 	@extend %pos-rel;
-	@extend %border-r;
+	border-radius: 10px;
 	@extend %text-center;
 	padding: 0rem 2.3rem;
 	box-shadow: 2px 10px 40px 1px rgba($card-title, 0.2);
@@ -97,7 +97,7 @@
 				font-size: 1.4rem;
 
 				&::before {
-					content: "added \2713";
+					content: 'added \2713';
 					transform: translateY(0%) rotateZ(0deg);
 				}
 			}

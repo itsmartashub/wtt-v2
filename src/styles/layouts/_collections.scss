@@ -13,7 +13,7 @@
 		box-shadow: $card-shadow;
 		padding: 6rem;
 		@extend %pos-rel;
-		@extend %border-r;
+		border-radius: 8px;
 		transition: all 0.4s $outSmooth;
 
 		&:hover {

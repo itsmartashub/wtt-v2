@@ -1,6 +1,6 @@
 .filters {
-	@extend %border-r;
 	@extend %grid-center;
+	border-radius: 5px;
 	align-content: space-between;
 	align-self: flex-start;
 	padding: 5rem 1rem;
