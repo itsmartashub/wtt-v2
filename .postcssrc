@@ -1,8 +1,0 @@
-{
-  "plugins": {
-    "postcss-preset-env": {
-      "stages": 2,
-      "autoprefixer": { "grid": true}
-    }
-  }
-}

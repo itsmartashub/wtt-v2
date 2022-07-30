@@ -1,3 +1,7 @@
 node_modules
 .env
 .parcel-cache
+.yarn
+dist
+.pnp.cjs
+.pnp.loader.mjs
