@@ -28,7 +28,6 @@ export default class Products {
       let response = await fetch(url, configObject);
       let data = await response.json();
       let products = data.record;
-      console.log(products);
       return products;
     } catch (error) {
       console.error(error);

@@ -28,7 +28,6 @@ export default class Bag {
 
   getAddToBagBtns() {
     let $addToBagBtns;
-    console.log(window.location.pathname);
     if (
       window.location.pathname == "/index.html" ||
       window.location.pathname == "/"
@@ -203,8 +202,7 @@ export default class Bag {
         let currItem = this.arrBag.find((item) => item.id == itemID);
 
         //todo problem je sto je this.arrBag [], nema nista i onda je i currItem undefined i amount samim itm i sve ostalo
-
-        console.log(currItem);
+        // console.log(currItem);
 
         currItem.amount = +currItem?.amount + 1;
         Storage.saveBag(this.arrBag);
