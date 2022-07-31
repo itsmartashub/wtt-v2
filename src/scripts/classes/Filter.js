@@ -1,40 +1,41 @@
-import images from 'url:../../assets/products/*.png';
-import Storage from './Storage';
+import images from "url:../../assets/products/*.png";
+import Storage from "./Storage";
 
-const $arrFilterWomenBtns = document.querySelectorAll('.filter--women');
-const $arrFilterMenBtns = document.querySelectorAll('.filter--men');
-const $arrFilterAllProductsBtns = document.querySelectorAll('.filter--all');
-const $productsContainer = document.querySelector('.allwatches__cards');
-const $title = document.querySelector('.allwatches__cards-section .title');
-const $priceSorting = document.querySelectorAll('.price-sorting');
+const $arrFilterWomenBtns = document.querySelectorAll(".filter--women");
+const $arrFilterMenBtns = document.querySelectorAll(".filter--men");
+const $arrFilterAllProductsBtns = document.querySelectorAll(".filter--all");
+const $productsContainer = document.querySelector(".allwatches__cards");
+const $title = document.querySelector(".allwatches__cards-section .title");
+const $priceSorting = document.querySelectorAll(".price-sorting");
 
-const $filtermobile_women = document.querySelector('.filtermobile--women');
-const $filtermobile_men = document.querySelector('.filtermobile--men');
-const $filtermobile_all = document.querySelector('.filtermobile--all');
+const $filtermobile_women = document.querySelector(".filtermobile--women");
+const $filtermobile_men = document.querySelector(".filtermobile--men");
+const $filtermobile_all = document.querySelector(".filtermobile--all");
 
-const $filtermobileChb = document.querySelector('#filtermobile__chb');
+const $filtermobileChb = document.querySelector("#filtermobile__chb");
 
 export default class Filter {
-	arrBag = Storage.getBag();
-	$cards;
-	$arrWomen;
-	$arrMen;
-	$arrAllWatch;
+  arrBag = Storage.getBag();
+  $cards;
+  $arrWomen;
+  $arrMen;
+  $arrAllWatch;
 
-	static get arrObjImgs() {
-		return Object.values(images);
-	}
+  static get arrObjImgs() {
+    return Object.values(images);
+  }
 
-	displayProducts(products) {
-		let productsRender = '';
-		let arrImgs = this.constructor.arrObjImgs;
-		let { record } = products;
+  displayProducts(products) {
+    let productsRender = "";
+    let arrImgs = this.constructor.arrObjImgs;
 
-		record.forEach(product => {
-			productsRender += `
+    products.forEach((product) => {
+      productsRender += `
 					<article class="card" data-gender=${product.gender} data-id=${product.id}>
 						<figure class="card__figure">
-							<img src=${arrImgs[product.id - 1]} alt="hand-watch-with-title-${product.title}" class="card__img" />
+							<img src=${arrImgs[product.id - 1]} alt="hand-watch-with-title-${
+        product.title
+      }" class="card__img" />
 						</figure>
 
 						<div class="card__informations">
@@ -48,128 +49,139 @@ export default class Filter {
 						</button>
 
 						<svg xmlns="http://www.w3.org/2000/svg" data-id=${
-							product.id
-						} class="card__fav card-fav-btn" width="43.938" height="39.367" viewBox="0 0 43.938 39.367">
+              product.id
+            } class="card__fav card-fav-btn" width="43.938" height="39.367" viewBox="0 0 43.938 39.367">
 							<path d="M38.151,3.608A11.143,11.143,0,0,0,29.863,0a10.425,10.425,0,0,0-6.511,2.247A13.321,13.321,0,0,0,20.72,5a13.314,13.314,0,0,0-2.633-2.749A10.423,10.423,0,0,0,11.576,0,11.143,11.143,0,0,0,3.287,3.608,12.953,12.953,0,0,0,0,12.453c0,3.5,1.306,6.712,4.11,10.1,2.508,3.026,6.113,6.1,10.288,9.656,1.426,1.215,3.041,2.592,4.719,4.059a2.433,2.433,0,0,0,3.2,0C24,34.8,25.615,33.42,27.042,32.2c4.174-3.557,7.779-6.629,10.287-9.656,2.8-3.383,4.11-6.591,4.11-10.1a12.951,12.951,0,0,0-3.287-8.845Zm0,0" transform="translate(1.25 1.25)"/>
 						</svg>
 					</article>
 				`;
-		});
-		$productsContainer.innerHTML = productsRender;
+    });
+    $productsContainer.innerHTML = productsRender;
 
-		this.$cards = document.querySelectorAll('.allwatches__cards-section .card');
-		this.makeDOMarrays([...this.$cards]);
-	}
+    this.$cards = document.querySelectorAll(".allwatches__cards-section .card");
+    this.makeDOMarrays([...this.$cards]);
+  }
 
-	makeDOMarrays(_cards) {
-		let arrUnisex = document.querySelectorAll(`[data-gender="unisex"]`);
-		this.$arrWomen = [...document.querySelectorAll(`[data-gender="female"]`), ...arrUnisex];
-		this.$arrMen = [...document.querySelectorAll(`[data-gender="male"]`), ...arrUnisex];
-		this.$arrAllWatches = this.$cards;
-	}
+  makeDOMarrays(_cards) {
+    let arrUnisex = document.querySelectorAll(`[data-gender="unisex"]`);
+    this.$arrWomen = [
+      ...document.querySelectorAll(`[data-gender="female"]`),
+      ...arrUnisex,
+    ];
+    this.$arrMen = [
+      ...document.querySelectorAll(`[data-gender="male"]`),
+      ...arrUnisex,
+    ];
+    this.$arrAllWatches = this.$cards;
+  }
 
-	filtering(_filterArrBtns, _arrForDisplay, _title) {
-		_filterArrBtns.forEach(filterBtn => {
-			filterBtn.addEventListener('click', () => {
-				this.appendingChild(_arrForDisplay);
-				this.changeTitle(_title);
-				this.scrollToTop();
-			});
-		});
-	}
+  filtering(_filterArrBtns, _arrForDisplay, _title) {
+    _filterArrBtns.forEach((filterBtn) => {
+      filterBtn.addEventListener("click", () => {
+        this.appendingChild(_arrForDisplay);
+        this.changeTitle(_title);
+        this.scrollToTop();
+      });
+    });
+  }
 
-	filteringMobile(_filterBtn, _arrForDisplay, _title) {
-		_filterBtn.addEventListener('click', () => {
-			this.appendingChild(_arrForDisplay);
-			this.changeTitle(_title);
-			this.closeFiltermobileChb(false);
-			this.scrollToTop();
-		});
-	}
+  filteringMobile(_filterBtn, _arrForDisplay, _title) {
+    _filterBtn.addEventListener("click", () => {
+      this.appendingChild(_arrForDisplay);
+      this.changeTitle(_title);
+      this.closeFiltermobileChb(false);
+      this.scrollToTop();
+    });
+  }
 
-	changeTitle(title) {
-		if ($title) {
-			$title.innerText = title;
-			if (!$title.classList.contains('title--anim')) $title.classList.add('title--anim');
-			else $title.classList.remove('title--anim');
-		}
-	}
+  changeTitle(title) {
+    if ($title) {
+      $title.innerText = title;
+      if (!$title.classList.contains("title--anim"))
+        $title.classList.add("title--anim");
+      else $title.classList.remove("title--anim");
+    }
+  }
 
-	priceSort() {
-		$priceSorting.forEach(selectEl => {
-			selectEl.addEventListener('change', e => {
-				if (e.srcElement.selectedIndex == 1) {
-					//todo fkn priceToHigh
-					this.priceToHigh();
-					this.closeFiltermobileChb(false);
-					this.scrollToTop();
-				} else if (e.srcElement.selectedIndex == 2) {
-					//todo fkn priceToLow\
-					this.priceToLow();
-					this.closeFiltermobileChb(false);
-					this.scrollToTop();
-				}
-			});
-		});
-	}
+  priceSort() {
+    $priceSorting.forEach((selectEl) => {
+      selectEl.addEventListener("change", (e) => {
+        if (e.srcElement.selectedIndex == 1) {
+          //todo fkn priceToHigh
+          this.priceToHigh();
+          this.closeFiltermobileChb(false);
+          this.scrollToTop();
+        } else if (e.srcElement.selectedIndex == 2) {
+          //todo fkn priceToLow\
+          this.priceToLow();
+          this.closeFiltermobileChb(false);
+          this.scrollToTop();
+        }
+      });
+    });
+  }
 
-	priceToHigh() {
-		let $arrCards = [...document.querySelectorAll('.card')];
+  priceToHigh() {
+    let $arrCards = [...document.querySelectorAll(".card")];
 
-		$arrCards.sort((a, b) => {
-			a = parseFloat(a.querySelector('.card__price').dataset.price);
-			b = parseFloat(b.querySelector('.card__price').dataset.price);
+    $arrCards.sort((a, b) => {
+      a = parseFloat(a.querySelector(".card__price").dataset.price);
+      b = parseFloat(b.querySelector(".card__price").dataset.price);
 
-			if (a > b) return -1;
-			else if (a < b) return 1;
-			else return 0;
-		});
+      if (a > b) return -1;
+      else if (a < b) return 1;
+      else return 0;
+    });
 
-		this.appendingChild($arrCards);
-	}
+    this.appendingChild($arrCards);
+  }
 
-	priceToLow() {
-		let $arrCards = [...document.querySelectorAll('.card')];
+  priceToLow() {
+    let $arrCards = [...document.querySelectorAll(".card")];
 
-		$arrCards.sort((a, b) => {
-			a = parseFloat(a.querySelector('.card__price').dataset.price);
-			b = parseFloat(b.querySelector('.card__price').dataset.price);
+    $arrCards.sort((a, b) => {
+      a = parseFloat(a.querySelector(".card__price").dataset.price);
+      b = parseFloat(b.querySelector(".card__price").dataset.price);
 
-			if (a > b) return 1;
-			else if (a < b) return -1;
-			else return 0;
-		});
+      if (a > b) return 1;
+      else if (a < b) return -1;
+      else return 0;
+    });
 
-		this.appendingChild($arrCards);
-	}
+    this.appendingChild($arrCards);
+  }
 
-	appendingChild(_arrForEach, _gender) {
-		const $cardsParent = document.querySelector('.allwatches__cards');
-		$cardsParent.innerHTML = ''; // da nestanu cards koje nisu u ternutno arrayu
+  appendingChild(_arrForEach, _gender) {
+    const $cardsParent = document.querySelector(".allwatches__cards");
+    $cardsParent.innerHTML = ""; // da nestanu cards koje nisu u ternutno arrayu
 
-		_arrForEach.forEach(card => {
-			$cardsParent.insertAdjacentElement('afterbegin', card);
-		});
-	}
+    _arrForEach.forEach((card) => {
+      $cardsParent.insertAdjacentElement("afterbegin", card);
+    });
+  }
 
-	closeFiltermobileChb(_isChecked) {
-		$filtermobileChb.checked = _isChecked;
-	}
+  closeFiltermobileChb(_isChecked) {
+    $filtermobileChb.checked = _isChecked;
+  }
 
-	scrollToTop() {
-		return window.scrollTo(0, 0);
-	}
+  scrollToTop() {
+    return window.scrollTo(0, 0);
+  }
 
-	setup_filter() {
-		this.filtering($arrFilterWomenBtns, this.$arrWomen, 'for her');
-		this.filtering($arrFilterMenBtns, this.$arrMen, 'for him');
-		this.filtering($arrFilterAllProductsBtns, this.$arrAllWatches, 'all watches');
+  setup_filter() {
+    this.filtering($arrFilterWomenBtns, this.$arrWomen, "for her");
+    this.filtering($arrFilterMenBtns, this.$arrMen, "for him");
+    this.filtering(
+      $arrFilterAllProductsBtns,
+      this.$arrAllWatches,
+      "all watches"
+    );
 
-		this.filteringMobile($filtermobile_women, this.$arrWomen, 'for her');
-		this.filteringMobile($filtermobile_men, this.$arrMen, 'for him');
-		this.filteringMobile($filtermobile_all, this.$arrAllWatches, 'all watches');
+    this.filteringMobile($filtermobile_women, this.$arrWomen, "for her");
+    this.filteringMobile($filtermobile_men, this.$arrMen, "for him");
+    this.filteringMobile($filtermobile_all, this.$arrAllWatches, "all watches");
 
-		this.priceSort();
-		this.closeFiltermobileChb();
-	}
+    this.priceSort();
+    this.closeFiltermobileChb();
+  }
 }
