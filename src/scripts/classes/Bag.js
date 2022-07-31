@@ -34,7 +34,10 @@ export default class Bag {
       window.location.pathname == "/"
     ) {
       $addToBagBtns = [...document.querySelectorAll(".add-to-bag")];
-    } else if (window.location.pathname == "/allwatches.html") {
+    } else if (
+      window.location.pathname == "/allwatches.html" ||
+      window.location.pathname == "/allwatches"
+    ) {
       $addToBagBtns = [...document.querySelectorAll(".btn-addtobag")];
     }
 
